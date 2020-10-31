@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"importHelpers": true,
+		"allowSyntheticDefaultImports": true,
+		"paths": {
+      "@/*": ["src/*"]
+    }
+	}
+}
