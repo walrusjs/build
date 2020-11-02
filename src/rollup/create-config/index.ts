@@ -5,7 +5,7 @@ import camelCase from 'camelcase';
 import escapeStringRegexp from 'escape-string-regexp';
 import { InternalOptions, Format } from '@/types';
 import { isString } from 'lodash';
-import { stdout } from '@/utils';
+import { stdout, replaceName } from '@/utils';
 import { MinifyOptions } from '@/types';
 import {
 	parseAliasArgument,
@@ -66,24 +66,24 @@ function getMain({ options, entry, format }) {
 }
 
 function createConfig(
-  options: InternalOptions, 
-	entry: string, 
-	format: Format, 
+  options: InternalOptions,
+	entry: string,
+	format: Format,
 	writeMeta: boolean
 ): CreateConfigResult {
   const pkg = options.pkg || {};
 
   const peerDeps = Object.keys(pkg.peerDependencies || {});
 
-  // ----- 
+  // -----
   let external: ExternalOption = ['dns', 'fs', 'path', 'url'].concat(
 		options.entries.filter(e => e !== entry),
   );
-  
+
   if (options.target === 'node') {
 		external = external.concat(builtinModules);
   }
-  
+
   if (options.external === 'none') {
     // bundle everything (external=[])
   } else if (options.external) {
@@ -99,7 +99,7 @@ function createConfig(
 			.concat(peerDeps)
 			.concat(Object.keys(pkg.dependencies || {}));
   }
-  
+
   const externalPredicate = new RegExp(
     `^(${external.map(escapeStringExternals).join('|')})($|/)`,
   );
@@ -126,7 +126,7 @@ function createConfig(
   // ------
   const moduleAliases = isString(options.alias) ? parseAliasArgument(options.alias) : [];
   const aliasIds = moduleAliases.map(alias => alias.find).filter(Boolean);
-  
+
   // ------
   let nameCache: NameCache = {};
   const bareNameCache = nameCache;
@@ -189,15 +189,15 @@ function createConfig(
     treeshake: {
       propertyReadSideEffects: false,
     },
-    plugins: getPlugins({ 
-      ...options, 
-      format, 
+    plugins: getPlugins({
+      ...options,
+      format,
       defines,
       entry,
       nameCache,
       writeMeta,
       minifyOptions,
-      moduleAliases, 
+      moduleAliases,
     })
   };
 
@@ -208,7 +208,7 @@ function createConfig(
 	if (options.multipleEntries) {
 		outputAliases['.'] = './' + basename(options.output);
   }
-  
+
   let globals = external.reduce((globals, name) => {
 		// Use raw value for CLI-provided RegExp externals:
 		// @ts-ignore
@@ -223,7 +223,7 @@ function createConfig(
 	if (options.globals && options.globals !== 'none') {
 		globals = Object.assign(globals, parseMappingArgument(options.globals));
   }
-  
+
   const absMain = resolve(options.cwd, getMain({ options, entry, format }));
 	const outputDir = dirname(absMain);
 	const outputEntryFileName = basename(absMain);

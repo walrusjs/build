@@ -1,5 +1,4 @@
-import { two } from './two';
+const a = 1;
+const b = 2;
 
-export default async function(...args) {
-	return [await two(...args), await two(...args)];
-}
+console.log(b);

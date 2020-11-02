@@ -1,2 +1,4 @@
-import { DEBUG } from './constants';
-console.log('DEBUG should be true: ', DEBUG);
+const a = 1;
+const b = 2;
+
+console.log(b);
