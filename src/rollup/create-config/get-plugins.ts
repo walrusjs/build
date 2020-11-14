@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import { Plugin } from 'rollup';
 import autoprefixer from 'autoprefixer';
+import cssnano from 'cssnano';
 import url from '@rollup/plugin-url';
 import json from '@rollup/plugin-json';
 import babel from '@rollup/plugin-babel';
@@ -19,7 +20,16 @@ interface GetPluginsOption extends CreateRollupConfigOptions {
 }
 
 function getPlugins(opts: GetPluginsOption) {
-  const { cwd, useTypescript, format, target, disableTypeCheck } = opts;
+  const {
+    cwd,
+    useTypescript,
+    format,
+    target,
+    disableTypeCheck
+  } = opts;
+
+  const moduleAlias = opts.alias ?? [];
+
   const DEFAULT_ALIAS = [
     {
       find: '@',
@@ -40,7 +50,11 @@ function getPlugins(opts: GetPluginsOption) {
       postcss({
         plugins: [
           autoprefixer(),
-        ],
+          opts.compress === true &&
+            cssnano({
+              preset: 'default',
+            }),
+        ].filter(Boolean),
         autoModules: shouldCssModules(opts),
         modules: cssModulesConfig(opts),
         // only write out CSS for the first bundle (avoids pointless extra files):
@@ -56,6 +70,7 @@ function getPlugins(opts: GetPluginsOption) {
       alias({
         entries: [
           ...DEFAULT_ALIAS,
+          ...moduleAlias
         ]
       }),
       nodeResolve({
@@ -74,7 +89,13 @@ function getPlugins(opts: GetPluginsOption) {
           typescript: require('typescript'),
           cacheRoot: `./node_modules/.cache/.rts2_cache_${format}`,
           tsconfig: opts.tsconfig,
-          check: !disableTypeCheck
+          check: !disableTypeCheck,
+          tsconfigOverride: {
+            compilerOptions: {
+              module: 'ESNext',
+              target: 'esnext',
+            },
+          }
         }),
       babel({
         babelHelpers: 'bundled',

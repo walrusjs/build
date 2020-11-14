@@ -14,7 +14,7 @@ interface CreateRollupConfigOpts {
 const createBabelConfig = (opts: CreateRollupConfigOpts = {}) => {
   const { useTypescript, target, nodeVersion, format } = opts;
   let isBrowser = target === 'browser';
-  const targets = isBrowser ? { browsers: ['last 2 versions', 'IE 10'] } : { node: nodeVersion || 6 };
+  const targets = isBrowser ? { browsers: ['last 2 versions', 'IE 10'] } : { node: nodeVersion || 8 };
 
   const presets: PluginItem[] = [
     useTypescript && [require.resolve('@babel/preset-typescript')],

@@ -1,4 +1,5 @@
-import { ModuleFormat } from 'rollup';
+import { ModuleFormat, InputOptions } from 'rollup';
+import { Alias } from '@rollup/plugin-alias';
 
 export type Target = 'node' | 'browser';
 
@@ -19,7 +20,7 @@ export interface CssModules {
   [key: string]: any;
 }
 
-export interface Config {
+export interface InputConfig {
   /**
    * 指定编译的目录
    */
@@ -48,8 +49,17 @@ export interface Config {
    * @default false
    */
   cssModules?: boolean | CssModules;
+  /**
+   * 是否开始压缩
+   * @default false
+   */
+  compress?: boolean;
+  /**
+   * 通配符配置, 默认`@`指向项目根目录的src目录
+   */
+  alias?: Alias[]
 }
 
-export interface InputConfig {
+export interface Config extends InputConfig  {
 
 }

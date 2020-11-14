@@ -8,7 +8,15 @@ describe('rollup build', () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'alias');
 
-    await build({ cwd });
+    await build({
+      cwd,
+      alias: [
+        {
+          find: './constants',
+          replacement: './constants-debug'
+        }
+      ]
+    });
 
     expect('Mark').toEqual('Mark');
   });
