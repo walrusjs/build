@@ -9,6 +9,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2';
+import lessNpmImport from 'less-plugin-npm-import';
 import { createBabelConfig } from '@/babel';
 import { shouldCssModules, cssModulesConfig } from '@/utils/css-modules';
 import { CreateRollupConfigOptions } from './';
@@ -44,7 +45,13 @@ function getPlugins(opts: GetPluginsOption) {
         modules: cssModulesConfig(opts),
         // only write out CSS for the first bundle (avoids pointless extra files):
         inject: false,
-        extract: true
+        extract: true,
+        use: {
+          less: {
+            plugins: [new lessNpmImport({ prefix: '~' })],
+            javascriptEnabled: true
+          }
+        } as { [key in 'sass' | 'stylus' | 'less']: any },
       }),
       alias({
         entries: [

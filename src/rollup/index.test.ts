@@ -58,6 +58,15 @@ describe('rollup build', () => {
     expect('Mark').toEqual('Mark');
   });
 
+  it('basic-less', async () => {
+    expect.assertions(1);
+    const cwd = join(fixtures, 'basic-less');
+
+    await build({ cwd });
+
+    expect('Mark').toEqual('Mark');
+  });
+
   it('basic-node-internals', async () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'basic-node-internals');
