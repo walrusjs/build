@@ -85,6 +85,24 @@ describe('rollup build', () => {
     expect('Mark').toEqual('Mark');
   });
 
+  it('css-modules-false', async () => {
+    expect.assertions(1);
+    const cwd = join(fixtures, 'css-modules-false');
+
+    await build({ cwd, cssModules: false });
+
+    expect('Mark').toEqual('Mark');
+  });
+
+  it('css-modules-true', async () => {
+    expect.assertions(1);
+    const cwd = join(fixtures, 'css-modules-true');
+
+    await build({ cwd, cssModules: true });
+
+    expect('Mark').toEqual('Mark');
+  });
+
   it('ts-declaration', async () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'ts-declaration');

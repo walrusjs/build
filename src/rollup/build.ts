@@ -19,7 +19,8 @@ const resolve = function(dir: string, filePath: string) {
 async function build(opts: Config) {
   const {
     cwd,
-    target = 'browser'
+    target = 'browser',
+    cssModules = false
   } = opts;
 
   const tsconfig = opts.tsconfig || join(cwd, 'tsconfig.json')
@@ -35,7 +36,8 @@ async function build(opts: Config) {
         ...opts,
         target,
         format: item,
-        tsconfig
+        tsconfig,
+        cssModules
       });
 
       steps.push({

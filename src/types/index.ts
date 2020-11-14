@@ -6,6 +6,19 @@ export type Format = ModuleFormat;
 
 export type NodeEnv = 'development' | 'production' | 'test';
 
+export type LocalsConventionStr = 'camelCase' | 'camelCaseOnly' | 'dashes' | 'dashesOnly';
+export type LocalsConventionFun = (originalClassName: string, generatedClassName: string, inputFile: string) => LocalsConventionStr;;
+
+// https://github.com/css-modules/postcss-modules
+export interface CssModules {
+  scopeBehaviour?: 'global' | 'local';
+  generateScopedName: string;
+  exportGlobals: boolean;
+  root: string;
+  localsConvention: LocalsConventionStr | LocalsConventionFun;
+  [key: string]: any;
+}
+
 export interface Config {
   /**
    * 指定编译的目录
@@ -30,4 +43,13 @@ export interface Config {
    * 指定tsconfig.json文件的位置，默认取
    */
   tsconfig?: string;
+  /**
+   * css modules 配置
+   * @default false
+   */
+  cssModules?: boolean | CssModules;
+}
+
+export interface InputConfig {
+
 }
