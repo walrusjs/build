@@ -67,6 +67,15 @@ describe('rollup build', () => {
     expect('Mark').toEqual('Mark');
   });
 
+  it('basic-ts', async () => {
+    expect.assertions(1);
+    const cwd = join(fixtures, 'basic-ts');
+
+    await build({ cwd });
+
+    expect('Mark').toEqual('Mark');
+  });
+
   it('ts-declaration', async () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'ts-declaration');
@@ -75,5 +84,4 @@ describe('rollup build', () => {
 
     expect('Mark').toEqual('Mark');
   });
-
 });
