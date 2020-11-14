@@ -11,6 +11,7 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2';
 import lessNpmImport from 'less-plugin-npm-import';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import { createBabelConfig } from '@/babel';
 import { shouldCssModules, cssModulesConfig } from '@/utils/css-modules';
 import { CreateRollupConfigOptions } from './';
@@ -19,7 +20,7 @@ interface GetPluginsOption extends CreateRollupConfigOptions {
   useTypescript: boolean;
 }
 
-function getPlugins(opts: GetPluginsOption) {
+function getPlugins(opts: GetPluginsOption, writeMeta?: boolean) {
   const {
     cwd,
     useTypescript,
@@ -46,6 +47,7 @@ function getPlugins(opts: GetPluginsOption) {
 
   const plugins: Plugin[] = []
     .concat(
+      peerDepsExternal(),
       url(),
       postcss({
         plugins: [
