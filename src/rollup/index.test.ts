@@ -128,4 +128,31 @@ describe('rollup build', () => {
 
     expect('Mark').toEqual('Mark');
   });
+
+  it('ts-jsx', async () => {
+    expect.assertions(1);
+    const cwd = join(fixtures, 'ts-jsx');
+
+    await build({ cwd });
+
+    expect('Mark').toEqual('Mark');
+  });
+
+  it('ts-mixed-exports', async () => {
+    expect.assertions(1);
+    const cwd = join(fixtures, 'ts-mixed-exports');
+
+    await build({ cwd });
+
+    expect('Mark').toEqual('Mark');
+  });
+
+  it('ts-module', async () => {
+    expect.assertions(1);
+    const cwd = join(fixtures, 'ts-module');
+
+    await build({ cwd });
+
+    expect('Mark').toEqual('Mark');
+  });
 });
