@@ -8,7 +8,7 @@ describe('rollup build', () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'alias');
 
-    await build(cwd);
+    await build({ cwd });
 
     expect('Mark').toEqual('Mark');
   });
@@ -17,7 +17,7 @@ describe('rollup build', () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'alias-external');
 
-    await build(cwd);
+    await build({ cwd });
 
     expect('Mark').toEqual('Mark');
   });
@@ -26,7 +26,16 @@ describe('rollup build', () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'async-iife-ts');
 
-    await build(cwd);
+    await build({ cwd });
+
+    expect('Mark').toEqual('Mark');
+  });
+
+  it('async-ts', async () => {
+    expect.assertions(1);
+    const cwd = join(fixtures, 'async-ts');
+
+    await build({ cwd });
 
     expect('Mark').toEqual('Mark');
   });
@@ -35,7 +44,7 @@ describe('rollup build', () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'basic');
 
-    await build(cwd);
+    await build({ cwd });
 
     expect('Mark').toEqual('Mark');
   });
@@ -44,7 +53,7 @@ describe('rollup build', () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'basic-css');
 
-    await build(cwd);
+    await build({ cwd });
 
     expect('Mark').toEqual('Mark');
   });
@@ -53,7 +62,7 @@ describe('rollup build', () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'ts-declaration');
 
-    await build(cwd);
+    await build({ cwd });
 
     expect('Mark').toEqual('Mark');
   });

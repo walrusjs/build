@@ -2,11 +2,12 @@ import { InputOptions } from 'rollup';
 import { extname } from 'path';
 import getPlugins from './get-plugins';
 import { getExistFile } from '../../utils';
-import { Format } from '../../types';
+import { Format, Target } from '@/types';
 
 interface Options {
   cwd: string;
   format?: Format;
+  target?: Target;
 }
 
 interface CreateRollupConfigResult {
@@ -40,7 +41,11 @@ const createRollupConfig = (opts: Options): CreateRollupConfigResult => {
   return {
     inputOptions: {
       input: entry,
-      plugins
+      plugins,
+      // 暂时忽略所有警告
+      onwarn(warning) {
+        if (warning.code === 'THIS_IS_UNDEFINED') return;
+      }
     }
   }
 }

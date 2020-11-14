@@ -3,6 +3,7 @@ import rimraf from 'rimraf';
 import { series } from 'asyncro';
 import { rollup, InputOptions, OutputOptions, ModuleFormat } from 'rollup';
 import createConfig from './create-config';
+import { Config } from '@/types';
 
 type Step = {
   inputOptions: InputOptions;
@@ -15,7 +16,8 @@ const resolve = function(dir: string, filePath: string) {
   return path.join(dir, filePath)
 }
 
-async function build(cwd: string) {
+async function build(opts: Config & { cwd: string }) {
+  const { cwd, target } = opts;
   // 删除构建目录
   rimraf.sync(resolve(cwd, `dist`));
 
@@ -23,7 +25,7 @@ async function build(cwd: string) {
     const steps: Step[] = [];
 
     formats.forEach(item => {
-      const { inputOptions } = createConfig({ cwd, format: item });
+      const { inputOptions } = createConfig({ cwd, format: item, });
 
       steps.push({
         inputOptions,
