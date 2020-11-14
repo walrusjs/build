@@ -1,5 +1,5 @@
 import { resolve, join } from 'path';
-import build from './';
+import { build } from './';
 
 describe('rollup build', () => {
   const fixtures = resolve(__dirname, '../../fixtures');
@@ -70,6 +70,15 @@ describe('rollup build', () => {
   it('basic-ts', async () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'basic-ts');
+
+    await build({ cwd });
+
+    expect('Mark').toEqual('Mark');
+  });
+
+  it('basic-tsx', async () => {
+    expect.assertions(1);
+    const cwd = join(fixtures, 'basic-tsx');
 
     await build({ cwd });
 

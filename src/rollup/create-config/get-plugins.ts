@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import { resolve, join } from 'path';
 import { Plugin } from 'rollup';
 import autoprefixer from 'autoprefixer';
 import url from '@rollup/plugin-url';
@@ -9,7 +9,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2';
-import { Format, Target } from '../../types';
+import { createBabelConfig } from '@/babel';
+import { Format, Target } from '@/types';
 
 interface GetPluginsOption {
   cwd: string;
@@ -19,13 +20,20 @@ interface GetPluginsOption {
 }
 
 function getPlugins(opts: GetPluginsOption) {
-  const { cwd, useTypescript, format } = opts;
+  const { cwd, useTypescript, format, target } = opts;
   const DEFAULT_ALIAS = [
     {
       find: '@',
       replacement: resolve(cwd, 'src')
     }
   ];
+
+  // 获取babel配置
+  const { presets } = createBabelConfig({
+    target,
+    format,
+    useTypescript
+  });
 
   const plugins: Plugin[] = []
     .concat(
@@ -55,10 +63,11 @@ function getPlugins(opts: GetPluginsOption) {
         typescript({
           typescript: require('typescript'),
           cacheRoot: `./node_modules/.cache/.rts2_cache_${format}`,
+          tsconfig: join(cwd, 'tsconfig.json'),
         }),
       babel({
         babelHelpers: 'bundled',
-        presets: ['@babel/preset-env']
+        presets
       }),
     )
     .filter(Boolean);

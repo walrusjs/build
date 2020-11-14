@@ -16,6 +16,10 @@ export interface Config {
    * 配置是 node 库还是 browser 库，只作用于语法层
    * @default browser
    */
-  target?: Target
+  target?: Target;
+  /**
+   * 禁用类型检查
+   */
+  disableTypeCheck?: boolean;
 
 }

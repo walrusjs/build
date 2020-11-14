@@ -42,6 +42,9 @@ const createRollupConfig = (opts: Options): CreateRollupConfigResult => {
     inputOptions: {
       input: entry,
       plugins,
+      treeshake: {
+				propertyReadSideEffects: false,
+			},
       // 暂时忽略所有警告
       onwarn(warning) {
         if (warning.code === 'THIS_IS_UNDEFINED') return;
