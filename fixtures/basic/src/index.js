@@ -1,4 +1,5 @@
-const a = 1;
-const b = 2;
+const arr1 = [1,2,3];
+const arr2 = [4,5,6];
 
-console.log(b);
+const result = [...arr1, ...arr2];
+console.log(result);

@@ -1,5 +1,5 @@
-import { promises } from 'fs';
-import { resolve, dirname, basename } from 'path';
+import { promises, existsSync } from 'fs';
+import { resolve, dirname, basename, join } from 'path';
 import { map } from 'asyncro';
 import camelCase from 'camelcase';
 import glob from 'tiny-glob/sync';
@@ -170,4 +170,27 @@ export function replaceName(filename: string, name: string) {
 		dirname(filename),
 		name + basename(filename).replace(/^[^.]+/, ''),
 	);
+}
+
+/**
+ * 按顺序获取文件
+ * @param cwd 目录
+ * @param files 获取的文件顺序
+ * @param returnRelative
+ */
+export function getExistFile({
+  cwd,
+  files,
+  returnRelative
+}: {
+  cwd: string;
+  files: string[];
+  returnRelative?: boolean;
+}) {
+  for (const file of files) {
+    const absFilePath = join(cwd, file);
+    if (existsSync(absFilePath)) {
+      return returnRelative ? file : absFilePath;
+    }
+  }
 }
