@@ -23,7 +23,7 @@ export const DEFAULT_INPUT_FILE = [
 
 
 const createRollupConfig = (opts: Options): CreateRollupConfigResult => {
-  const cwd = opts.cwd;
+  const { cwd, target } = opts;
 
   // 默认输入文件
   const entry = getExistFile({

@@ -17,7 +17,7 @@ const resolve = function(dir: string, filePath: string) {
 }
 
 async function build(opts: Config & { cwd: string }) {
-  const { cwd, target } = opts;
+  const { cwd, target = 'browser' } = opts;
   // 删除构建目录
   rimraf.sync(resolve(cwd, `dist`));
 
@@ -25,7 +25,11 @@ async function build(opts: Config & { cwd: string }) {
     const steps: Step[] = [];
 
     formats.forEach(item => {
-      const { inputOptions } = createConfig({ cwd, format: item, });
+      const { inputOptions } = createConfig({
+        cwd,
+        target,
+        format: item
+      });
 
       steps.push({
         inputOptions,
