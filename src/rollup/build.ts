@@ -1,4 +1,4 @@
-import path from 'path';
+import { join } from 'path';
 import rimraf from 'rimraf';
 import { series } from 'asyncro';
 import { rollup, InputOptions, OutputOptions, ModuleFormat } from 'rollup';
@@ -13,11 +13,17 @@ type Step = {
 const formats: ModuleFormat[] = ['es', 'commonjs', 'umd'];
 
 const resolve = function(dir: string, filePath: string) {
-  return path.join(dir, filePath)
+  return join(dir, filePath)
 }
 
-async function build(opts: Config & { cwd: string }) {
-  const { cwd, target = 'browser' } = opts;
+async function build(opts: Config) {
+  const {
+    cwd,
+    target = 'browser'
+  } = opts;
+
+  const tsconfig = opts.tsconfig || join(cwd, 'tsconfig.json')
+
   // 删除构建目录
   rimraf.sync(resolve(cwd, `dist`));
 
@@ -26,9 +32,10 @@ async function build(opts: Config & { cwd: string }) {
 
     formats.forEach(item => {
       const { inputOptions } = createConfig({
-        cwd,
+        ...opts,
         target,
-        format: item
+        format: item,
+        tsconfig
       });
 
       steps.push({

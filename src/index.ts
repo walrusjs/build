@@ -1,3 +1,1 @@
-export function foo() {
-	return 42;
-}
+export { build as rollupBuild } from '@/rollup';

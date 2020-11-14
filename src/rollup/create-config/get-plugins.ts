@@ -1,4 +1,4 @@
-import { resolve, join } from 'path';
+import { resolve } from 'path';
 import { Plugin } from 'rollup';
 import autoprefixer from 'autoprefixer';
 import url from '@rollup/plugin-url';
@@ -10,17 +10,14 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2';
 import { createBabelConfig } from '@/babel';
-import { Format, Target } from '@/types';
+import { CreateRollupConfigOptions } from './';
 
-interface GetPluginsOption {
-  cwd: string;
-  target?: Target;
+interface GetPluginsOption extends CreateRollupConfigOptions {
   useTypescript: boolean;
-  format?: Format;
 }
 
 function getPlugins(opts: GetPluginsOption) {
-  const { cwd, useTypescript, format, target } = opts;
+  const { cwd, useTypescript, format, target, disableTypeCheck } = opts;
   const DEFAULT_ALIAS = [
     {
       find: '@',
@@ -63,7 +60,8 @@ function getPlugins(opts: GetPluginsOption) {
         typescript({
           typescript: require('typescript'),
           cacheRoot: `./node_modules/.cache/.rts2_cache_${format}`,
-          tsconfig: join(cwd, 'tsconfig.json'),
+          tsconfig: opts.tsconfig,
+          check: !disableTypeCheck
         }),
       babel({
         babelHelpers: 'bundled',

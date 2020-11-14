@@ -1,13 +1,11 @@
 import { InputOptions } from 'rollup';
 import { extname } from 'path';
 import getPlugins from './get-plugins';
-import { getExistFile } from '../../utils';
-import { Format, Target } from '@/types';
+import { getExistFile } from '@/utils';
+import { Format, Config } from '@/types';
 
-interface Options {
-  cwd: string;
+export interface CreateRollupConfigOptions extends Config {
   format?: Format;
-  target?: Target;
 }
 
 interface CreateRollupConfigResult {
@@ -22,7 +20,7 @@ export const DEFAULT_INPUT_FILE = [
 ];
 
 
-const createRollupConfig = (opts: Options): CreateRollupConfigResult => {
+const createRollupConfig = (opts: CreateRollupConfigOptions): CreateRollupConfigResult => {
   const { cwd, target } = opts;
 
   // 默认输入文件
