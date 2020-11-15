@@ -8,15 +8,7 @@ describe('rollup build', () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'alias');
 
-    await build({
-      cwd,
-      alias: [
-        {
-          find: './constants',
-          replacement: './constants-debug'
-        }
-      ]
-    });
+    await build({ cwd });
 
     expect('Mark').toEqual('Mark');
   });
@@ -120,18 +112,9 @@ describe('rollup build', () => {
     expect('Mark').toEqual('Mark');
   });
 
-  it('css-modules-false', async () => {
+  it('css-modules', async () => {
     expect.assertions(1);
-    const cwd = join(fixtures, 'css-modules-false');
-
-    await build({ cwd, cssModules: false });
-
-    expect('Mark').toEqual('Mark');
-  });
-
-  it('css-modules-true', async () => {
-    expect.assertions(1);
-    const cwd = join(fixtures, 'css-modules-true');
+    const cwd = join(fixtures, 'css-modules');
 
     await build({ cwd, cssModules: true });
 

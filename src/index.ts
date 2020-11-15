@@ -1,27 +1,23 @@
 import rimraf from 'rimraf';
 import { resolve, join } from 'path';
-import { Config } from '@/types';
+import { merge } from 'lodash';
 import { build as rollupBuild } from '@/rollup';
+import { Config } from '@/types';
+import { getExistFile, isFile } from '@/utils';
+import { DEFAULT_CONFIG_FILE, DEFAULT_INPUT_FILE } from '@/config';
 import configLoader from '@/utils/config-loader';
 
-// 配置文件获取顺序
-export const DEFAULT_CONFIG_FILE = [
-  'wBuild.config.ts',
-  'wBuild.config.js',
-  '.wBuildrc.ts',
-  '.wBuildrc.js'
-];
+const DEFAULT_CWD = process.cwd();
 
-async function build(options: Config) {
-  const {
-    cwd,
-    target = 'browser',
-    cssModules = false
-  } = options;
-  const tsconfig = options.tsconfig || join(cwd, 'tsconfig.json')
+const DEFAULT_CONDIG: Config = {
+  cwd: DEFAULT_CWD,
+  tsconfig: join(DEFAULT_CWD, 'tsconfig.json'),
+  target: 'browser',
+  cssModules: false,
+};
 
-  // 删除构建目录
-  rimraf.sync(resolve(cwd, `dist`));
+function getBundleConfig(argsConfig?: Config) {
+  const { cwd = DEFAULT_CWD } = argsConfig;
 
   const userConfig = configLoader.loadSync({
     files: DEFAULT_CONFIG_FILE,
@@ -29,19 +25,37 @@ async function build(options: Config) {
     packageKey: 'wBuild'
   });
 
-  // 获取配置优先级 命令行 > 配置文件 > 默认
+  const latestConfig: Config = merge({}, DEFAULT_CONDIG, userConfig.data || {}, argsConfig);
 
-  // 配置文件存在
-  if (userConfig.path) {
-    console.log(userConfig.data);
+  latestConfig.entry = latestConfig.entry ?? getExistFile({
+    cwd: latestConfig.cwd,
+    files: DEFAULT_INPUT_FILE
+  });
+
+  latestConfig.target = latestConfig.target ?? 'browser';
+  latestConfig.cssModules = latestConfig.cssModules ?? false;
+
+  if (latestConfig.cwd !== DEFAULT_CWD) {
+    latestConfig.tsconfig = join(latestConfig.cwd, 'tsconfig.json');
   }
 
-  await rollupBuild({
-    ...options,
-    target,
-    cssModules,
-    tsconfig
-  })
+  if (!isFile(latestConfig.tsconfig)) {
+    delete latestConfig.tsconfig;
+  }
+
+  return latestConfig;
+}
+
+async function build(options: Config) {
+  const { cwd = DEFAULT_CWD } = options;
+
+  // 获取配置优先级 命令行 > 配置文件 > 默认
+  const latestConfig = getBundleConfig(options);
+
+  // 删除构建目录
+  rimraf.sync(resolve(cwd, `dist`));
+
+  await rollupBuild(latestConfig)
 }
 
 export default build;
