@@ -67,6 +67,15 @@ describe('rollup build', () => {
     expect('Mark').toEqual('Mark');
   });
 
+  it('basic-dashed-external', async () => {
+    expect.assertions(1);
+    const cwd = join(fixtures, 'basic-dashed-external');
+
+    await build({ cwd });
+
+    expect('Mark').toEqual('Mark');
+  });
+
   it('basic-json', async () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'basic-json');
