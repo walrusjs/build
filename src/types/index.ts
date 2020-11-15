@@ -1,4 +1,4 @@
-import { ModuleFormat, InputOptions } from 'rollup';
+import { ModuleFormat } from 'rollup';
 import { Alias } from '@rollup/plugin-alias';
 
 export type Target = 'node' | 'browser';
@@ -30,6 +30,11 @@ export interface InputConfig {
    * 会依次找 src/index.tsx, src/index.ts, src/index.jsx, src/index.js，如果存在，则会作为默认的 entry。
    */
   entry?: string | string[];
+  /**
+   * 指定打包代码格式
+   * @default `['esm', 'cjs']`
+   */
+  formats?: ModuleFormat[];
   /**
    * 配置是 node 库还是 browser 库，只作用于语法层
    * @default browser

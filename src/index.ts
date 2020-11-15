@@ -1,22 +1,38 @@
 import rimraf from 'rimraf';
 import { resolve, join } from 'path';
+import { map } from 'asyncro';
 import { merge } from 'lodash';
 import { build as rollupBuild } from '@/rollup';
 import { Config } from '@/types';
-import { getExistFile, isFile } from '@/utils';
+import { getExistFile, isFile, isDir } from '@/utils';
 import { DEFAULT_CONFIG_FILE, DEFAULT_INPUT_FILE } from '@/config';
 import configLoader from '@/utils/config-loader';
+import resolveArgs, { Args } from '@/utils/resolve-args';
 
 const DEFAULT_CWD = process.cwd();
 
 const DEFAULT_CONDIG: Config = {
   cwd: DEFAULT_CWD,
-  tsconfig: join(DEFAULT_CWD, 'tsconfig.json'),
+  tsconfig: join(DEFAULT_CWD, './tsconfig.json'),
   target: 'browser',
   cssModules: false,
+  formats: ['esm', 'cjs']
 };
 
-function getBundleConfig(argsConfig?: Config) {
+async function getEntries({ input, cwd }) {
+	let entries = (
+		await map([].concat(input), async file => {
+			file = resolve(cwd, file);
+			if (await isDir(file)) {
+				file = resolve(file, 'index.js');
+			}
+			return file;
+		})
+	).filter((item, i, arr) => arr.indexOf(item) === i);
+	return entries;
+}
+
+async function getBundleConfig(argsConfig?: Config) {
   const { cwd = DEFAULT_CWD } = argsConfig;
 
   const userConfig = configLoader.loadSync({
@@ -25,12 +41,14 @@ function getBundleConfig(argsConfig?: Config) {
     packageKey: 'wBuild'
   });
 
-  const latestConfig: Config = merge({}, DEFAULT_CONDIG, userConfig.data || {}, argsConfig);
+  const latestConfig: Config = merge({}, DEFAULT_CONDIG, argsConfig, userConfig.data || {});
 
-  latestConfig.entry = latestConfig.entry ?? getExistFile({
+  const defaultEntry = getExistFile({
     cwd: latestConfig.cwd,
     files: DEFAULT_INPUT_FILE
   });
+
+  latestConfig.entry = latestConfig.entry ?? [defaultEntry];
 
   latestConfig.target = latestConfig.target ?? 'browser';
   latestConfig.cssModules = latestConfig.cssModules ?? false;
@@ -40,22 +58,49 @@ function getBundleConfig(argsConfig?: Config) {
   }
 
   if (!isFile(latestConfig.tsconfig)) {
-    delete latestConfig.tsconfig;
+    latestConfig.tsconfig = undefined;
+  }
+
+  // 过滤掉不存在的文件
+  latestConfig.entry = await getEntries({
+    input: latestConfig.entry,
+    cwd: latestConfig.cwd
+  });
+
+  if (latestConfig.formats) {
+    latestConfig.formats = latestConfig.formats
+      .map(item => {
+        if (item === 'commonjs') {
+          return 'cjs'
+        }
+        if (item === 'es') {
+          return 'esm'
+        }
+        return item
+      });
   }
 
   return latestConfig;
 }
 
-async function build(options: Config) {
-  const { cwd = DEFAULT_CWD } = options;
+async function build(args: Args) {
+  const argsConfig = resolveArgs(args);
 
-  // 获取配置优先级 命令行 > 配置文件 > 默认
-  const latestConfig = getBundleConfig(options);
+  if (argsConfig.cwd === '.') {
+    argsConfig.cwd = DEFAULT_CWD;
+  }
+
+  // 获取配置优先级 配置文件 > 命令行 > 默认
+  const latestConfig = await getBundleConfig(argsConfig);
+
+  if (!latestConfig.entry?.length) {
+    return;
+  }
 
   // 删除构建目录
-  rimraf.sync(resolve(cwd, `dist`));
+  rimraf.sync(resolve(latestConfig.cwd, `dist`));
 
-  await rollupBuild(latestConfig)
+  await rollupBuild(latestConfig);
 }
 
 export default build;

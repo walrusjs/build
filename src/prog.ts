@@ -4,9 +4,7 @@ let { version } = require('../package.json');
 const toArray = val => (Array.isArray(val) ? val : val == null ? [] : [val]);
 
 export default handler => {
-	const ENABLE_MODERN = process.env.MICROBUNDLE_MODERN !== 'false';
-
-	const DEFAULT_FORMATS = ENABLE_MODERN ? 'modern,es,cjs,umd' : 'es,cjs,umd';
+	const DEFAULT_FORMATS = 'esm,cjs';
 
 	const cmd = type => (str, opts) => {
 		opts.watch = opts.watch || type === 'watch';
@@ -33,7 +31,7 @@ export default handler => {
 		.option('--entry, -i', 'Entry module(s)')
 		.option('--output, -o', 'Directory to place build files into')
 		.option(
-			'--format, -f',
+			'--formats, -f',
 			`Only build specified formats (any of ${DEFAULT_FORMATS} or iife)`,
 			DEFAULT_FORMATS,
 		)
@@ -43,7 +41,7 @@ export default handler => {
 			'Outputs files analog to package.json main entries',
 			true,
 		)
-		.option('--target', 'Specify your target environment (node or web)', 'web')
+		.option('--target', 'Specify your target environment (node or browser)', 'browser')
 		.option('--external', `Specify external dependencies, or 'none'`)
 		.option('--globals', `Specify globals dependencies, or 'none'`)
 		.example('microbundle --globals react=React,jquery=$')
