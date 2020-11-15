@@ -47,7 +47,9 @@ function getPlugins(opts: GetPluginsOption, writeMeta?: boolean) {
 
   const plugins: Plugin[] = []
     .concat(
-      peerDepsExternal(),
+      peerDepsExternal({
+        includeDependencies: true
+      }),
       url(),
       postcss({
         plugins: [
