@@ -1,8 +1,8 @@
 import { resolve, join } from 'path';
-import { build } from './';
+import build from './';
 
 describe('rollup build', () => {
-  const fixtures = resolve(__dirname, '../../fixtures');
+  const fixtures = resolve(__dirname, '../fixtures');
 
   it('alias', async () => {
     expect.assertions(1);
@@ -48,6 +48,15 @@ describe('rollup build', () => {
     expect('Mark').toEqual('Mark');
   });
 
+  it('basic-compress-false', async () => {
+    expect.assertions(1);
+    const cwd = join(fixtures, 'basic-compress-false');
+
+    await build({ cwd });
+
+    expect('Mark').toEqual('Mark');
+  });
+
   it('basic', async () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'basic');
@@ -60,6 +69,15 @@ describe('rollup build', () => {
   it('basic-css', async () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'basic-css');
+
+    await build({ cwd });
+
+    expect('Mark').toEqual('Mark');
+  });
+
+  it('basic-json', async () => {
+    expect.assertions(1);
+    const cwd = join(fixtures, 'basic-json');
 
     await build({ cwd });
 
