@@ -125,7 +125,16 @@ describe('rollup build', () => {
     expect.assertions(1);
     const cwd = join(fixtures, 'css-modules');
 
-    await build({ cwd, cssModules: true });
+    await build({ cwd });
+
+    expect('Mark').toEqual('Mark');
+  });
+
+  it('shebang', async () => {
+    expect.assertions(1);
+    const cwd = join(fixtures, 'shebang');
+
+    await build({ cwd });
 
     expect('Mark').toEqual('Mark');
   });

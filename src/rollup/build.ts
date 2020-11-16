@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { series } from 'asyncro';
-import { rollup, InputOptions, OutputOptions, ModuleFormat } from 'rollup';
+import { rollup, InputOptions, OutputOptions } from 'rollup';
 import createConfig from './create-config';
 import { Config } from '@/types';
 
@@ -31,7 +31,7 @@ async function build(opts: Config) {
         steps.push({
           inputOptions,
           outputOptions: {
-            file: resolve(opts.cwd, `dist/index-${formats[j]}.js`),
+            file: resolve(opts.cwd, `dist/$index${i}-${formats[j]}.js`),
             format: formats[j],
             name: formats[j] === 'umd' ? 'BasicCss' : undefined,
             exports: 'auto'

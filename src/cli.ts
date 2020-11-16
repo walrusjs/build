@@ -2,13 +2,11 @@
 
 import build from './index';
 import prog from './prog';
-// import { stdout } from './utils';
 import logError from '@/utils/log-error';
 
 const run = opts => {
 	build(opts)
-		.then(({  }) => {
-			// if (output != null) stdout(output);
+		.then(() => {
 			if (!opts.watch) process.exit(0);
 		})
 		.catch(err => {

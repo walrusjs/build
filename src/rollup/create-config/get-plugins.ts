@@ -12,6 +12,7 @@ import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2';
 import lessNpmImport from 'less-plugin-npm-import';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import shebang from '@walrus/rollup-plugin-shebang';
 import { createBabelConfig } from '@/babel';
 import { shouldCssModules, cssModulesConfig } from '@/utils/css-modules';
 import { CreateRollupConfigOptions } from './';
@@ -47,6 +48,7 @@ function getPlugins(opts: GetPluginsOption, writeMeta?: boolean) {
 
   const plugins: Plugin[] = []
     .concat(
+      shebang(),
       peerDepsExternal({
         includeDependencies: true
       }),
@@ -103,6 +105,7 @@ function getPlugins(opts: GetPluginsOption, writeMeta?: boolean) {
         }),
       babel({
         babelHelpers: 'bundled',
+        babelrc: false,
         presets
       }),
     )

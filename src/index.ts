@@ -25,10 +25,15 @@ async function getEntries({ input, cwd }) {
 			file = resolve(cwd, file);
 			if (await isDir(file)) {
 				file = resolve(file, 'index.js');
-			}
-			return file;
+      }
+      if (await isFile(file)) {
+        return file;
+      }
+      return undefined;
 		})
-	).filter((item, i, arr) => arr.indexOf(item) === i);
+  )
+  .filter((item, i, arr) => arr.indexOf(item) === i)
+  .filter(Boolean);
 	return entries;
 }
 
@@ -65,7 +70,7 @@ async function getBundleConfig(argsConfig?: Config) {
   latestConfig.entry = await getEntries({
     input: latestConfig.entry,
     cwd: latestConfig.cwd
-  });
+  }) as string[];
 
   if (latestConfig.formats) {
     latestConfig.formats = latestConfig.formats
