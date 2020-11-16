@@ -31,6 +31,10 @@ export interface InputConfig {
    */
   entry?: string | string[];
   /**
+   * 指定在 UMD 和 IIFE 中公开的名称
+   */
+  name?: string;
+  /**
    * 指定打包代码格式
    * @default `['esm', 'cjs']`
    */
@@ -62,9 +66,20 @@ export interface InputConfig {
   /**
    * 通配符配置, 默认`@`指向项目根目录的src目录
    */
-  alias?: Alias[]
+  alias?: Alias[];
+  /**
+   * 是否生成 source map
+   * @default true
+   */
+  sourcemap?: boolean;
 }
 
 export interface Config extends InputConfig  {
-
+  entries?: string[];
+  input?: string[];
+  output?: string;
+  multipleEntries?: boolean;
+  pkg?: {
+    [key: string]: any
+  }
 }

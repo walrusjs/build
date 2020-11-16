@@ -1,12 +1,13 @@
 import rimraf from 'rimraf';
 import { resolve, join } from 'path';
-import { map } from 'asyncro';
-import { merge } from 'lodash';
+import { merge, isString } from 'lodash';
 import { build as rollupBuild } from '@/rollup';
 import { Config } from '@/types';
-import { getExistFile, isFile, isDir } from '@/utils';
-import { DEFAULT_CONFIG_FILE, DEFAULT_INPUT_FILE } from '@/config';
+import { isFile } from '@/utils';
+import { DEFAULT_CONFIG_FILE } from '@/config';
 import configLoader from '@/utils/config-loader';
+import { getInput, getOutput, getEntries } from '@/utils/resolve-options';
+import { getConfigFromPkgJson, getName } from '@/utils/package-info';
 import resolveArgs, { Args } from '@/utils/resolve-args';
 
 const DEFAULT_CWD = process.cwd();
@@ -19,93 +20,100 @@ const DEFAULT_CONDIG: Config = {
   formats: ['esm', 'cjs']
 };
 
-async function getEntries({ input, cwd }) {
-	let entries = (
-		await map([].concat(input), async file => {
-			file = resolve(cwd, file);
-			if (await isDir(file)) {
-				file = resolve(file, 'index.js');
-      }
-      if (await isFile(file)) {
-        return file;
-      }
-      return undefined;
-		})
-  )
-  .filter((item, i, arr) => arr.indexOf(item) === i)
-  .filter(Boolean);
-	return entries;
-}
+async function build(inputOptions: Args) {
+  let options = { ...inputOptions };
+  const argsConfig = resolveArgs(options);
 
-async function getBundleConfig(argsConfig?: Config) {
-  const { cwd = DEFAULT_CWD } = argsConfig;
+  options.cwd = resolve(process.cwd(), inputOptions.cwd);
+	const cwd = options.cwd;
 
+  /**
+   * 读取配置文件
+   */
   const userConfig = configLoader.loadSync({
     files: DEFAULT_CONFIG_FILE,
     cwd,
     packageKey: 'wBuild'
   });
 
-  const latestConfig: Config = merge({}, DEFAULT_CONDIG, argsConfig, userConfig.data || {});
+  // 获取配置优先级 配置文件 > 命令行 > 默认
+  const config: Config = merge({}, DEFAULT_CONDIG, argsConfig, userConfig.data || {});
 
-  const defaultEntry = getExistFile({
-    cwd: latestConfig.cwd,
-    files: DEFAULT_INPUT_FILE
+  config.cwd = resolve(process.cwd(), config.cwd);
+
+  const { hasPackageJson, pkg } = await getConfigFromPkgJson(cwd);
+  config.pkg = pkg;
+
+  if (config.entry) {
+    config.entries = Array.isArray(config.entry)
+      ? config.entry
+      : (isString(config.entry) && config.entry ? [config.entry] : [])
+  }
+
+  const { finalName, pkgName } = getName({
+		name: config.name,
+		pkgName: config.pkg.name,
+		amdName: config.pkg.amdName,
+		hasPackageJson,
+		cwd,
   });
 
-  latestConfig.entry = latestConfig.entry ?? [defaultEntry];
+  config.name = finalName;
+	config.pkg.name = pkgName;
 
-  latestConfig.target = latestConfig.target ?? 'browser';
-  latestConfig.cssModules = latestConfig.cssModules ?? false;
+  config.input = await getInput({
+    cwd,
+    entries: config.entries,
+    source: config.pkg.source,
+  });
 
-  if (latestConfig.cwd !== DEFAULT_CWD) {
-    latestConfig.tsconfig = join(latestConfig.cwd, 'tsconfig.json');
+  config.output = await getOutput({
+		cwd,
+		output: config.output,
+		pkgMain: config.pkg.main,
+		pkgName: config.pkg.name,
+	});
+
+  config.entries = await getEntries({
+		cwd,
+		input: config.input,
+  });
+
+  config.multipleEntries = config.entries.length > 1;
+
+  config.formats = Array.from(
+    new Set(config.formats.map(f => {
+      if (f === 'esm') {
+        return 'es'
+      }
+      if (f === 'commonjs') {
+        return 'cjs'
+      }
+      return f
+    }))
+  )
+  .sort((a, b) => (a === 'cjs' ? -1 : a > b ? 1 : 0));
+
+  if (config.cwd !== DEFAULT_CWD) {
+    config.tsconfig = join(config.cwd, 'tsconfig.json');
   }
 
-  if (!isFile(latestConfig.tsconfig)) {
-    latestConfig.tsconfig = undefined;
+  if (! await isFile(config.tsconfig)) {
+    config.tsconfig = undefined;
   }
 
-  // 过滤掉不存在的文件
-  latestConfig.entry = await getEntries({
-    input: latestConfig.entry,
-    cwd: latestConfig.cwd
-  }) as string[];
-
-  if (latestConfig.formats) {
-    latestConfig.formats = latestConfig.formats
-      .map(item => {
-        if (item === 'commonjs') {
-          return 'cjs'
-        }
-        if (item === 'es') {
-          return 'esm'
-        }
-        return item
-      });
+  if (config.sourcemap !== false) {
+		config.sourcemap = true;
   }
 
-  return latestConfig;
-}
+  console.log(config);
 
-async function build(args: Args) {
-  const argsConfig = resolveArgs(args);
+  if (config.entries?.length) {
+    // 删除构建目录
+    rimraf.sync(resolve(cwd, `dist`));
 
-  if (argsConfig.cwd === '.') {
-    argsConfig.cwd = DEFAULT_CWD;
+    await rollupBuild(config);
   }
-
-  // 获取配置优先级 配置文件 > 命令行 > 默认
-  const latestConfig = await getBundleConfig(argsConfig);
-
-  if (!latestConfig.entry?.length) {
-    return;
-  }
-
-  // 删除构建目录
-  rimraf.sync(resolve(latestConfig.cwd, `dist`));
-
-  await rollupBuild(latestConfig);
 }
 
 export default build;

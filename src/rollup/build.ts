@@ -1,4 +1,3 @@
-import { join } from 'path';
 import { series } from 'asyncro';
 import { rollup, InputOptions, OutputOptions } from 'rollup';
 import createConfig from './create-config';
@@ -9,41 +8,30 @@ type Step = {
   outputOptions: OutputOptions;
 }
 
-const resolve = function(dir: string, filePath: string) {
-  return join(dir, filePath)
-}
+interface RollupBuildOptions extends Config {}
 
-async function build(opts: Config) {
-  const entry = opts.entry as string[];
-  const formats = opts.formats;
+async function build(options: RollupBuildOptions) {
+  const { entries, formats } = options;
 
-  function getSteps() {
-    const steps: Step[] = [];
+  const steps: Step[] = [];
 
-    for (let i = 0; i < entry.length; i++) {
-      for (let j = 0; j < formats.length; j++) {
-        const { inputOptions } = createConfig({
-          ...opts,
-          entry: entry[i],
-          format: formats[j]
-        });
+  for (let i = 0; i < entries.length; i++) {
+    for (let j = 0; j < formats.length; j++) {
+      const { inputOptions, outputOptions } = createConfig(
+        options,
+        entries[i],
+        formats[j],
+        i === 0 && j === 0,
+      );
 
-        steps.push({
-          inputOptions,
-          outputOptions: {
-            file: resolve(opts.cwd, `dist/$index${i}-${formats[j]}.js`),
-            format: formats[j],
-            name: formats[j] === 'umd' ? 'BasicCss' : undefined,
-            exports: 'auto'
-          }
-        });
-      }
+      steps.push({
+        inputOptions,
+        outputOptions
+      });
     }
-
-    return steps;
   }
 
-  const steps = getSteps();
+  console.log(steps);
 
   await series(
     steps.map(config => async () => {

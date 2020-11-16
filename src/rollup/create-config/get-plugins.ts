@@ -15,12 +15,18 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import shebang from '@walrus/rollup-plugin-shebang';
 import { createBabelConfig } from '@/babel';
 import { shouldCssModules, cssModulesConfig } from '@/utils/css-modules';
-import { CreateRollupConfigOptions } from './';
+import { Format, Config } from '@/types';
 
-interface GetPluginsOption extends CreateRollupConfigOptions {
+export interface GetPluginsOption extends Config {
+  format: Format;
   useTypescript: boolean;
 }
 
+/**
+ * 获取Rollup插件配置
+ * @param opts
+ * @param writeMeta
+ */
 function getPlugins(opts: GetPluginsOption, writeMeta?: boolean) {
   const {
     cwd,

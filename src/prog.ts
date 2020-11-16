@@ -36,17 +36,12 @@ export default handler => {
 			DEFAULT_FORMATS,
 		)
 		.option('--watch, -w', 'Rebuilds on any change', false)
-		.option(
-			'--pkg-main',
-			'Outputs files analog to package.json main entries',
-			true,
-		)
 		.option('--target', 'Specify your target environment (node or browser)', 'browser')
 		.option('--external', `Specify external dependencies, or 'none'`)
 		.option('--globals', `Specify globals dependencies, or 'none'`)
-		.example('microbundle --globals react=React,jquery=$')
+		.example('walrus-build --globals react=React,jquery=$')
 		.option('--define', 'Replace constants with hard-coded values')
-		.example('microbundle --define API_KEY=1234')
+		.example('walrus-build --define API_KEY=1234')
 		.option('--alias', `Map imports to different modules`)
 		.example('microbundle --alias react=preact')
 		.option('--compress', 'Compress output using Terser', null)
@@ -66,7 +61,7 @@ export default handler => {
 			'A custom JSX pragma like React.createElement (default: h)',
 		)
 		.option('--tsconfig', 'Specify the path to a custom tsconfig.json')
-		.example('microbundle build --tsconfig tsconfig.build.json');
+		.example('walrus-build build --tsconfig tsconfig.build.json');
 
 	prog
 		.command('build [...entries]', '', { default: true })
