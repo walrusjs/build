@@ -1,11 +1,11 @@
 import sade from 'sade';
+import { DEFAULT_FORMATS } from '@/config';
+
 let { version } = require('../package.json');
 
 const toArray = val => (Array.isArray(val) ? val : val == null ? [] : [val]);
 
 export default handler => {
-	const DEFAULT_FORMATS = 'esm,cjs';
-
 	const cmd = type => (str, opts) => {
 		opts.watch = opts.watch || type === 'watch';
 
@@ -17,21 +17,21 @@ export default handler => {
 				opts.compress = opts.compress !== 'false' && opts.compress !== '0';
 			}
 		} else {
-			// the default compress value is `true` for web, `false` for Node:
+			// the default compress value is `true` for browser, `false` for Node:
 			opts.compress = opts.target !== 'node';
 		}
 
 		handler(opts);
 	};
 
-	let prog = sade('microbundle');
+	let prog = sade('walrus-build');
 
 	prog
 		.version(version)
 		.option('--entry, -i', 'Entry module(s)')
 		.option('--output, -o', 'Directory to place build files into')
 		.option(
-			'--formats, -f',
+			'--format, -f',
 			`Only build specified formats (any of ${DEFAULT_FORMATS} or iife)`,
 			DEFAULT_FORMATS,
 		)

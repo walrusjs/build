@@ -31,8 +31,6 @@ async function build(options: RollupBuildOptions) {
     }
   }
 
-  console.log(steps);
-
   await series(
     steps.map(config => async () => {
       const { inputOptions, outputOptions } = config;

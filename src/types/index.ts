@@ -29,19 +29,23 @@ export interface InputConfig {
    * 指定入口文件
    * 会依次找 src/index.tsx, src/index.ts, src/index.jsx, src/index.js，如果存在，则会作为默认的 entry。
    */
-  entry?: string | string[];
+  entry?: string[];
+  /**
+   * 指定入口文件
+   */
+  entries?: string[];
   /**
    * 指定在 UMD 和 IIFE 中公开的名称
    */
   name?: string;
   /**
    * 指定打包代码格式
-   * @default `['esm', 'cjs']`
+   * @default `esm,cjs`
    */
-  formats?: ModuleFormat[];
+  format?: string;
   /**
    * 配置是 node 库还是 browser 库，只作用于语法层
-   * @default browser
+   * @default `browser`
    */
   target?: Target;
   /**
@@ -72,13 +76,34 @@ export interface InputConfig {
    * @default true
    */
   sourcemap?: boolean;
+  /**
+   * 指定输出目录
+   * @default `dist`
+   */
+  output?: string;
+  /**
+   * 是否开始监听模式
+   */
+  watch?: boolean;
+  /**
+   * 是否开启严格模式
+   */
+  strict?: boolean;
 }
 
 export interface Config extends InputConfig  {
-  entries?: string[];
   input?: string[];
-  output?: string;
+  /**
+   * 打包格式集合，内部使用
+   */
+  formats?: ModuleFormat[];
+  /**
+   * 是否打包多个文件，内部使用
+   */
   multipleEntries?: boolean;
+  /**
+   * package.json
+   */
   pkg?: {
     [key: string]: any
   }

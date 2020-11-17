@@ -2,13 +2,12 @@ import rimraf from 'rimraf';
 import { resolve, join } from 'path';
 import { merge, isString } from 'lodash';
 import { build as rollupBuild } from '@/rollup';
-import { Config } from '@/types';
+import { Config, Format, InputConfig } from '@/types';
 import { isFile } from '@/utils';
-import { DEFAULT_CONFIG_FILE } from '@/config';
+import { DEFAULT_CONFIG_FILE, DEFAULT_FORMATS } from '@/config';
 import configLoader from '@/utils/config-loader';
 import { getInput, getOutput, getEntries } from '@/utils/resolve-options';
 import { getConfigFromPkgJson, getName } from '@/utils/package-info';
-import resolveArgs, { Args } from '@/utils/resolve-args';
 
 const DEFAULT_CWD = process.cwd();
 
@@ -17,12 +16,11 @@ const DEFAULT_CONDIG: Config = {
   tsconfig: join(DEFAULT_CWD, './tsconfig.json'),
   target: 'browser',
   cssModules: false,
-  formats: ['esm', 'cjs']
+  format: DEFAULT_FORMATS,
 };
 
-async function build(inputOptions: Args) {
+async function build(inputOptions: InputConfig) {
   let options = { ...inputOptions };
-  const argsConfig = resolveArgs(options);
 
   options.cwd = resolve(process.cwd(), inputOptions.cwd);
 	const cwd = options.cwd;
@@ -36,18 +34,34 @@ async function build(inputOptions: Args) {
     packageKey: 'wBuild'
   });
 
+  const argsConfig: InputConfig = {
+    cwd: inputOptions.cwd,
+    name: inputOptions.name,
+    entries: inputOptions.entries,
+    output: inputOptions.output,
+    format: inputOptions.format,
+    watch: inputOptions.watch,
+    target: inputOptions.target,
+    strict: inputOptions.strict,
+    sourcemap: inputOptions.sourcemap,
+    tsconfig: inputOptions.tsconfig,
+  };
+
   // 获取配置优先级 配置文件 > 命令行 > 默认
   const config: Config = merge({}, DEFAULT_CONDIG, argsConfig, userConfig.data || {});
 
+  // 处理cwd
   config.cwd = resolve(process.cwd(), config.cwd);
 
+  // 读取package.json
   const { hasPackageJson, pkg } = await getConfigFromPkgJson(cwd);
   config.pkg = pkg;
 
+  // 兼容 entry
   if (config.entry) {
     config.entries = Array.isArray(config.entry)
       ? config.entry
-      : (isString(config.entry) && config.entry ? [config.entry] : [])
+      : (isString(config.entry) && config.entry ? [config.entry] : config.entries)
   }
 
   const { finalName, pkgName } = getName({
@@ -81,6 +95,7 @@ async function build(inputOptions: Args) {
 
   config.multipleEntries = config.entries.length > 1;
 
+  config.formats = (config.format).split(',') as Format[];
   config.formats = Array.from(
     new Set(config.formats.map(f => {
       if (f === 'esm') {
@@ -106,9 +121,7 @@ async function build(inputOptions: Args) {
 		config.sourcemap = true;
   }
 
-  console.log(config);
-
-  if (config.entries?.length) {
+  if (config.entries?.length && config.formats?.length) {
     // 删除构建目录
     rimraf.sync(resolve(cwd, `dist`));
 

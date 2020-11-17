@@ -15,3 +15,6 @@ export const DEFAULT_CONFIG_FILE = [
   '.wBuildrc.ts',
   '.wBuildrc.js'
 ];
+
+// 默认的编译格式
+export const DEFAULT_FORMATS = 'esm,cjs';
