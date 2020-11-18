@@ -38,7 +38,7 @@ interface GetInputOptions {
 }
 
 /**
- * 获取输入配置
+ * 获取输入
  * 优先级 配置 > package.source > default
  * @param param0
  */
@@ -49,24 +49,21 @@ export async function getInput({
 }: GetInputOptions) {
   const input: string[] = [];
 
-  const defaultEntry = getExistFile({
-    cwd,
-    files: DEFAULT_INPUT_FILE,
-    // returnRelative: true
-  });
-
 	[]
 		.concat(
 			(entries && entries.length)
 				? entries
 				: (
             source &&
-            (
-              Array.isArray(source) ? source : [source])
-              .map(file =>
-                resolve(cwd, file),
-            )
-          ) || [defaultEntry]
+            (Array.isArray(source) ? source : [source])
+              .map(file => resolve(cwd, file))
+          ) || [
+            getExistFile({
+              cwd,
+              files: DEFAULT_INPUT_FILE,
+              // returnRelative: true
+            })
+          ].filter(Boolean)
 		)
 		.map(file => glob(file))
 		.forEach(file => input.push(...file));
@@ -76,7 +73,7 @@ export async function getInput({
 
 /**
  * 获取输出
- * @param param0
+ * @param param
  */
 export async function getOutput({ cwd, output, pkgMain, pkgName }) {
 	let main = resolve(cwd, output || pkgMain || 'dist');
