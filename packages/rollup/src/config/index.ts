@@ -1,3 +1,13 @@
+import { Config } from '../types';
+
+/**
+ * 默认配置
+ */
+export const DEFAULT_CONFIG: Config = {
+  format: ['esm', 'cjs'],
+  output: 'dist'
+}
+
 /**
  * 入口文件默认顺序
  */

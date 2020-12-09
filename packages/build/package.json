@@ -1,0 +1,19 @@
+{
+  "name": "@walrus/build",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:walrusjs/build.git",
+  "author": "wangxingkang <156148958@qq.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@walrus/rollup": "^1.0.0",
+    "sade": "^1.7.4"
+  },
+  "devDependencies": {
+    "@types/sade": "^1.7.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  }
+}

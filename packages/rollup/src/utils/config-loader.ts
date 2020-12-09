@@ -1,6 +1,6 @@
 import path from 'path'
 import joycon from 'joycon';
-import { readFileSync } from 'fs';
+import { readFileSync } from 'fs-extra';
 import requireFromString from 'require-from-string';
 
 const configLoader = new joycon({
