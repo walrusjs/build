@@ -61,9 +61,11 @@ async function normalizeConfig(
 
   if (isObject(config.alias)) {
     Object.keys(config.alias).forEach(item => {
+      const replacement = (config.alias as Record<string, string>)[item];
+
       moduleAlias.push({
         find: item,
-        replacement: config.alias[item]
+        replacement
       })
     });
   }
@@ -75,7 +77,7 @@ async function normalizeConfig(
   // normalize output
   const output = await getOutput({
 		cwd,
-		output: config.output,
+		output: config.output as string,
 		pkgMain: pkg.main,
 		pkgName: pkg.name,
   });

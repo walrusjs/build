@@ -78,11 +78,15 @@ export interface NormalizedConfig {
   /**
    * 别名设置
    */
-  alias?: Alias[];
+  alias: Alias[];
   /**
    * 指定输出目录
    * @default `dist`
    */
-  output?: string;
+  output: string;
+  /**
+   *
+   */
+  target: Target;
 }
 

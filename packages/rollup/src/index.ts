@@ -53,7 +53,8 @@ class Bundler {
     }).data ?? {};
 
     this.config = merge({}, DEFAULT_CONFIG, config, userConfig);
-    this.bundles = new Set()
+    this.normalizedConfig = {} as NormalizedConfig;
+    this.bundles = new Set();
   }
 
   async run() {
@@ -67,7 +68,6 @@ class Bundler {
     for (const entry of entries) {
       for (const format of formats) {
         tasks.push(createConfig({
-          cwd: this.cwd,
           pkg: this.pkg,
           config: this.normalizedConfig,
           entry,

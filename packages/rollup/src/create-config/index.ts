@@ -10,7 +10,6 @@ interface CreateRollupConfigResult {
 }
 
 interface CreateRollupConfigOpts {
-  cwd: string;
   pkg: PackageJson;
   entry: string;
   format: Format;
@@ -21,19 +20,18 @@ interface CreateRollupConfigOpts {
  * 获取Rollup配置
  */
 const createRollupConfig = ({
-  cwd,
   entry,
   format,
   config,
   pkg
 }: CreateRollupConfigOpts): CreateRollupConfigResult => {
-  const { alias, output, multipleEntries } = config;
+  const { alias = [], output, multipleEntries, cwd } = config;
   const useTypescript = path.extname(entry) === '.ts' || path.extname(entry) === '.tsx';
 
-  let outputAliases = {};
+  let outputAliases: Record<string, string> = {};
 	// since we transform src/index.js, we need to rename imports for it:
 	if (multipleEntries) {
-		outputAliases['.'] = './' + path.basename(output);
+		outputAliases['.'] = './' + path.basename(output as string);
   }
 
   const absMain = path.resolve(cwd, getMain({
@@ -43,12 +41,9 @@ const createRollupConfig = ({
     format
   }));
 
-  console.log(absMain);
-
   const plugins = getPlugins({
-    cwd,
     format,
-    alias,
+    config,
     useTypescript
   });
 

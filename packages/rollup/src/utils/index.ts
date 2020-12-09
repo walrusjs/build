@@ -105,7 +105,7 @@ export function getMain({
   entry,
   format
 }: GetMainParams) {
-	let mainNoExtension = options.output;
+	let mainNoExtension: string = options.output as string;
 	if (options.multipleEntries) {
 		let name = entry.match(/([\\/])index(\.(umd|cjs|es|m))?\.(mjs|[tj]sx?)$/)
 			? mainNoExtension
@@ -141,3 +141,4 @@ export function getMain({
 export { default as clearConsole } from '@pansy/clear-console';
 export { default as configLoader } from './config-loader';
 export { default as normalizeConfig } from './normalize-config';
+export { default as babelCustom } from './babel-custom';
