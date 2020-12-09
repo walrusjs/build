@@ -1,6 +1,6 @@
 import { declare } from '@babel/helper-plugin-utils';
-import { mergeConfig } from '@walrus/utils';
-import { Options, EnvOptions } from './types';
+import mergeConfig from '@birman/utils/lib/merge-config';
+import { Options, EnvOptions } from '@/types';
 
 const defaultEnvConfig: Partial<EnvOptions> = {
   exclude: [
@@ -19,7 +19,8 @@ function toObject<T extends object>(obj: T | boolean): T | Partial<T> {
   return (typeof obj === 'object' && obj !== null) ? obj : {};
 }
 
-export default declare((api, opts: Options = {}) => {
+// @ts-ignore
+export default declare((api: { assertVersion: (number) => void }, opts: Options = {}) => {
   api.assertVersion(7);
 
   // console.log(opts);

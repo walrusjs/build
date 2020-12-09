@@ -1,8 +1,12 @@
 {
   "name": "@walrus/babel-preset-walrus",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "license": "MIT",
+  "scripts": {
+    "build": "rimraf lib && tsc -p tsconfig.build.json"
+  },
   "peerDependencies": {
     "@babel/core": "^7.0.0"
   },
