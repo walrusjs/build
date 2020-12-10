@@ -37,7 +37,22 @@ function snapshot(
 }
 
 snapshot({
-  title: 'basic',
-  cwd: fixture('basic')
-})
+  title: 'alias',
+  cwd: fixture('alias')
+});
+
+snapshot({
+  title: 'alias-default',
+  cwd: fixture('alias-default')
+});
+
+// snapshot({
+//   title: 'basic',
+//   cwd: fixture('basic')
+// })
+
+// snapshot({
+//   title: 'basic-ts',
+//   cwd: fixture('basic-ts')
+// })
 

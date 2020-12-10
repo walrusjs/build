@@ -1,4 +1,2 @@
-import { DEBUG } from '@/constants';
-import { testa } from './a';
+import { DEBUG } from './constants';
 console.log('DEBUG should be true: ', DEBUG);
-console.log(testa);
