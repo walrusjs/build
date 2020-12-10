@@ -24,6 +24,10 @@ export interface Config {
    */
   name?: string;
   /**
+   *
+   */
+  strict?: boolean;
+  /**
    * 指定入口文件
    */
   entries?: string | string[];
@@ -45,9 +49,14 @@ export interface Config {
    */
   output?: string;
   /**
-   *
+   * 配置是 node 库还是 browser 库，只作用于语法层
+   * @default `browser`
    */
   target?: Target;
+  /**
+   * 是否禁用类型检查
+   */
+  disableTypeCheck?: boolean;
 }
 
 export interface NormalizedConfig {
@@ -55,6 +64,7 @@ export interface NormalizedConfig {
    * 当前的工作目录
    */
   cwd: string;
+  strict: boolean;
   /**
    * 指定在 UMD 和 IIFE 中公开的名称
    */
@@ -85,8 +95,18 @@ export interface NormalizedConfig {
    */
   output: string;
   /**
-   *
+   * 配置是 node 库还是 browser 库，只作用于语法层
+   * @default `browser`
    */
   target: Target;
+  /**
+   * package.json
+   */
+  pkg: PackageJson;
+  hasPackageJson: boolean;
+  /**
+   * 是否禁用类型检查
+   */
+  disableTypeCheck?: boolean;
 }
 

@@ -1,15 +1,24 @@
 import path from 'path';
-import { isArray, isString, isObject } from 'lodash';
+import { isArray, isString, isPlainObject } from 'lodash';
 import { Alias } from '@rollup/plugin-alias';
+import { yellow } from 'kleur';
 import { DEFAULT_INPUT_FILE } from '../config';
 import { Config, NormalizedConfig, Format, PackageJson } from '../types';
-import { getExistFile, isFile, getOutput } from './';
+import { getExistFile, isFile, stderr, getOutput, safeVariableName } from './';
 
-async function normalizeConfig(
+interface Opts {
   cwd: string,
   config: Config,
   pkg: PackageJson
-): Promise<NormalizedConfig> {
+  hasPackageJson: boolean;
+}
+
+async function normalizeConfig({
+  cwd,
+  pkg,
+  config,
+  hasPackageJson
+}: Opts): Promise<NormalizedConfig> {
   // normalize entries
   let entries: NormalizedConfig['entries'] = [];
   if (config.entries) {
@@ -19,6 +28,14 @@ async function normalizeConfig(
         ? [config.entries]
         : []
   }
+
+  const { finalName, pkgName } = getName({
+		name: config.name,
+		pkgName: pkg.name,
+		amdName: pkg.amdName,
+		hasPackageJson,
+		cwd,
+  });
 
   if (!entries.length) {
     const input = getExistFile({
@@ -50,6 +67,17 @@ async function normalizeConfig(
       formats = config.format;
     }
   }
+	// de-dupe formats and convert "esm" to "es":
+	formats = Array.from(new Set(formats.map(f => {
+    if (f === 'esm') {
+      return 'es';
+    }
+    if (f === 'commonjs') {
+      return 'cjs';
+    }
+    return f;
+  })));
+	formats.sort((a, b) => (a === 'cjs' ? -1 : a > b ? 1 : 0));
 
   // normalize alias
   const moduleAlias: Alias[] = [
@@ -59,7 +87,7 @@ async function normalizeConfig(
     }
   ];
 
-  if (isObject(config.alias)) {
+  if (isPlainObject(config.alias) && config.alias) {
     Object.keys(config.alias).forEach(item => {
       const replacement = (config.alias as Record<string, string>)[item];
 
@@ -82,15 +110,54 @@ async function normalizeConfig(
 		pkgName: pkg.name,
   });
 
-  return {
+  const normalizedConfig: NormalizedConfig = {
     cwd,
+    pkg,
+    name: finalName,
     entries,
     formats,
     tsconfig: config.tsconfig,
     alias: moduleAlias,
     output: output,
+    hasPackageJson,
     multipleEntries: entries.length > 1,
+    target: config.target ?? 'browser',
+    strict: !!config.strict
   }
+
+  normalizedConfig.pkg.name = pkgName;
+
+  return normalizedConfig
+}
+
+interface GetNameOpts {
+  name?: string;
+  pkgName: string;
+  amdName: string,
+  cwd: string,
+  hasPackageJson: boolean
+}
+
+export function getName({
+  name,
+  pkgName,
+  amdName,
+  cwd,
+  hasPackageJson
+}: GetNameOpts) {
+	if (!pkgName) {
+		pkgName = path.basename(cwd);
+		if (hasPackageJson) {
+			stderr(
+				yellow().inverse('WARN'),
+				yellow(` missing package.json "name" field. Assuming "${pkgName}".`),
+			);
+		}
+	}
+
+	const finalName = name || amdName || safeVariableName(pkgName);
+
+	return { finalName, pkgName };
 }
 
 export default normalizeConfig;

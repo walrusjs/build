@@ -1,9 +1,14 @@
 import path from 'path';
+import camelCase from 'camelcase';
 import { existsSync, promises } from 'fs-extra';
 import { Format, PackageJson, NormalizedConfig } from '../types';
 
 export const readFile = promises.readFile;
 export const stat = promises.stat;
+
+// eslint-disable-next-line no-console
+export const stdout = console.log.bind(console);
+export const stderr = console.error.bind(console);
 
 /**
  * 判断是否为文件
@@ -91,20 +96,15 @@ export function getExistFile({
 interface GetMainParams {
   format: Format;
   entry: string;
-  pkg: PackageJson;
   options: NormalizedConfig;
 }
 
-/**
- *
- * @param param0
- */
 export function getMain({
   options,
-  pkg,
   entry,
   format
 }: GetMainParams) {
+  const { pkg } = options;
 	let mainNoExtension: string = options.output as string;
 	if (options.multipleEntries) {
 		let name = entry.match(/([\\/])index(\.(umd|cjs|es|m))?\.(mjs|[tj]sx?)$/)
@@ -133,9 +133,21 @@ export function getMain({
 	mainsByFormat.umd = replaceName(
 		pkg['umd:main'] || pkg.unpkg || 'x.umd.js',
 		mainNoExtension,
-	);
+  );
 
 	return mainsByFormat[format] || mainsByFormat.cjs;
+}
+
+const INVALID_ES3_IDENT = /((^[^a-zA-Z]+)|[^\w.-])|([^a-zA-Z0-9]+$)/g;
+
+/**
+ * Turn a package name into a valid reasonably-unique variable name
+ * @param {string} name
+ */
+export function safeVariableName(name: string) {
+	const normalized = removeScope(name).toLowerCase();
+	const identifier = normalized.replace(INVALID_ES3_IDENT, '');
+	return camelCase(identifier);
 }
 
 export { default as clearConsole } from '@pansy/clear-console';

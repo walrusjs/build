@@ -1,7 +1,7 @@
 import path from 'path';
 import { InputOptions, OutputOptions } from 'rollup';
 import { getMain } from '../utils';
-import { NormalizedConfig, Format, PackageJson } from '../types';
+import { NormalizedConfig, Format } from '../types';
 import getPlugins from './get-plugins';
 
 interface CreateRollupConfigResult {
@@ -10,7 +10,6 @@ interface CreateRollupConfigResult {
 }
 
 interface CreateRollupConfigOpts {
-  pkg: PackageJson;
   entry: string;
   format: Format;
   config: NormalizedConfig;
@@ -19,13 +18,15 @@ interface CreateRollupConfigOpts {
 /**
  * 获取Rollup配置
  */
-const createRollupConfig = ({
-  entry,
-  format,
-  config,
-  pkg
-}: CreateRollupConfigOpts): CreateRollupConfigResult => {
-  const { alias = [], output, multipleEntries, cwd } = config;
+const createConfig = (
+  {
+    entry,
+    format,
+    config
+ }: CreateRollupConfigOpts,
+ writeMeta: boolean
+): CreateRollupConfigResult => {
+  const { output, multipleEntries, cwd, pkg } = config;
   const useTypescript = path.extname(entry) === '.ts' || path.extname(entry) === '.tsx';
 
   let outputAliases: Record<string, string> = {};
@@ -36,16 +37,20 @@ const createRollupConfig = ({
 
   const absMain = path.resolve(cwd, getMain({
     options: config,
-    pkg,
     entry,
     format
   }));
+  const outputDir = path.dirname(absMain);
+  const outputEntryFileName = path.basename(absMain);
 
-  const plugins = getPlugins({
-    format,
-    config,
-    useTypescript
-  });
+  const plugins = getPlugins(
+    {
+      format,
+      config,
+      useTypescript
+    },
+    writeMeta
+  );
 
   const inputOptions: InputOptions = {
     input: entry,
@@ -62,6 +67,11 @@ const createRollupConfig = ({
   const outputOptions: OutputOptions = {
     format,
     exports: 'auto',
+    strict: config.strict === true,
+    freeze: false,
+    esModule: false,
+    dir: outputDir,
+    entryFileNames: outputEntryFileName
   }
 
   return {
@@ -70,4 +80,4 @@ const createRollupConfig = ({
   }
 }
 
-export default createRollupConfig;
+export default createConfig;

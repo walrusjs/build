@@ -1,6 +1,6 @@
 interface TargetsObj {
   esmodules: true,
-  node: string | 'current' | true,
+  node: string | number | 'current' | true,
   safari: string | 'tp',
   browsers: string | string[],
   [key: string]: any;
