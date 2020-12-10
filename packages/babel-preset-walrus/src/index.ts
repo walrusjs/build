@@ -106,6 +106,7 @@ export default declare((api: { assertVersion: (number) => void }, opts: Options 
             ];
           })
         : []),
+      opts.asyncToPromises && require('babel-plugin-transform-async-to-promises'),
     ].filter(Boolean),
   }
 });

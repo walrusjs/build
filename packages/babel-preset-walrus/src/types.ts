@@ -64,5 +64,6 @@ export interface Options {
   react?: boolean | Partial<ReactOptions>;
   debug?: boolean;
   dynamicImportNode?: boolean;
+  asyncToPromises?: boolean;
   import?: ImportPluginOpts[];
 }

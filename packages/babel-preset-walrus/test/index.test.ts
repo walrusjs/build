@@ -15,7 +15,7 @@ function transformWithPreset(code: string, opts: Options) {
   return transform(code, {
     filename,
     babelrc: false,
-    presets: [[require.resolve('./index.ts'), deepmerge(DEFAULT_OPTS, opts)]],
+    presets: [[require.resolve('../src/index.ts'), deepmerge(DEFAULT_OPTS, opts)]],
   })!.code;
 }
 
@@ -123,6 +123,18 @@ test('typescript key remapping types', () => {
     },
   );
   expect(code).toContain('"use strict"');
+});
+
+test('async transform to promises', () => {
+  const code = transformWithPreset(
+    `(async function () {
+       console.log('foo');
+    })();`,
+    {
+      asyncToPromises: true
+    }
+  );
+  expect(code).toContain(`Promise.resolve(`);
 });
 
 // test('dynamic import', () => {
