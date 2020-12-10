@@ -16,11 +16,11 @@ function generate(config: Config, options: Options) {
 function snapshot(
   {
     title,
-    entries,
-    cwd
-  }: { title: string; entries?: string | string[]; cwd?: string },
+    entries
+  }: { title: string; entries?: string | string[]; },
   config?: Config
 ) {
+  const cwd = fixture(title);
   test(title, async () => {
     await generate(
       {
@@ -37,13 +37,15 @@ function snapshot(
 }
 
 snapshot({
-  title: 'alias',
-  cwd: fixture('alias')
+  title: 'alias'
 });
 
 snapshot({
-  title: 'alias-default',
-  cwd: fixture('alias-default')
+  title: 'alias-default'
+});
+
+snapshot({
+  title: 'alias-external'
 });
 
 // snapshot({
