@@ -4,7 +4,7 @@ import { Alias } from '@rollup/plugin-alias';
 import { yellow } from 'kleur';
 import { DEFAULT_INPUT_FILE } from '../config';
 import { Config, NormalizedConfig, Format, PackageJson } from '../types';
-import { getExistFile, isFile, stderr, getOutput, safeVariableName } from './';
+import { getExistFile, isFile, stderr, getOutput, safeVariableName, configLoader } from './';
 
 interface Opts {
   cwd: string,
@@ -57,8 +57,13 @@ async function normalizeConfig({
     config.tsconfig = path.join(cwd, 'tsconfig.json');
   }
 
+  // 支持向上查找tsconfig.json
   if (!await isFile(config.tsconfig)) {
-    config.tsconfig = undefined;
+    config.tsconfig = (configLoader
+      .loadSync({
+        files: ['tsconfig.json'],
+        cwd
+      })).path;
   }
 
   // normalize format
@@ -167,13 +172,6 @@ export function getName({
 	const finalName = name || amdName || safeVariableName(pkgName);
 
 	return { finalName, pkgName };
-}
-
-interface GetInputOpts {
-  module?: string[];
-  source?: string | string[],
-  cwd: string,
-  entries?: string[]
 }
 
 export default normalizeConfig;

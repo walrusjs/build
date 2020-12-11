@@ -127,6 +127,9 @@ export interface NormalizedConfig {
    * package.json
    */
   pkg: PackageJson;
+  /**
+   * package.json 是否存在
+   */
   hasPackageJson: boolean;
   /**
    * 是否禁用类型检查

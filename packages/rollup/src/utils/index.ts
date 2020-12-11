@@ -1,7 +1,7 @@
 import path from 'path';
 import camelCase from 'camelcase';
 import { existsSync, promises } from 'fs-extra';
-import { Format, PackageJson, NormalizedConfig } from '../types';
+import { Format, NormalizedConfig } from '../types';
 
 export const readFile = promises.readFile;
 export const stat = promises.stat;
@@ -99,6 +99,8 @@ export async function jsOrTs(cwd: string, filename: string) {
 		: (await isFile(path.resolve(cwd, filename + '.tsx')))
 		? '.tsx'
     : '.js';
+
+  return extension;
 }
 
 interface GetMainParams {
