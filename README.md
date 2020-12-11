@@ -30,43 +30,42 @@
 * 💅  内置支持 `CSS` `Sass` `Stylus` `Less` `CSS modules`
 * 💻  使用 TypeScript 编写，提供类型定义文件
 
-## 🏗 安装
-
-```sh
-// npm
-npm install @walrus/build --save --dev
-
-// yarn
-yarn add @walrus/build --dev
-```
-
 ## 🔨 使用
 
-- 创建入口文件
+1️⃣ **安装** 运行: `yarn add @walrus/build --dev`
 
-```
-// src/index.js
-const test = 'Hello World';
-
-export function main() {
-  console.log(test);
-}
-```
-
-- 在`package.json`中添加 scripts
+2️⃣ **完善项目信息** your `package.json`:
 
 ```json
 {
+  "name": "foo",                   // your package name
+  "source": "src/foo.js",          // your source code
+  "main": "dist/foo.js",           // where to generate the CommonJS/Node bundle
+  "module": "dist/foo.module.js",  // where to generate the ESM bundle
+  "unpkg": "dist/foo.umd.js",      // where to generate the UMD bundle (also aliased as "umd:main")
   "scripts": {
-    "build": "wb"
+    "build": "wb",        // compiles "source" to "main"/"module"/"unpkg"
+    "start": "wb watch"     // re-build when source files change
   }
 }
 ```
 
-- 执行编译命令
+3️⃣ **编译文件** 运行 `npm run build`.
 
-切换到项目根目录
+## 配置
+
+### Cli Options
 
 ```
-npm run build
+Usage
+	$ microbundle <command> [options]
+
+Options
+	-v, --version      Displays current version
+	-i, --entry        Entry module(s)
+  -o, --output       Directory to place build files into
+	-f, --format       Only build specified formats (any of es,cjs,umd or iife) (default es,cjs)
+
+Examples
+	$ wb build --tsconfig tsconfig.build.json
 ```
