@@ -1,0 +1,6 @@
+{
+  "name": "svgr",
+  "dependencies": {
+    "react": "16"
+  }
+}

@@ -1,15 +1,12 @@
 import path from 'path'
-import Bundler, { Options, Config } from '../src';
+import Bundler, { Config } from '../src';
 
 function fixture(...args: string[]) {
   return path.join(__dirname, 'fixtures', ...args)
 }
 
-function generate(config: Config, options: Options) {
-  const bundler = new Bundler(config, {
-    logLevel: 'quiet',
-    ...options
-  })
+function generate(config: Config) {
+  const bundler = new Bundler(config)
   return bundler.run()
 }
 
@@ -25,10 +22,9 @@ function snapshot(
     await generate(
       {
         ...config,
-        entries
-      },
-      {
-        rootDir: cwd
+        entries,
+        cwd,
+        sourcemap: false
       }
     )
 
@@ -48,13 +44,30 @@ snapshot({
   title: 'alias-external'
 });
 
-// snapshot({
-//   title: 'basic',
-//   cwd: fixture('basic')
-// })
+snapshot({
+  title: 'async-iife-ts'
+});
+
+snapshot({
+  title: 'async-ts'
+});
 
 // snapshot({
-//   title: 'basic-ts',
-//   cwd: fixture('basic-ts')
-// })
+//   title: 'basic'
+// });
 
+// snapshot({
+//   title: 'basic-ts'
+// });
+
+// snapshot({
+//   title: 'basic-tsx'
+// });
+
+// snapshot({
+//   title: 'basic-json'
+// });
+
+snapshot({
+  title: 'svgr'
+});
