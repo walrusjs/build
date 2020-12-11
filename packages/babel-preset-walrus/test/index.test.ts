@@ -134,6 +134,20 @@ test('async transform to promises', () => {
       asyncToPromises: true
     }
   );
+  console.log(code);
+  expect(code).toContain(`Promise.resolve(`);
+});
+
+test('async transform to promises', () => {
+  const code = transformWithPreset(
+    `export class MyClass {
+      async foo() {}
+    }`,
+    {
+      asyncToPromises: true
+    }
+  );
+  console.log(code);
   expect(code).toContain(`Promise.resolve(`);
 });
 

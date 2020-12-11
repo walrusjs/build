@@ -1,6 +1,6 @@
 import { declare } from '@babel/helper-plugin-utils';
 import mergeConfig from '@birman/utils/lib/merge-config';
-import { Options, EnvOptions } from '@/types';
+import { Options, EnvOptions, AsyncToPromisesOptions } from '@/types';
 
 const defaultEnvConfig: Partial<EnvOptions> = {
   exclude: [
@@ -23,27 +23,27 @@ function toObject<T extends object>(obj: T | boolean): T | Partial<T> {
 export default declare((api: { assertVersion: (number) => void }, opts: Options = {}) => {
   api.assertVersion(7);
 
-  // console.log(opts);
-  // console.log({
-  //   ...mergeConfig(defaultEnvConfig, toObject(opts.env)),
-  //   debug: opts.debug,
-  // });
+  const defaulrAsyncToPromisesOptions: Partial<AsyncToPromisesOptions> = {
+    inlineHelpers: true,
+    externalHelpers: false,
+    minify: true,
+  }
 
   return {
     presets: [
       opts.env && [
-        require('@babel/preset-env').default,
+        require.resolve('@babel/preset-env'),
         {
           ...mergeConfig(defaultEnvConfig, toObject(opts.env)),
           debug: opts.debug,
         }
       ],
       opts.react && [
-        require('@babel/preset-react').default,
+        require.resolve('@babel/preset-react'),
         toObject(opts.react)
       ],
       opts.typescript && [
-        require('@babel/preset-typescript').default,
+        require.resolve('@babel/preset-typescript'),
         {
           allowNamespaces: true,
           ...toObject(opts.typescript)
@@ -52,7 +52,7 @@ export default declare((api: { assertVersion: (number) => void }, opts: Options 
     ].filter(Boolean),
     plugins: [
       [
-        require('babel-plugin-module-resolver'),
+        require.resolve('babel-plugin-module-resolver'),
         {
           root: ['.'],
           alias: {
@@ -61,41 +61,43 @@ export default declare((api: { assertVersion: (number) => void }, opts: Options 
         }
       ],
       [
-        require('@babel/plugin-proposal-optional-chaining').default,
+        require.resolve('@babel/plugin-proposal-optional-chaining'),
         { loose: false },
       ],
       [
-        require('@babel/plugin-proposal-nullish-coalescing-operator').default,
+        require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
         { loose: false },
       ],
-      require('@babel/plugin-syntax-top-level-await').default,
+      require.resolve('@babel/plugin-syntax-top-level-await'),
       [
-        require('@babel/plugin-transform-destructuring').default,
+        require.resolve('@babel/plugin-transform-destructuring'),
         { loose: false },
       ],
       opts.typescript && [
         require.resolve('babel-plugin-transform-typescript-metadata'),
       ],
       [
-        require('@babel/plugin-proposal-decorators').default,
+        require.resolve('@babel/plugin-proposal-decorators'),
         { legacy: true }
       ],
       [
-        require('@babel/plugin-proposal-class-properties').default,
+        require.resolve('@babel/plugin-proposal-class-properties'),
         { loose: true },
       ],
-      require('@babel/plugin-proposal-export-default-from').default,
+      require.resolve('@babel/plugin-syntax-dynamic-import'),
+      require.resolve('@babel/plugin-proposal-export-default-from'),
+      require.resolve('@babel/plugin-proposal-export-namespace-from'),
       [
-        require('@babel/plugin-proposal-pipeline-operator').default,
+        require.resolve('@babel/plugin-proposal-pipeline-operator'),
         {
           proposal: 'minimal',
         },
       ],
-      require('@babel/plugin-proposal-do-expressions').default,
-      require('@babel/plugin-proposal-function-bind').default,
-      require('@babel/plugin-proposal-logical-assignment-operators').default,
+      require.resolve('@babel/plugin-proposal-do-expressions'),
+      require.resolve('@babel/plugin-proposal-function-bind'),
+      require.resolve('@babel/plugin-proposal-logical-assignment-operators'),
       opts.dynamicImportNode && [
-        require.resolve('babel-plugin-dynamic-import-node'),
+        require.resolve('babel-plugin-dynamic-import-node')
       ],
       ...(opts.import
         ? opts.import.map((item) => {
@@ -106,7 +108,10 @@ export default declare((api: { assertVersion: (number) => void }, opts: Options 
             ];
           })
         : []),
-      opts.asyncToPromises && require('babel-plugin-transform-async-to-promises'),
+      opts.asyncToPromises && [
+        require.resolve('babel-plugin-transform-async-to-promises'),
+        {...defaulrAsyncToPromisesOptions}
+      ],
     ].filter(Boolean),
   }
 });

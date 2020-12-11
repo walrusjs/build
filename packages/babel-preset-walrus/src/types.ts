@@ -32,6 +32,14 @@ export interface ReactOptions {
   useSpread: string;
 }
 
+export interface AsyncToPromisesOptions {
+	externalHelpers: boolean;
+	hoist: boolean;
+	inlineHelpers: boolean;
+	minify: boolean;
+	target: "es5" | "es6";
+}
+
 export interface TypeScriptOptions {
   isTSX: boolean;
   jsxPragma: string;
@@ -61,9 +69,25 @@ export interface Options {
    * @babel/preset-env 配置
    */
   env?: Partial<EnvOptions>;
+  /**
+   * 是否使用TypeScript
+   */
   react?: boolean | Partial<ReactOptions>;
+  /**
+   * 是否开启debug
+   */
   debug?: boolean;
+  /**
+   * 是否使用 babel-plugin-dynamic-import-node 插件
+   */
   dynamicImportNode?: boolean;
+  /**
+   * 是否将`async`转换为`promise`
+   * 开启则使用 babel-plugin-transform-async-to-promises
+   */
   asyncToPromises?: boolean;
+  /**
+   * babel-plugin-import配置
+   */
   import?: ImportPluginOpts[];
 }
