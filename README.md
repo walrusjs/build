@@ -54,6 +54,13 @@
 
 ## 配置
 
+项目以以下顺序读取配置文件
+
+- `wb.config.ts`
+- `wb.config.js`
+- `.wbrc.ts`
+- `.wbrc.js`
+
 ### Cli Options
 
 ```
