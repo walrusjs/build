@@ -20,6 +20,11 @@ export interface PackageJson {
 
 export interface Config {
   /**
+   * 当前的工作目录
+   * @default `.`
+   */
+  cwd?: string;
+  /**
    * 指定在 UMD 和 IIFE 中公开的名称
    */
   name?: string;
@@ -64,6 +69,9 @@ export interface NormalizedConfig {
    * 当前的工作目录
    */
   cwd: string;
+  /**
+   * 是否开启严格模式
+   */
   strict: boolean;
   /**
    * 指定在 UMD 和 IIFE 中公开的名称

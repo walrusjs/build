@@ -33,6 +33,7 @@ const babelCustom = ({
     // alias: {
     //   '@': path.resolve(cwd, 'src')
     // },
+    asyncToPromises: true,
     typescript: !!useTypescript,
   }
 

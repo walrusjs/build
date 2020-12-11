@@ -71,7 +71,6 @@ export default function getPlugins(
       commonjs({
         include: /\/node_modules\//,
       }),
-      json(),
       useTypescript &&
         typescript({
           typescript: require('typescript'),
@@ -87,9 +86,11 @@ export default function getPlugins(
         }),
       babel({
         babelHelpers: 'bundled',
+        exclude: /\/node_modules\//,
         babelrc: false,
         presets
       }),
+      json(),
     )
     .filter(Boolean);
 

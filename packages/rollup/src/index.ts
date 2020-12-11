@@ -30,15 +30,6 @@ interface Paths {
   progressEstimatorCache: string;
 }
 
-export interface Options {
-  /**
-   * Log level
-   */
-  logLevel?: 'verbose' | 'quiet';
-  rootDir: string;
-}
-
-
 class Bundler {
   private cwd: string;
   private pkg: PackageJson;
@@ -49,8 +40,8 @@ class Bundler {
   private normalizedConfig: NormalizedConfig;
   public bundles: Set<Assets>;
 
-  constructor(config: Config, options: Options) {
-    this.cwd = path.resolve(options.rootDir || '.');
+  constructor(config: Config) {
+    this.cwd = path.resolve(config.cwd || '.');
 
     const pkgInfo = configLoader
       .loadSync({
