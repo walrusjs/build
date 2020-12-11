@@ -122,7 +122,8 @@ async function normalizeConfig({
     hasPackageJson,
     multipleEntries: entries.length > 1,
     target: config.target ?? 'browser',
-    strict: !!config.strict
+    strict: !!config.strict,
+    sourcemap: !!config.sourcemap,
   }
 
   normalizedConfig.pkg.name = pkgName;

@@ -68,6 +68,7 @@ const createConfig = (
     format,
     exports: 'auto',
     strict: config.strict === true,
+    sourcemap: config.sourcemap,
     freeze: false,
     esModule: false,
     dir: outputDir,

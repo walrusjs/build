@@ -6,7 +6,8 @@ import { Config } from '../types';
 export const DEFAULT_CONFIG: Config = {
   format: ['esm', 'cjs'],
   output: 'dist',
-  strict: true
+  strict: true,
+  sourcemap: true
 }
 
 /**

@@ -29,12 +29,15 @@ const babelCustom = ({
       modules: format === 'es' ? false : 'auto',
       targets
     },
-    react: {},
-    // alias: {
-    //   '@': path.resolve(cwd, 'src')
-    // },
+    alias: {
+      '@': path.resolve(cwd, 'src')
+    },
     asyncToPromises: true,
     typescript: !!useTypescript,
+  }
+
+  if (isBrowser) {
+    babelPresetWalrusOpts.react = {}
   }
 
   const presets: PluginItem[] = [

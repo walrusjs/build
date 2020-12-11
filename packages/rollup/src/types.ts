@@ -29,9 +29,13 @@ export interface Config {
    */
   name?: string;
   /**
-   *
+   * 是否开启严格模式
    */
   strict?: boolean;
+  /**
+   * 是否生成sourcemap
+   */
+  sourcemap?: boolean;
   /**
    * 指定入口文件
    */
@@ -73,6 +77,10 @@ export interface NormalizedConfig {
    * 是否开启严格模式
    */
   strict: boolean;
+    /**
+   * 是否生成sourcemap
+   */
+  sourcemap: boolean;
   /**
    * 指定在 UMD 和 IIFE 中公开的名称
    */
