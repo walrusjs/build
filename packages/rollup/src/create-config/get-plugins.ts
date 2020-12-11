@@ -5,6 +5,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import alias from '@rollup/plugin-alias';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
+import { terser, Options as TerserOptions  } from "rollup-plugin-terser";
 import inject, { RollupInjectOptions } from '@rollup/plugin-inject';
 import shebang from '@walrus/rollup-plugin-shebang';
 import autoprefixer from 'autoprefixer';
@@ -38,6 +39,14 @@ export default function getPlugins(
     target,
     useTypescript,
   });
+
+  const terserOpts: TerserOptions = {
+    compress: {
+      pure_getters: true,
+      unsafe: true,
+      unsafe_comps: true
+    },
+  };
 
   const plugins: Plugin[] = []
     .concat(
@@ -100,6 +109,7 @@ export default function getPlugins(
         presets
       }),
       json(),
+      config.compress !== false && terser(terserOpts)
     )
     .filter(Boolean);
 

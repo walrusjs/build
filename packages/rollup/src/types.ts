@@ -58,6 +58,10 @@ export interface Config {
    */
   output?: string;
   /**
+   * 是否开启压缩
+   */
+  compress?: boolean;
+  /**
    * 配置是 node 库还是 browser 库，只作用于语法层
    * @default `browser`
    */
@@ -81,6 +85,10 @@ export interface NormalizedConfig {
    * 是否生成sourcemap
    */
   sourcemap: boolean;
+   /**
+   * 是否开启压缩
+   */
+  compress: boolean;
   /**
    * 指定在 UMD 和 IIFE 中公开的名称
    */
