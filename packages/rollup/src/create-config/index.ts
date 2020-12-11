@@ -1,6 +1,6 @@
 import path from 'path';
 import { InputOptions, OutputOptions } from 'rollup';
-import { getMain } from '../utils';
+import { getMain, getExternalTest } from '../utils';
 import { NormalizedConfig, Format } from '../types';
 import getPlugins from './get-plugins';
 
@@ -52,8 +52,27 @@ const createConfig = (
     writeMeta
   );
 
+  let external = ['dns', 'fs', 'path', 'url'].concat(
+		config.entries.filter(e => e !== entry),
+	);
+  const aliasIds = config.alias.map(alias => alias.find);
+
+  const externalTest = getExternalTest(external);
+
   const inputOptions: InputOptions = {
     input: entry,
+    external: id => {
+      if (id === 'babel-plugin-transform-async-to-promises/helpers') {
+        return false;
+      }
+      if (config.multipleEntries && id === '.') {
+        return true;
+      }
+      if (aliasIds.indexOf(id) >= 0) {
+        return false;
+      }
+      return externalTest(id);
+    },
     plugins,
     treeshake: {
       propertyReadSideEffects: false,

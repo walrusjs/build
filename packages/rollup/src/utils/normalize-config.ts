@@ -123,6 +123,7 @@ async function normalizeConfig({
     multipleEntries: entries.length > 1,
     target: config.target ?? 'browser',
     strict: !!config.strict,
+    compress: !!config.compress,
     sourcemap: !!config.sourcemap,
   }
 

@@ -154,3 +154,4 @@ export { default as clearConsole } from '@pansy/clear-console';
 export { default as configLoader } from './config-loader';
 export { default as normalizeConfig } from './normalize-config';
 export { default as babelCustom } from './babel-custom';
+export { default as getExternalTest } from './get-external-test';

@@ -106,7 +106,8 @@ export default function getPlugins(
         babelHelpers: 'bundled',
         exclude: /\/node_modules\//,
         babelrc: false,
-        presets
+        presets,
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.es6', '.es', '.mjs']
       }),
       json(),
       config.compress !== false && terser(terserOpts)
