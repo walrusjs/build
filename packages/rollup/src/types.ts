@@ -9,7 +9,7 @@ export type Target = 'node' | 'browser';
 export interface PackageJson {
   name: string;
   version: string;
-  source?: string;
+  source?: string | string[];
   dependencies?: { [packageName: string]: string };
   devDependencies?: { [packageName: string]: string };
   engines?: {

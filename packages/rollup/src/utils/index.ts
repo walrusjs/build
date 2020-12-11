@@ -93,6 +93,14 @@ export function getExistFile({
   }
 }
 
+export async function jsOrTs(cwd: string, filename: string) {
+	const extension = (await isFile(path.resolve(cwd, filename + '.ts')))
+		? '.ts'
+		: (await isFile(path.resolve(cwd, filename + '.tsx')))
+		? '.tsx'
+    : '.js';
+}
+
 interface GetMainParams {
   format: Format;
   entry: string;

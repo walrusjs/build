@@ -38,12 +38,18 @@ async function normalizeConfig({
   });
 
   if (!entries.length) {
-    const input = getExistFile({
-      cwd,
-      files: DEFAULT_INPUT_FILE
-    });
+    const source = pkg.source;
 
-    input && (entries = [input]);
+    const input: string[] = source
+      ? (Array.isArray(source) ? source : [source]).map((file: string) => path.resolve(cwd, file))
+      : [
+        getExistFile({
+          cwd,
+          files: DEFAULT_INPUT_FILE
+        })
+      ].filter(Boolean) as string[];
+
+    !!input.length && (entries = input);
   }
 
   // normalize tsconfig
@@ -56,6 +62,7 @@ async function normalizeConfig({
   }
 
   // normalize format
+  // config > pkg.source > default
   let formats: Format[] = [];
   if (config.format) {
     if (isString(config.format)) {
@@ -160,6 +167,13 @@ export function getName({
 	const finalName = name || amdName || safeVariableName(pkgName);
 
 	return { finalName, pkgName };
+}
+
+interface GetInputOpts {
+  module?: string[];
+  source?: string | string[],
+  cwd: string,
+  entries?: string[]
 }
 
 export default normalizeConfig;
