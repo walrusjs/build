@@ -8,6 +8,20 @@
 
 项目正在紧张开发中...
 
+**一些约定**
+
+- 配置优先级: 配置文件 >> 命令行参数 >> 默认配置
+- 入口文件优先级: 配置 >> package.json source >> 默认
+- 入口文件默认会按照以下的顺序进行查找
+  - `src/index.tsx` 
+  - `src/index.ts`,
+  - `src/index.jsx`,
+  - `src/index.js`,
+  - `index.tsx`,
+  - `index.ts`,
+  - `index.jsx`,
+  - `index.js'` 
+
 ## ✨ 特性
 
 * 🚀  快速，默认情况下零配置
@@ -44,7 +58,7 @@ export function main() {
 ```json
 {
   "scripts": {
-    "build": "walrus test"
+    "build": "wb"
   }
 }
 ```
@@ -54,5 +68,5 @@ export function main() {
 切换到项目根目录
 
 ```
-npm run test
+npm run build
 ```
