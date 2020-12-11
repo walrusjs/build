@@ -4,12 +4,15 @@ import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import alias from '@rollup/plugin-alias';
 import nodeResolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+import inject, { RollupInjectOptions } from '@rollup/plugin-inject';
 import shebang from '@walrus/rollup-plugin-shebang';
 import autoprefixer from 'autoprefixer';
 import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2';
 import lessNpmImport from 'less-plugin-npm-import';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import svgr from '@svgr/rollup';
 import { babelCustom } from '../utils';
 import { Format, NormalizedConfig } from '../types';
 
@@ -44,6 +47,7 @@ export default function getPlugins(
         includeDependencies: true
       }),
       url(),
+      svgr(),
       alias({
         entries: aliasConfig
       }),
@@ -77,9 +81,14 @@ export default function getPlugins(
           cacheRoot: `./node_modules/.cache/.rts2_cache_${format}`,
           tsconfig: config.tsconfig,
           check: !disableTypeCheck,
+          tsconfigDefaults: {
+            compilerOptions: {
+              sourceMap: config.sourcemap,
+              declaration: true
+            }
+          },
           tsconfigOverride: {
             compilerOptions: {
-              module: 'ESNext',
               target: 'esnext',
             },
           }
