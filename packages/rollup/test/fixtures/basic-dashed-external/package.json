@@ -1,0 +1,6 @@
+{
+  "name": "basic-dashed-external",
+  "dependencies": {
+    "tiny-glob": "^0.2.6"
+  }
+}

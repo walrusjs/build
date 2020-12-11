@@ -17,14 +17,14 @@ function snapshot(
   }: { title: string; entries?: string | string[]; },
   config?: Config
 ) {
-  const cwd = fixture(title);
   test(title, async () => {
     await generate(
       {
         ...config,
         entries,
-        cwd,
-        sourcemap: false
+        cwd: fixture(title),
+        sourcemap: false,
+        compress: false,
       }
     )
 
@@ -52,21 +52,41 @@ snapshot({
   title: 'async-ts'
 });
 
-// snapshot({
-//   title: 'basic'
-// });
+snapshot({
+  title: 'basic'
+});
 
-// snapshot({
-//   title: 'basic-ts'
-// });
+snapshot({
+  title: 'basic-css'
+});
 
-// snapshot({
-//   title: 'basic-tsx'
-// });
+snapshot({
+  title: 'basic-dashed-external'
+});
 
-// snapshot({
-//   title: 'basic-json'
-// });
+snapshot({
+  title: 'basic-multi-source'
+});
+
+snapshot({
+  title: 'class-decorators-ts'
+});
+
+snapshot({
+  title: 'class-properties'
+});
+
+snapshot({
+  title: 'basic-ts'
+});
+
+snapshot({
+  title: 'basic-tsx'
+});
+
+snapshot({
+  title: 'basic-json'
+});
 
 snapshot({
   title: 'svgr'

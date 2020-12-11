@@ -88,7 +88,7 @@ class Bundler {
     this.logger = await this.createLogger();
     const outputDir = path.dirname(this.normalizedConfig.output);
 
-    console.log(this.normalizedConfig);
+    // console.log(this.normalizedConfig);
 
     const cleanPromise = new Promise(resolve =>
       rimraf(
