@@ -4,14 +4,21 @@ import rimraf from 'rimraf';
 import { series } from 'asyncro';
 import { merge } from 'lodash';
 import progressEstimator from 'progress-estimator';
-import { rollup, InputOptions, OutputOptions } from 'rollup';
+import { rollup } from 'rollup';
 import {
   DEFAULT_CONFIG_FILE,
   DEFAULT_CONFIG
 } from './config';
-import { PackageJson, Config, Format, NormalizedConfig } from './types';
-import { configLoader, normalizeConfig } from './utils';
+import {
+  Task,
+  Paths,
+  PackageJson,
+  Config,
+  NormalizedConfig
+} from './types';
+import { configLoader, normalizeConfig, clearConsole } from './utils';
 import createConfig from './create-config';
+import doWatch from './utils/do-watch';
 
 interface Asset {
   absolute: string
@@ -20,14 +27,8 @@ interface Asset {
 
 type Assets = Map<string, Asset>;
 
-type Task = {
-  format: Format;
-  inputOptions: InputOptions;
-  outputOptions: OutputOptions;
-}
-
-interface Paths {
-  progressEstimatorCache: string;
+interface RunOptions {
+  watch?: boolean
 }
 
 class Bundler {
@@ -78,7 +79,8 @@ class Bundler {
     });
   }
 
-  async run() {
+  async run(options: RunOptions = {}) {
+    // clearConsole();
     this.normalizedConfig = await normalizeConfig({
       cwd: this.cwd,
       config: this.config,
@@ -88,7 +90,7 @@ class Bundler {
     this.logger = await this.createLogger();
     const outputDir = path.dirname(this.normalizedConfig.output);
 
-    // console.log(this.normalizedConfig);
+    console.log(this.normalizedConfig);
 
     const cleanPromise = new Promise(resolve =>
       rimraf(
@@ -99,8 +101,6 @@ class Bundler {
         resolve,
       ),
     )
-
-    this.logger?.(cleanPromise, `remove output dir`);
 
     const { formats, entries } = this.normalizedConfig;
 
@@ -122,6 +122,18 @@ class Bundler {
         });
       }
     }
+
+    if (options.watch === true) {
+      return doWatch(
+        {
+          output: this.normalizedConfig.output
+        },
+        this.normalizedConfig.cwd,
+        tasks
+      );
+    }
+
+    this.logger?.(cleanPromise, `remove output dir`);
 
     await series(
       tasks.map(config => async () => {

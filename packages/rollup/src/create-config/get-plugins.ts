@@ -31,7 +31,12 @@ export default function getPlugins(
   }: GetPluginsOption,
   writeMeta: boolean
 ) {
-  const { target, alias: aliasConfig, disableTypeCheck } = config;
+  const {
+    target,
+    alias: aliasOpts,
+    replace: replaceOpts,
+    disableTypeCheck
+  } = config;
 
   const { presets } = babelCustom({
     config,
@@ -52,13 +57,15 @@ export default function getPlugins(
     .concat(
       // @ts-ignore
       shebang(),
+      config.replaceMode === 'rollup' &&
+        replace(replaceOpts ?? {}),
       peerDepsExternal({
         includeDependencies: true
       }),
       url(),
       svgr(),
       alias({
-        entries: aliasConfig
+        entries: aliasOpts
       }),
       postcss({
         plugins: [

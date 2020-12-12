@@ -1,9 +1,12 @@
 {
   "name": "@walrus/rollup",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "license": "MIT",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "rimraf lib && tsc -p tsconfig.build.json"
   },
@@ -20,7 +23,7 @@
     "@rollup/plugin-strip": "2.0.0",
     "@rollup/plugin-url": "5.0.1",
     "@svgr/rollup": "5.4.0",
-    "@walrus/babel-preset-walrus": "^1.0.0",
+    "@walrus/babel-preset-walrus": "^0.1.0",
     "@walrus/rollup-plugin-shebang": "1.0.1",
     "asyncro": "3.0.0",
     "autoprefixer": "10.1.0",

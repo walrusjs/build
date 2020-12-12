@@ -34,6 +34,9 @@ const babelCustom = ({
     },
     asyncToPromises: true,
     typescript: !!useTypescript,
+    defines: config.replaceMode === 'babel'
+      ? config.replace
+      : undefined
   }
 
   if (isBrowser) {

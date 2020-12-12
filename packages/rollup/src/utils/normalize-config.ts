@@ -137,6 +137,8 @@ async function normalizeConfig({
     strict: !!config.strict,
     compress: !!config.compress,
     sourcemap: !!config.sourcemap,
+    replace: config.replace,
+    replaceMode: config.replaceMode ?? 'babel'
   }
 
   normalizedConfig.pkg.name = pkgName;

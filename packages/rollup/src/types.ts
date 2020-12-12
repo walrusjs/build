@@ -1,10 +1,21 @@
-import { ModuleFormat } from 'rollup';
+import { ModuleFormat, InputOptions, OutputOptions } from 'rollup';
+import { Replacement } from '@rollup/plugin-replace';
 import { RollupAliasOptions, Alias } from '@rollup/plugin-alias';
 
 export type Format = ModuleFormat;
 
 /** JS target */
 export type Target = 'node' | 'browser';
+
+export type Task = {
+  format: Format;
+  inputOptions: InputOptions;
+  outputOptions: OutputOptions;
+}
+
+export interface Paths {
+  progressEstimatorCache: string;
+}
 
 export interface PackageJson {
   name: string;
@@ -70,6 +81,20 @@ export interface Config {
    * 是否禁用类型检查
    */
   disableTypeCheck?: boolean;
+  /**
+   * 是否开启监听
+   */
+  watch?: boolean;
+  /**
+   * 替换模式，推荐使用 `babel`
+   * @default `babel`
+   */
+  replaceMode?: 'rollup' | 'babel',
+  /**
+   * 替换代码
+   * @rollup/plugin-replace
+   */
+  replace?: Record<string, string>;
 }
 
 export interface NormalizedConfig {
@@ -135,5 +160,14 @@ export interface NormalizedConfig {
    * 是否禁用类型检查
    */
   disableTypeCheck?: boolean;
+  /**
+   * 替换模式，推荐使用 `babel`
+   * @default `babel`
+   */
+  replaceMode: 'rollup' | 'babel',
+  /**
+   * 替换代码
+   * @rollup/plugin-replace
+   */
+  replace?: Record<string, string>;
 }
-

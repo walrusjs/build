@@ -11,17 +11,13 @@ function generate(config: Config) {
 }
 
 function snapshot(
-  {
-    title,
-    entries
-  }: { title: string; entries?: string | string[]; },
-  config?: Config
+  config?: Config & { title: string; }
 ) {
+  const { title, ...rest } = config;
   test(title, async () => {
     await generate(
       {
-        ...config,
-        entries,
+        ...rest,
         cwd: fixture(title),
         sourcemap: false,
         compress: false,
@@ -32,62 +28,70 @@ function snapshot(
   })
 }
 
-snapshot({
-  title: 'alias'
-});
+// snapshot({
+//   title: 'alias'
+// });
+
+// snapshot({
+//   title: 'alias-default'
+// });
+
+// snapshot({
+//   title: 'alias-external'
+// });
+
+// snapshot({
+//   title: 'async-iife-ts'
+// });
+
+// snapshot({
+//   title: 'async-ts'
+// });
+
+// snapshot({
+//   title: 'basic'
+// });
+
+// snapshot({
+//   title: 'basic-css'
+// });
+
+// snapshot({
+//   title: 'basic-dashed-external'
+// });
+
+// snapshot({
+//   title: 'basic-multi-source'
+// });
+
+// snapshot({
+//   title: 'class-decorators-ts'
+// });
+
+// snapshot({
+//   title: 'class-properties'
+// });
+
+// snapshot({
+//   title: 'basic-ts'
+// });
+
+// snapshot({
+//   title: 'basic-tsx'
+// });
+
+// snapshot({
+//   title: 'basic-json'
+// });
+
+// snapshot({
+//   title: 'replace'
+// });
 
 snapshot({
-  title: 'alias-default'
+  title: 'replace-expression'
 });
 
-snapshot({
-  title: 'alias-external'
-});
-
-snapshot({
-  title: 'async-iife-ts'
-});
-
-snapshot({
-  title: 'async-ts'
-});
-
-snapshot({
-  title: 'basic'
-});
-
-snapshot({
-  title: 'basic-css'
-});
-
-snapshot({
-  title: 'basic-dashed-external'
-});
-
-snapshot({
-  title: 'basic-multi-source'
-});
-
-snapshot({
-  title: 'class-decorators-ts'
-});
-
-snapshot({
-  title: 'class-properties'
-});
-
-snapshot({
-  title: 'basic-ts'
-});
-
-snapshot({
-  title: 'basic-tsx'
-});
-
-snapshot({
-  title: 'basic-json'
-});
-
-snapshot({
-  title: 'svgr'
-});
+// snapshot({
+//   title: 'svgr'
+// });

@@ -90,6 +90,8 @@ const createConfig = (
     sourcemap: config.sourcemap,
     freeze: false,
     esModule: false,
+    name: config.name && config.name.replace(/^global\./, ''),
+    extend: /^global\./.test(config.name as string),
     dir: outputDir,
     entryFileNames: outputEntryFileName
   }
