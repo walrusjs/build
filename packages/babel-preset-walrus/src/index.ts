@@ -1,6 +1,7 @@
 import { declare } from '@babel/helper-plugin-utils';
 import mergeConfig from '@birman/utils/lib/merge-config';
 import { Options, EnvOptions, AsyncToPromisesOptions } from '@/types';
+import { mapValues } from 'lodash';
 
 const defaultEnvConfig: Partial<EnvOptions> = {
   exclude: [
@@ -51,6 +52,14 @@ export default declare((api: { assertVersion: (number) => void }, opts: Options 
       ],
     ].filter(Boolean),
     plugins: [
+      opts.defines && [
+        require.resolve('babel-plugin-transform-replace-expressions'),
+        {
+          replace: mapValues(opts.defines, function(item) {
+            return item + '';
+          }),
+        }
+      ],
       [
         require.resolve('babel-plugin-module-resolver'),
         {

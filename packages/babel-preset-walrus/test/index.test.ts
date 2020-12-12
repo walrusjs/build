@@ -134,7 +134,6 @@ test('async transform to promises', () => {
       asyncToPromises: true
     }
   );
-  console.log(code);
   expect(code).toContain(`Promise.resolve(`);
 });
 
@@ -147,7 +146,6 @@ test('async transform to promises', () => {
       asyncToPromises: true
     }
   );
-  console.log(code);
   expect(code).toContain(`Promise.resolve(`);
 });
 
@@ -155,6 +153,23 @@ test('async transform to promises', () => {
 //   const code = transformWithPreset(`import('./a');`, {});
 //   expect(code).toContain(`require('./a')`);
 // });
+
+test('defines', () => {
+  const code = transformWithPreset(
+    `const DEBUG = true;
+    if (DEBUG) {
+      console.log('debug mode', DEBUG);
+    } else {
+      console.log('production mode', DEBUG);
+    }`,
+    {
+      defines: {
+        DEBUG: 'false'
+      }
+    }
+  );
+  expect(code).toContain(`if (false) {`);
+});
 
 test('alias', () => {
   const code = transformWithPreset(`import { a } from '@/a';`, {

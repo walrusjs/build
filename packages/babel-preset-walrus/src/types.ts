@@ -90,4 +90,9 @@ export interface Options {
    * babel-plugin-import配置
    */
   import?: ImportPluginOpts[];
+  /**
+   * 替换代码
+   * babel-plugin-transform-replace-expressions
+   */
+  defines?: Record<string, string>;
 }
