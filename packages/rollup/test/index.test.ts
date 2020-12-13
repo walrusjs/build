@@ -64,6 +64,12 @@ function snapshot(
 //   title: 'basic-multi-source'
 // });
 
+snapshot({
+  title: 'basic-node-internals',
+  target: 'node',
+  format: ['cjs']
+});
+
 // snapshot({
 //   title: 'class-decorators-ts'
 // });
@@ -96,9 +102,9 @@ function snapshot(
 //   title: 'svgr'
 // });
 
-snapshot({
-  title: 'optional-chaining-ts'
-});
+// snapshot({
+//   title: 'optional-chaining-ts'
+// });
 
 // snapshot({
 //   title: 'pretty'
