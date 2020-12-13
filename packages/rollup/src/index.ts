@@ -1,9 +1,8 @@
 import path from 'path';
-import fs from 'fs-extra';
 import rimraf from 'rimraf';
+import ora from 'ora';
 import { series } from 'asyncro';
 import { merge } from 'lodash';
-import progressEstimator from 'progress-estimator';
 import { rollup } from 'rollup';
 import {
   DEFAULT_CONFIG_FILE,
@@ -18,7 +17,7 @@ import {
 } from './types';
 import { configLoader, normalizeConfig, clearConsole } from './utils';
 import createConfig from './create-config';
-import doWatch from './utils/do-watch';
+import doWatch from './do-watch';
 
 interface Asset {
   absolute: string
@@ -36,10 +35,10 @@ class Bundler {
   private pkg: PackageJson;
   private paths: Paths;
   private config: Config;
-  private logger: progressEstimator.ProgressEstimator | null;
   private hasPackageJson: boolean;
   private normalizedConfig: NormalizedConfig;
   public bundles: Set<Assets>;
+  private spinner: ora.Ora;
 
   constructor(config: Config) {
     this.cwd = path.resolve(config.cwd || '.');
@@ -65,19 +64,15 @@ class Bundler {
     this.paths = {
       progressEstimatorCache: this.resolveApp('node_modules/.cache/.progress-estimator')
     }
-    this.logger = null;
+
+    this.spinner = ora({
+      prefixText: `[wb]: `,
+    });
   }
 
   resolveApp(relativePath: string) {
     return path.resolve(this.cwd, relativePath);
   };
-
-  async createLogger() {
-    await fs.ensureDir(this.paths.progressEstimatorCache);
-    return progressEstimator({
-      storagePath: this.paths.progressEstimatorCache,
-    });
-  }
 
   async run(options: RunOptions = {}) {
     // clearConsole();
@@ -87,10 +82,9 @@ class Bundler {
       pkg: this.pkg,
       hasPackageJson: this.hasPackageJson
     });
-    this.logger = await this.createLogger();
     const outputDir = path.dirname(this.normalizedConfig.output);
 
-    console.log(this.normalizedConfig);
+    // console.log(this.normalizedConfig);
 
     const cleanPromise = new Promise(resolve =>
       rimraf(
@@ -124,27 +118,53 @@ class Bundler {
     }
 
     if (options.watch === true) {
+      this.spinner.start();
+
       return doWatch(
         {
-          output: this.normalizedConfig.output
+          output: this.normalizedConfig.output,
+          onStart: () => {
+            this.spinner.text = 'watch start';
+          },
+          onBuildStart: () => {
+            this.spinner.text = 'buld start';
+          },
+          onBuildEnd: () => {
+            this.spinner.text = 'buld start';
+          },
+          onEnd: () => {
+            this.spinner.text = 'watch end';
+          },
+          onError: (e, message) => {
+            this.spinner.fail(`error: ${message}`);
+          }
         },
         this.normalizedConfig.cwd,
         tasks
       );
     }
 
-    this.logger?.(cleanPromise, `remove output dir`);
+    this.spinner.start('build start');
+
+    this.spinner.text = 'clean output dir';
+
+    await cleanPromise;
 
     await series(
       tasks.map(config => async () => {
         const promise = this.build(config);
 
-        this.logger?.(promise, `Building modules format ${config.format}`);
+        this.spinner.text = `Building modules format ${config.format}`;
+
         let bundle = await promise;
 
         return bundle;
       })
     );
+
+    this.spinner.succeed(
+      `build sucess`
+    )
   }
 
   async build(task: Task) {

@@ -82,10 +82,6 @@ export interface Config {
    */
   disableTypeCheck?: boolean;
   /**
-   * 是否开启监听
-   */
-  watch?: boolean;
-  /**
    * 替换模式，推荐使用 `babel`
    * @default `babel`
    */
