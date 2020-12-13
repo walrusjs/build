@@ -13,9 +13,7 @@ export type Task = {
   outputOptions: OutputOptions;
 }
 
-export interface Paths {
-  progressEstimatorCache: string;
-}
+export interface Paths {}
 
 export interface PackageJson {
   name: string;

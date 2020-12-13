@@ -8,6 +8,7 @@
     "lib"
   ],
   "scripts": {
+    "link": "yarn link",
     "build": "rimraf lib && tsc -p tsconfig.build.json"
   },
   "peerDependencies": {

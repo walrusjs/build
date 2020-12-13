@@ -5,10 +5,9 @@
   "author": "wangxingkang <156148958@qq.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "lerna run dev --parallel",
+    "link": "lerna run link --parallel",
     "build": "lerna run build --parallel",
-    "build:wb": "lerna run build:wb --parallel",
-    "test": "npm run test:rollup && npm run test:babel-preset-walrus",
+    "test:unit": "npm run test:rollup && npm run test:babel-preset-walrus",
     "test:rollup": "walrus test ./packages/rollup",
     "test:babel-preset-walrus": "walrus test ./packages/babel-preset-walrus",
     "test-types": "tsc --noEmit",

@@ -88,10 +88,38 @@ function snapshot(
 //   title: 'replace'
 // });
 
-snapshot({
-  title: 'replace-expression'
-});
+// snapshot({
+//   title: 'replace-expression'
+// });
 
 // snapshot({
 //   title: 'svgr'
+// });
+
+snapshot({
+  title: 'optional-chaining-ts'
+});
+
+// snapshot({
+//   title: 'pretty'
+// });
+
+// snapshot({
+//   title: 'pure'
+// });
+
+// snapshot({
+//   title: 'shebang'
+// });
+
+// snapshot({
+//   title: 'ts-jsx'
+// });
+
+// snapshot({
+//   title: 'ts-mixed-exports'
+// });
+
+// snapshot({
+//   title: 'ts-module'
 // });

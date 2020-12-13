@@ -13,9 +13,8 @@
     "lib"
   ],
   "scripts": {
-    "dev": "node ./lib/cli.js --watch",
-    "build": "rimraf lib && tsc -p tsconfig.build.json",
-    "build:wb": "ts-node ./src/cli.ts"
+    "link": "yarn link",
+    "build": "rimraf lib && tsc -p tsconfig.build.json"
   },
   "dependencies": {
     "@walrus/rollup": "^0.3.0",

@@ -14,6 +14,7 @@ import typescript from 'rollup-plugin-typescript2';
 import lessNpmImport from 'less-plugin-npm-import';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import svgr from '@svgr/rollup';
+import tempDir from 'temp-dir';
 import { babelCustom } from '../utils';
 import { Format, NormalizedConfig } from '../types';
 
@@ -93,8 +94,10 @@ export default function getPlugins(
       }),
       useTypescript &&
         typescript({
+          cwd: config.cwd,
+          clean: true,
+          cacheRoot: `${tempDir}/.rollup_plugin_typescript2_cache`,
           typescript: require('typescript'),
-          cacheRoot: `./node_modules/.cache/.rts2_cache_${format}`,
           tsconfig: config.tsconfig,
           check: !disableTypeCheck,
           tsconfigDefaults: {
@@ -104,9 +107,9 @@ export default function getPlugins(
             }
           },
           tsconfigOverride: {
-            compilerOptions: {
-              target: 'esnext',
-            },
+            compilerOptions : {
+              module: 'esnext'
+            }
           }
         }),
       babel({

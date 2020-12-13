@@ -62,7 +62,7 @@ class Bundler {
     this.normalizedConfig = {} as NormalizedConfig;
     this.bundles = new Set();
     this.paths = {
-      progressEstimatorCache: this.resolveApp('node_modules/.cache/.progress-estimator')
+
     }
 
     this.spinner = ora({
@@ -118,22 +118,16 @@ class Bundler {
     }
 
     if (options.watch === true) {
-      this.spinner.start();
+      this.spinner.start('watch start');
 
       return doWatch(
         {
           output: this.normalizedConfig.output,
           onStart: () => {
-            this.spinner.text = 'watch start';
-          },
-          onBuildStart: () => {
-            this.spinner.text = 'buld start';
-          },
-          onBuildEnd: () => {
-            this.spinner.text = 'buld start';
+            this.spinner.text = 'build start';
           },
           onEnd: () => {
-            this.spinner.text = 'watch end';
+            this.spinner.text = 'build end';
           },
           onError: (e, message) => {
             this.spinner.fail(`error: ${message}`);
@@ -162,9 +156,7 @@ class Bundler {
       })
     );
 
-    this.spinner.succeed(
-      `build sucess`
-    )
+    this.spinner.succeed(`build sucess`);
   }
 
   async build(task: Task) {

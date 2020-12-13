@@ -36,8 +36,6 @@ function doWatch(options: Options, cwd: string, tasks: Task[]) {
 			return prev;
     }, []);
 
-    console.log(list);
-
     const watcher = watch(list).on('event', e => {
       if (e.code === 'START') {
         if (typeof onStart === 'function') {
