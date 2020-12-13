@@ -36,7 +36,7 @@
 
 2️⃣ **完善项目信息** your `package.json`:
 
-```json
+```js
 {
   "name": "foo",                   // your package name
   "source": "src/foo.js",          // your source code

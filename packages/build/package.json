@@ -1,13 +1,26 @@
 {
   "name": "@walrus/build",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.1.0",
+  "main": "./dist/build.js",
+  "types": "./dist/index.d.ts",
   "repository": "git@github.com:walrusjs/build.git",
   "author": "wangxingkang <156148958@qq.com>",
   "license": "MIT",
+  "bin": {
+    "wb": "./lib/cli.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "dev": "node ./lib/cli.js --watch",
+    "build": "rimraf lib && tsc -p tsconfig.build.json",
+    "build:wb": "ts-node ./src/cli.ts"
+  },
   "dependencies": {
-    "@walrus/rollup": "^1.0.0",
-    "sade": "^1.7.4"
+    "@walrus/rollup": "^0.1.0",
+    "sade": "^1.7.4",
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@types/sade": "^1.7.2"
