@@ -18,7 +18,7 @@
     "build:wb": "ts-node ./src/cli.ts"
   },
   "dependencies": {
-    "@walrus/rollup": "^0.1.0",
+    "@walrus/rollup": "^0.3.0",
     "sade": "^1.7.4",
     "yargs": "^16.2.0"
   },
