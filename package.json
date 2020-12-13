@@ -11,7 +11,8 @@
     "test": "npm run test:rollup && npm run test:babel-preset-walrus",
     "test:rollup": "walrus test ./packages/rollup",
     "test:babel-preset-walrus": "walrus test ./packages/babel-preset-walrus",
-    "test-types": "tsc --noEmit"
+    "test-types": "tsc --noEmit",
+    "release": "walrus release"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.165",
