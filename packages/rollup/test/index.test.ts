@@ -29,7 +29,13 @@ function snapshot(
 }
 
 snapshot({
-  title: 'alias'
+  title: 'alias',
+  alias: [
+    {
+      find: './constants',
+      replacement: './constants-debug'
+    }
+  ]
 });
 
 snapshot({
@@ -37,7 +43,13 @@ snapshot({
 });
 
 snapshot({
-  title: 'alias-external'
+  title: 'alias-external',
+  alias: [
+    {
+      find: 'tiny-glob',
+      replacement: './colossal-glob.js'
+    }
+  ]
 });
 
 snapshot({
@@ -91,11 +103,17 @@ snapshot({
 });
 
 snapshot({
-  title: 'replace'
+  title: 'replace',
+  replace: {
+    DEBUG: 'false'
+  }
 });
 
 snapshot({
-  title: 'replace-expression'
+  title: 'replace-expression',
+  replace: {
+    'Object.freeze': 'Object'
+  }
 });
 
 snapshot({

@@ -2,12 +2,7 @@ import path from 'path';
 import rimraf from 'rimraf';
 import ora from 'ora';
 import { series } from 'asyncro';
-import { merge } from 'lodash';
 import { rollup } from 'rollup';
-import {
-  DEFAULT_CONFIG_FILE,
-  DEFAULT_CONFIG
-} from './config';
 import {
   Task,
   Paths,
@@ -52,18 +47,10 @@ class Bundler {
     this.pkg = pkgInfo.data ?? {};
     this.hasPackageJson = !!pkgInfo.path;
 
-    const userConfig = configLoader.loadSync({
-      files: DEFAULT_CONFIG_FILE,
-      cwd: this.cwd,
-      packageKey: 'wb'
-    }).data ?? {};
-
-    this.config = merge({}, DEFAULT_CONFIG, config, userConfig);
+    this.config = config;
     this.normalizedConfig = {} as NormalizedConfig;
     this.bundles = new Set();
-    this.paths = {
-
-    }
+    this.paths = {}
 
     this.spinner = ora({
       prefixText: `[wb]: `,
