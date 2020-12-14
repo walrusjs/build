@@ -17,9 +17,10 @@
     "build": "rimraf lib && tsc -p tsconfig.build.json"
   },
   "dependencies": {
+    "@lerna/filter-packages": "^3.18.0",
     "@walrus/rollup": "^0.3.0",
-    "sade": "^1.7.4",
-    "yargs": "^16.2.0"
+    "ajv": "^6.12.6",
+    "sade": "^1.7.4"
   },
   "devDependencies": {
     "@types/sade": "^1.7.2"
