@@ -38,19 +38,7 @@ export default (handler: (opts: any) => void) => {
 			DEFAULT_FORMATS,
 		)
 		.option('--watch, -w', 'Rebuilds on any change', false)
-		.option(
-			'--pkg-main',
-			'Outputs files analog to package.json main entries',
-			true,
-		)
 		.option('--target', 'Specify your target environment (node or browser)', 'browser')
-		.option('--external', `Specify external dependencies, or 'none'`)
-		.option('--globals', `Specify globals dependencies, or 'none'`)
-		.example('wb --globals react=React,jquery=$')
-		.option('--define', 'Replace constants with hard-coded values')
-		.example('wb --define API_KEY=1234')
-		.option('--alias', `Map imports to different modules`)
-		.example('wb --alias react=preact')
 		.option('--compress', 'Compress output using Terser', undefined)
 		.option('--strict', 'Enforce undefined global context and add "use strict"', true)
 		.option('--name', 'Specify name exposed in UMD builds')
@@ -62,7 +50,6 @@ export default (handler: (opts: any) => void) => {
 			undefined,
 		)
 		.example("wb --no-sourcemap # don't generate sourcemaps")
-		.option('--raw', 'Show raw byte size', false)
 		.option(
 			'--jsx',
 			'A custom JSX pragma like React.createElement (default: h)',

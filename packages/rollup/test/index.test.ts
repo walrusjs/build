@@ -28,41 +28,41 @@ function snapshot(
   })
 }
 
-// snapshot({
-//   title: 'alias'
-// });
+snapshot({
+  title: 'alias'
+});
 
-// snapshot({
-//   title: 'alias-default'
-// });
+snapshot({
+  title: 'alias-default'
+});
 
-// snapshot({
-//   title: 'alias-external'
-// });
+snapshot({
+  title: 'alias-external'
+});
 
-// snapshot({
-//   title: 'async-iife-ts'
-// });
+snapshot({
+  title: 'async-iife-ts'
+});
 
-// snapshot({
-//   title: 'async-ts'
-// });
+snapshot({
+  title: 'async-ts'
+});
 
-// snapshot({
-//   title: 'basic'
-// });
+snapshot({
+  title: 'basic'
+});
 
-// snapshot({
-//   title: 'basic-css'
-// });
+snapshot({
+  title: 'basic-css'
+});
 
 // snapshot({
 //   title: 'basic-dashed-external'
 // });
 
-// snapshot({
-//   title: 'basic-multi-source'
-// });
+snapshot({
+  title: 'basic-multi-source'
+});
 
 snapshot({
   title: 'basic-node-internals',
@@ -70,62 +70,62 @@ snapshot({
   format: ['cjs']
 });
 
-// snapshot({
-//   title: 'class-decorators-ts'
-// });
+snapshot({
+  title: 'class-decorators-ts'
+});
 
-// snapshot({
-//   title: 'class-properties'
-// });
+snapshot({
+  title: 'class-properties'
+});
 
-// snapshot({
-//   title: 'basic-ts'
-// });
+snapshot({
+  title: 'basic-ts'
+});
 
-// snapshot({
-//   title: 'basic-tsx'
-// });
+snapshot({
+  title: 'basic-tsx'
+});
 
-// snapshot({
-//   title: 'basic-json'
-// });
+snapshot({
+  title: 'basic-json'
+});
 
-// snapshot({
-//   title: 'replace'
-// });
+snapshot({
+  title: 'replace'
+});
 
-// snapshot({
-//   title: 'replace-expression'
-// });
+snapshot({
+  title: 'replace-expression'
+});
 
-// snapshot({
-//   title: 'svgr'
-// });
+snapshot({
+  title: 'svgr'
+});
 
-// snapshot({
-//   title: 'optional-chaining-ts'
-// });
+snapshot({
+  title: 'optional-chaining-ts'
+});
 
-// snapshot({
-//   title: 'pretty'
-// });
+snapshot({
+  title: 'pretty'
+});
 
-// snapshot({
-//   title: 'pure'
-// });
+snapshot({
+  title: 'pure'
+});
 
-// snapshot({
-//   title: 'shebang'
-// });
+snapshot({
+  title: 'shebang'
+});
 
-// snapshot({
-//   title: 'ts-jsx'
-// });
+snapshot({
+  title: 'ts-jsx'
+});
 
-// snapshot({
-//   title: 'ts-mixed-exports'
-// });
+snapshot({
+  title: 'ts-mixed-exports'
+});
 
-// snapshot({
-//   title: 'ts-module'
-// });
+snapshot({
+  title: 'ts-module'
+});
