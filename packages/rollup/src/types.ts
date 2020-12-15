@@ -1,5 +1,4 @@
 import { ModuleFormat, InputOptions, OutputOptions } from 'rollup';
-import { Replacement } from '@rollup/plugin-replace';
 import { RollupAliasOptions, Alias } from '@rollup/plugin-alias';
 
 export type Format = ModuleFormat;

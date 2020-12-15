@@ -22,7 +22,8 @@ interface Asset {
 type Assets = Map<string, Asset>;
 
 interface RunOptions {
-  watch?: boolean
+  watch?: boolean;
+  prefixText?: string;
 }
 
 class Bundler {
@@ -62,6 +63,10 @@ class Bundler {
   };
 
   async run(options: RunOptions = {}) {
+    const { prefixText } = options;
+    this.spinner = ora({
+      prefixText: prefixText ? `${prefixText}: ` : undefined,
+    });
     // clearConsole();
     this.normalizedConfig = await normalizeConfig({
       cwd: this.cwd,
