@@ -19,7 +19,7 @@ const colors: typeof ForegroundColor[] = [
 let index = 0;
 const cache: Record<string, string> = {};
 
-export default function (pkg: string) {
+export function randomColor(pkg: string) {
   if (!cache[pkg]) {
     const color = colors[index];
     let str = chalk[color].bold(pkg);

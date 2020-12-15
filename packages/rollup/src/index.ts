@@ -5,12 +5,11 @@ import { series } from 'asyncro';
 import { rollup } from 'rollup';
 import {
   Task,
-  Paths,
   PackageJson,
   Config,
   NormalizedConfig
 } from './types';
-import { configLoader, normalizeConfig, clearConsole } from './utils';
+import { configLoader, normalizeConfig } from './utils';
 import createConfig from './create-config';
 import doWatch from './do-watch';
 
@@ -29,7 +28,6 @@ interface RunOptions {
 class Bundler {
   private cwd: string;
   private pkg: PackageJson;
-  private paths: Paths;
   private config: Config;
   private hasPackageJson: boolean;
   private normalizedConfig: NormalizedConfig;
@@ -51,7 +49,6 @@ class Bundler {
     this.config = config;
     this.normalizedConfig = {} as NormalizedConfig;
     this.bundles = new Set();
-    this.paths = {}
 
     this.spinner = ora({
       prefixText: `[wb]: `,
@@ -75,8 +72,6 @@ class Bundler {
       hasPackageJson: this.hasPackageJson
     });
     const outputDir = path.dirname(this.normalizedConfig.output);
-
-    // console.log(this.normalizedConfig);
 
     const cleanPromise = new Promise(resolve =>
       rimraf(

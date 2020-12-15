@@ -2,9 +2,10 @@ import path from 'path';
 import { isArray, isString, isPlainObject } from 'lodash';
 import { Alias } from '@rollup/plugin-alias';
 import { yellow } from 'kleur';
-import { DEFAULT_INPUT_FILE } from '../config';
+import { DEFAULT_INPUT_FILE } from './config';
 import { Config, NormalizedConfig, Format, PackageJson } from '../types';
-import { getExistFile, isFile, stderr, getOutput, safeVariableName, configLoader } from './';
+import { getExistFile, isFile, configLoader } from '../';
+import { stderr, getOutput, safeVariableName } from './utils';
 
 interface Opts {
   cwd: string,
@@ -82,10 +83,7 @@ async function normalizeConfig({
 	// de-dupe formats and convert "esm" to "es":
 	formats = Array.from(new Set(formats.map(f => {
     if (f === 'esm') {
-      return 'es';
-    }
-    if (f === 'commonjs') {
-      return 'cjs';
+      return 'es' as Format;
     }
     return f;
   })));

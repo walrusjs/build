@@ -7,7 +7,7 @@
   "scripts": {
     "link": "lerna run link --parallel",
     "build": "lerna run build --parallel",
-    "test:unit": "npm run test:rollup && npm run test:babel-preset-walrus",
+    "test:unit": "walrus test",
     "test:build": "walrus test ./packages/build",
     "test:rollup": "walrus test ./packages/rollup",
     "test:babel-preset-walrus": "walrus test ./packages/babel-preset-walrus",

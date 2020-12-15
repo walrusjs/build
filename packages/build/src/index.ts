@@ -19,7 +19,7 @@ export async function buildForLerna(opts: Opts) {
       ...opts,
       cwd: pkgPath,
       rootPath: cwd
-    });
+    } as Opts);
   }
 }
 

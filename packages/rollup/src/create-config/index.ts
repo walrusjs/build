@@ -53,8 +53,9 @@ const createConfig = (
   );
 
   let external = ['dns', 'fs', 'path', 'url'].concat(
-		config.entries.filter(e => e !== entry),
-	);
+		config.entries.filter((e: string) => e !== entry),
+  );
+  // @ts-ignore
   const aliasIds = config.alias.map(alias => alias.find);
 
   const externalTest = getExternalTest(external);

@@ -1,6 +1,7 @@
 import path from 'path';
-import camelCase from 'camelcase';
-import { existsSync, promises } from 'fs-extra';
+import { promises } from 'fs-extra';
+// @ts-ignore
+import { configLoader, isDir, isFile, getExistFile, normalizeConfig } from '@walrus/build-utils';
 import { Format, NormalizedConfig } from '../types';
 
 export const readFile = promises.readFile;
@@ -9,54 +10,6 @@ export const stat = promises.stat;
 // eslint-disable-next-line no-console
 export const stdout = console.log.bind(console);
 export const stderr = console.error.bind(console);
-
-/**
- * 判断是否为文件
- * @param name
- */
-export function isFile(name: string): Promise<boolean> {
-	return stat(name)
-		.then(stats => stats.isFile())
-		.catch(() => false);
-}
-
-/**
- * 判断是否为目录
- * @param name
- */
-export function isDir(name: string): Promise<boolean> {
-  return stat(name)
-    .then(stats => stats.isDirectory())
-		.catch(() => false);
-}
-
-interface GetOutputOpts {
-  cwd: string;
-  output: string;
-  pkgMain: string;
-  pkgName: string;
-}
-
-export async function getOutput({
-  cwd,
-  output,
-  pkgMain,
-  pkgName
-}: GetOutputOpts) {
-	let main = path.resolve(cwd, output || pkgMain || 'dist');
-	if (!main.match(/\.[a-z]+$/) || (await isDir(main))) {
-		main = path.resolve(main, `${removeScope(pkgName)}.js`);
-	}
-	return main;
-}
-
-/**
- * Remove a @scope/ prefix from a package name string
- * @param name
- */
-export const removeScope = (name: string): string => {
-	return name.replace(/^@.*\//, '')
-};
 
 /**
  * 替换文件名称
@@ -68,39 +21,6 @@ export function replaceName(filename: string, name: string) {
 		path.dirname(filename),
 		name + path.basename(filename).replace(/^[^.]+/, ''),
 	);
-}
-
-/**
- * 按顺序获取文件
- * @param cwd 目录
- * @param files 获取的文件顺序
- * @param returnRelative
- */
-export function getExistFile({
-  cwd,
-  files,
-  returnRelative
-}: {
-  cwd: string;
-  files: string[];
-  returnRelative?: boolean;
-}) {
-  for (const file of files) {
-    const absFilePath = path.join(cwd, file);
-    if (existsSync(absFilePath)) {
-      return returnRelative ? file : absFilePath;
-    }
-  }
-}
-
-export async function jsOrTs(cwd: string, filename: string) {
-	const extension = (await isFile(path.resolve(cwd, filename + '.ts')))
-		? '.ts'
-		: (await isFile(path.resolve(cwd, filename + '.tsx')))
-		? '.tsx'
-    : '.js';
-
-  return extension;
 }
 
 interface GetMainParams {
@@ -148,20 +68,6 @@ export function getMain({
 	return mainsByFormat[format] || mainsByFormat.cjs;
 }
 
-const INVALID_ES3_IDENT = /((^[^a-zA-Z]+)|[^\w.-])|([^a-zA-Z0-9]+$)/g;
-
-/**
- * Turn a package name into a valid reasonably-unique variable name
- * @param {string} name
- */
-export function safeVariableName(name: string) {
-	const normalized = removeScope(name).toLowerCase();
-	const identifier = normalized.replace(INVALID_ES3_IDENT, '');
-	return camelCase(identifier);
-}
-
-export { default as clearConsole } from '@pansy/clear-console';
-export { default as configLoader } from './config-loader';
-export { default as normalizeConfig } from './normalize-config';
+export { configLoader, isDir, isFile, getExistFile, normalizeConfig };
 export { default as babelCustom } from './babel-custom';
 export { default as getExternalTest } from './get-external-test';

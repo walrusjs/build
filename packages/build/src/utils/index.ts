@@ -1,4 +1,8 @@
 // @ts-ignore
-export { configLoader } from '@walrus/rollup/lib/utils';
+import { configLoader, randomColor } from '@walrus/build-utils';
+
 export { default as getUserConfig } from './get-user-config';
-export { default as randomColor} from './random-color';
+export {
+  configLoader,
+  randomColor
+}
