@@ -27,6 +27,10 @@ function snapshot(
   })
 }
 
+// snapshot({
+//   title: 'alias'
+// });
+
 snapshot({
-  title: 'alias'
+  title: 'lerna'
 });

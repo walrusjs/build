@@ -1,38 +1,45 @@
 import { merge }  from 'lodash';
-import path from 'path';
-// @ts-ignore
-import RollupBundler from '@walrus/rollup';
-import { Config } from './types';
+import { resolve, join } from 'path';
+import { existsSync } from 'fs-extra';
 import { DEFAULT_CONFIG } from './config';
 import { getUserConfig } from './utils';
+import build, { Opts } from './build';
 
-export interface Opts extends Config {
-  watch?: boolean;
+const { getPackages } = require('@lerna/project');
+
+export async function buildForLerna(opts: Opts) {
+  // @ts-ignore
+  const cwd = opts.cwd as string;
+  const packages = await getPackages(cwd);
+
+  for (const pkg of packages) {
+    const pkgPath = pkg.contents;
+    process.chdir(pkgPath);
+    await build({
+      ...opts,
+      cwd: pkgPath,
+      rootPath: cwd
+    });
+  }
 }
 
-async function build(opts: Opts) {
+export default async function(opts: Opts) {
   const { watch, ...inputConfig } = opts;
 
-  const cwd = path.resolve(inputConfig.cwd ?? '.');
+   // @ts-ignore
+  const cwd = resolve(inputConfig.cwd ?? '.');
   const userConfig = getUserConfig(cwd);
   const config = merge({}, DEFAULT_CONFIG, inputConfig, userConfig);
+  config.cwd = cwd;
 
-  console.log(config)
+  const useLerna = existsSync(join(cwd, 'lerna.json'));
 
-  const bundler = new RollupBundler(config);
-
-  try {
-    if (opts.watch === true) {
-      await bundler.run({ watch: opts.watch });
-    } else {
-      await bundler.run();
-    }
-    return 'success';
-  } catch (e) {
-    return e;
+  if (useLerna) {
+    await buildForLerna({ ...config, watch });
+  } else {
+    await build({ ...config, watch });
   }
 }
 
 export * from './types';
-export default build;
 

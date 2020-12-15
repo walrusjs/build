@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@lerna/filter-packages": "^3.18.0",
+    "@lerna/project": "^3.21.0",
     "@walrus/rollup": "^0.3.0",
     "ajv": "^6.12.6",
     "sade": "^1.7.4"
