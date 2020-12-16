@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "link": "lerna run link --parallel",
-    "build": "lerna run build --parallel",
+    "build": "lerna run build --stream",
     "test:unit": "walrus test",
     "test:build": "walrus test ./packages/build",
     "test:rollup": "walrus test ./packages/rollup",

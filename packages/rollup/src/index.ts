@@ -64,13 +64,14 @@ class Bundler {
     this.spinner = ora({
       prefixText: prefixText ? `${prefixText}: ` : undefined,
     });
-    // clearConsole();
+
     this.normalizedConfig = await normalizeConfig({
       cwd: this.cwd,
       config: this.config,
       pkg: this.pkg,
       hasPackageJson: this.hasPackageJson
     });
+
     const outputDir = path.dirname(this.normalizedConfig.output);
 
     const cleanPromise = new Promise(resolve =>

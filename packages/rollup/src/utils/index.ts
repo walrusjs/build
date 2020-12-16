@@ -1,6 +1,5 @@
 import path from 'path';
 import { promises } from 'fs-extra';
-// @ts-ignore
 import { configLoader, isDir, isFile, getExistFile, normalizeConfig } from '@walrus/build-utils';
 import { Format, NormalizedConfig } from '../types';
 
@@ -49,7 +48,7 @@ export function getMain({
 
 	const mainsByFormat: Record<string, string> = {};
 
-	mainsByFormat.es = replaceName(
+	mainsByFormat.esm = replaceName(
 		pkg.module && !pkg.module.match(/src\//)
 			? pkg.module
 			: pkg['jsnext:main'] || 'x.esm.js',

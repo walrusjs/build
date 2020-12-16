@@ -20,8 +20,8 @@ function toObject<T extends object>(obj: T | boolean): T | Partial<T> {
   return (typeof obj === 'object' && obj !== null) ? obj : {};
 }
 
-// @ts-ignore
-export default declare((api: { assertVersion: (number) => void }, opts: Options = {}) => {
+
+export default declare((api: { assertVersion: (version: number) => void }, opts: Options = {}) => {
   api.assertVersion(7);
 
   const defaulrAsyncToPromisesOptions: Partial<AsyncToPromisesOptions> = {

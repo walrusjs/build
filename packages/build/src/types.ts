@@ -1,4 +1,3 @@
-// @ts-ignore
 import { Format, Target, Config } from '@walrus/build-utils';
 
 export { Format, Target, Config }

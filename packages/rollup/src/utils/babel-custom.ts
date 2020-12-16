@@ -1,7 +1,6 @@
 import path from 'path';
 import { PluginItem } from '@babel/core';
 import { NormalizedConfig, Format, Target } from '../types';
-// @ts-ignore
 import { Options, EnvOptions } from '@walrus/babel-preset-walrus';
 
 interface BabelCustomOptions {
@@ -26,7 +25,7 @@ const babelCustom = ({
 
   const babelPresetWalrusOpts: Options = {
     env: {
-      modules: format === 'es' ? false : 'auto',
+      modules: format === 'esm' ? false : 'auto',
       targets
     },
     alias: {

@@ -1,5 +1,4 @@
 import { InputOptions, OutputOptions } from 'rollup';
-// @ts-ignore
 import { Format, Target, Config, NormalizedConfig, PackageJson } from '@walrus/build-utils';
 
 export type Task = {

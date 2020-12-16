@@ -1,5 +1,4 @@
 import sade from 'sade';
-// @ts-ignore
 import { DEFAULT_FORMATS } from '@walrus/rollup/lib/config';
 
 const pkg = require('../package.json');
