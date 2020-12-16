@@ -2,7 +2,7 @@ import path from 'path';
 import { isArray, isString, isPlainObject } from 'lodash';
 import { Alias } from '@rollup/plugin-alias';
 import { yellow } from 'kleur';
-import { DEFAULT_INPUT_FILE } from './config';
+import { DEFAULT_INPUT_FILE, ALL_FORMATS, DEFAULT_CONFIG } from './config';
 import { Config, NormalizedConfig, Format, PackageJson } from '../types';
 import { getExistFile, isFile, configLoader } from '../';
 import { stderr, getOutput, safeVariableName } from './utils';
@@ -17,21 +17,36 @@ interface Opts {
 async function normalizeConfig({
   cwd,
   pkg,
-  config,
+  config: inputConfig,
   hasPackageJson
 }: Opts): Promise<NormalizedConfig> {
+  let {
+    name,
+    tsconfig,
+    strict,
+    compress,
+    sourcemap,
+    replace,
+    output,
+    alias,
+    format: formatConfig,
+    entries: entriesConfig,
+    replaceMode = 'babel',
+    target = 'browser'
+  } = Object.assign({}, DEFAULT_CONFIG, inputConfig);
+
   // normalize entries
   let entries: NormalizedConfig['entries'] = [];
-  if (config.entries) {
-    entries = isArray(config.entries)
-      ? config.entries
-      : (isString(config.entries))
-        ? [config.entries]
+  if (entriesConfig) {
+    entries = isArray(entriesConfig)
+      ? entriesConfig
+      : (isString(entriesConfig))
+        ? [entriesConfig]
         : []
   }
 
   const { finalName, pkgName } = getName({
-		name: config.name,
+		name,
 		pkgName: pkg.name,
 		amdName: pkg.amdName,
 		hasPackageJson,
@@ -54,13 +69,13 @@ async function normalizeConfig({
   }
 
   // normalize tsconfig
-  if (!config.tsconfig) {
-    config.tsconfig = path.join(cwd, 'tsconfig.json');
+  if (!tsconfig) {
+    tsconfig = path.join(cwd, 'tsconfig.json');
   }
 
   // 支持向上查找tsconfig.json
-  if (!await isFile(config.tsconfig)) {
-    config.tsconfig = (configLoader
+  if (!await isFile(tsconfig)) {
+    tsconfig = (configLoader
       .loadSync({
         files: ['tsconfig.json'],
         cwd
@@ -70,23 +85,20 @@ async function normalizeConfig({
   // normalize format
   // config > pkg.source > default
   let formats: Format[] = [];
-  if (config.format) {
-    if (isString(config.format)) {
+  if (formatConfig) {
+    if (isString(formatConfig)) {
       // 支持'esm,cjs'配置
-      formats = (config.format as string).split(',') as Format[];
+      formats = (formatConfig as string).split(',') as Format[];
     }
 
-    if (isArray(config.format)) {
-      formats = config.format;
+    if (isArray(formatConfig)) {
+      formats = formatConfig;
     }
   }
 	// de-dupe formats and convert "esm" to "es":
-	formats = Array.from(new Set(formats.map(f => {
-    if (f === 'esm') {
-      return 'es' as Format;
-    }
-    return f;
-  })));
+  formats = Array
+    .from(new Set(formats))
+    .filter(item => ALL_FORMATS.includes(item));
 	formats.sort((a, b) => (a === 'cjs' ? -1 : a > b ? 1 : 0));
 
   // normalize alias
@@ -97,9 +109,9 @@ async function normalizeConfig({
     }
   ];
 
-  if (isPlainObject(config.alias) && config.alias) {
-    Object.keys(config.alias).forEach(item => {
-      const replacement = (config.alias as Record<string, string>)[item];
+  if (isPlainObject(alias) && alias) {
+    Object.keys(alias).forEach(item => {
+      const replacement = (alias as Record<string, string>)[item];
 
       moduleAlias.push({
         find: item,
@@ -108,14 +120,14 @@ async function normalizeConfig({
     });
   }
 
-  if (isArray(config.alias)) {
-    moduleAlias.push(...config.alias);
+  if (isArray(alias)) {
+    moduleAlias.push(...alias);
   }
 
   // normalize output
-  const output = await getOutput({
+  const latestOutput = await getOutput({
 		cwd,
-		output: config.output as string,
+		output: output as string,
 		pkgMain: pkg.main,
 		pkgName: pkg.name,
   });
@@ -126,17 +138,17 @@ async function normalizeConfig({
     name: finalName,
     entries,
     formats,
-    tsconfig: config.tsconfig,
+    tsconfig,
     alias: moduleAlias,
-    output: output,
+    output: latestOutput,
     hasPackageJson,
     multipleEntries: entries.length > 1,
-    target: config.target ?? 'browser',
-    strict: !!config.strict,
-    compress: !!config.compress,
-    sourcemap: !!config.sourcemap,
-    replace: config.replace,
-    replaceMode: config.replaceMode ?? 'babel'
+    target: target,
+    strict: !!strict,
+    compress: !!compress,
+    sourcemap: !!sourcemap,
+    replace,
+    replaceMode
   }
 
   normalizedConfig.pkg.name = pkgName;
