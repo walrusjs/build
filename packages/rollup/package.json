@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@babel/core": "7.12.9",
+    "@microsoft/api-extractor": "^7.12.1",
     "@rollup/plugin-alias": "3.1.1",
     "@rollup/plugin-babel": "5.2.2",
     "@rollup/plugin-commonjs": "16.0.0",
@@ -35,7 +36,6 @@
     "ora": "^5.1.0",
     "postcss": "8.2.1",
     "require-from-string": "2.0.2",
-    "rimraf": "3.0.2",
     "rollup": "2.34.2",
     "rollup-plugin-peer-deps-external": "2.2.4",
     "rollup-plugin-postcss": "4.0.0",
@@ -48,9 +48,7 @@
   },
   "devDependencies": {
     "@types/autoprefixer": "^9.7.2",
-    "@types/fs-extra": "^9.0.4",
     "@types/require-from-string": "^1.2.0",
-    "@types/rimraf": "^3.0.0",
     "@types/svgr__rollup": "^4.3.0"
   },
   "publishConfig": {

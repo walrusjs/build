@@ -1,5 +1,5 @@
 import path from 'path';
-import rimraf from 'rimraf';
+import { rimraf } from '@walrus/build-utils';
 import ora from 'ora';
 import { series } from 'asyncro';
 import { rollup } from 'rollup';
