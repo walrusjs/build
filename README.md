@@ -51,12 +51,12 @@
   "unpkg": "dist/foo.umd.js",      // where to generate the UMD bundle (also aliased as "umd:main")
   "scripts": {
     "build": "wb",        // compiles "source" to "main"/"module"/"unpkg"
-    "start": "wb watch"     // re-build when source files change
+    "start": "wb --watch"     // re-build when source files change
   }
 }
 ```
 
-3️⃣ **编译文件** 运行 `npm run build`.
+3️⃣ **执行编译** 运行 `npm run build`.
 
 ## 配置
 
@@ -77,8 +77,8 @@ Options
 	-v, --version      Displays current version
 	-i, --entry        Entry module(s)
   -o, --output       Directory to place build files into
-	-f, --format       Only build specified formats (any of es,cjs,umd or iife) (default es,cjs)
+	-f, --format       Only build specified formats (any of esm,cjs,umd) (default esm,cjs)
 
 Examples
-	$ wb build --tsconfig tsconfig.build.json
+	$ wb --tsconfig tsconfig.build.json
 ```
