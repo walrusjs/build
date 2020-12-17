@@ -27,9 +27,9 @@ function snapshot(
   })
 }
 
-// snapshot({
-//   title: 'alias'
-// });
+snapshot({
+  title: 'alias'
+});
 
 snapshot({
   title: 'lerna'

@@ -1,16 +1,10 @@
-import { merge }  from 'lodash';
-import { resolve, parse } from 'path';
-// @ts-ignore
+import { parse } from 'path';
 import RollupBundler from '@walrus/rollup';
-import { DEFAULT_CONFIG } from './config';
-import { getUserConfig, randomColor } from './utils';
+import { randomColor } from './utils';
 import { Opts } from './types';
 
 async function build({ watch, rootPath, ...inputConfig }: Opts) {
-  // @ts-ignore
-  const cwd: string = resolve(inputConfig.cwd as string);
-  const userConfig = getUserConfig(cwd);
-  const config = merge({}, DEFAULT_CONFIG, inputConfig, userConfig);
+  const cwd: string = inputConfig.cwd as string;
 
   let dirName: string | undefined;
 
@@ -18,8 +12,7 @@ async function build({ watch, rootPath, ...inputConfig }: Opts) {
     dirName = randomColor(parse(cwd).name);
   }
 
-  // @ts-ignore
-  const bundler = new RollupBundler(config);
+  const bundler = new RollupBundler(inputConfig);
 
   try {
     if (watch === true) {

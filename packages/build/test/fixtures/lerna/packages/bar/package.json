@@ -1,3 +1,7 @@
 {
-  "name": "bar"
+  "name": "bar",
+  "dependencies": {
+    "a": "1.0.0",
+    "job": "1.0.0"
+  }
 }

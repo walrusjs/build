@@ -41,7 +41,8 @@ export default (handler: (opts: any) => void) => {
 		.option('--compress', 'Compress output using Terser', undefined)
 		.option('--strict', 'Enforce undefined global context and add "use strict"', true)
 		.option('--name', 'Specify name exposed in UMD builds')
-		.option('--cwd', 'Use an alternative working directory', '.')
+    .option('--cwd', 'Use an alternative working directory', '.')
+    .option('--stream', 'Stream output with lines prefixed by package.', false)
 		.option('--sourcemap', 'Generate source map', true)
 		.option(
 			'--css-modules',

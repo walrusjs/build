@@ -3,6 +3,7 @@ import { RollupAliasOptions, Alias } from '@rollup/plugin-alias';
 /** JS target */
 export type Target = 'node' | 'browser';
 
+// 目前仅支持这三种格式，感觉满足需求了
 export type Format = 'esm' | 'cjs' | 'umd';
 
 export interface PackageJson {
