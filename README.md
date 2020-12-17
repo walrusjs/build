@@ -28,11 +28,13 @@
 
 ## ✨ 特性
 
-* 🚀  快速，默认情况下零配置
-* 📦  基于 rollup 进行打包
-* 🐚  支持别名设置，默认`@`指向项目`src`目录
-* 💅  内置支持 `CSS` `Sass` `Stylus` `Less` `CSS modules`
-* 💻  使用 TypeScript 编写，提供类型定义文件
+- 🚀  快速，默认情况下零配置
+- 🌈  基于 rollup 和 babel 的打包功能
+- 📦  支持 cjs、esm 和 umd 三种格式的打包
+- 🎉  支持 lerna
+- 🐚  支持别名设置，默认`@`指向项目`src`目录
+- 💅  内置支持 `CSS` `Sass` `Stylus` `Less` `CSS modules`
+- 💻  使用 TypeScript 编写，提供类型定义文件
 
 ## 🔨 使用
 
