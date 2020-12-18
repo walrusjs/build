@@ -1,4 +1,3 @@
-import { merge }  from 'lodash';
 import { resolve, join } from 'path';
 import { existsSync } from 'fs-extra';
 import { getUserConfig } from './utils';

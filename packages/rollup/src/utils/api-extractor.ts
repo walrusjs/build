@@ -7,13 +7,15 @@ import { NormalizedConfig } from '../types';
 export default async function({
   cwd,
   pkg,
-  dts,
+  typeExtractor,
   tsconfig,
   output
 }: NormalizedConfig) {
-  if (dts === false) return;
+  if (typeExtractor === false) return;
   const outDir = path.dirname(output);
-  const { files = [], ignore = [], includedPackages = [] } = dts;
+  const { files = [], ignore = [], includedPackages = [] } = typeExtractor;
+
+  console.log(typeExtractor);
 
   const dtsFiles = await globby(files, {
     cwd: outDir,
@@ -28,7 +30,7 @@ export default async function({
       configObject: {
         projectFolder: cwd,
         mainEntryPointFilePath: dtsFile,
-        bundledPackages: [],
+        bundledPackages: includedPackages,
         apiReport: { enabled: false, reportFileName: 'report.api.md' },
         dtsRollup: { enabled: true, untrimmedFilePath: dtsFile },
         tsdocMetadata: { enabled: false },
@@ -47,11 +49,11 @@ export default async function({
     });
   });
 
-    const scrappedDtsFiles = await globby('**/*.d.ts', {
-      cwd: outDir,
-      absolute: true,
-      ignore: [...dtsFiles, ...ignore],
-    });
+  const scrappedDtsFiles = await globby('**/*.d.ts', {
+    cwd: outDir,
+    absolute: true,
+    ignore: [...dtsFiles, ...ignore],
+  });
 
-    await Promise.all(scrappedDtsFiles.map(file => fs.remove(file)));
+  await Promise.all(scrappedDtsFiles.map(file => fs.remove(file)));
 }

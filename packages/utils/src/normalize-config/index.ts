@@ -30,7 +30,7 @@ async function normalizeConfig({
     output,
     alias,
     cssModules,
-    dts,
+    typeExtractor,
     format: formatConfig,
     entries: entriesConfig,
     replaceMode = 'babel',
@@ -152,8 +152,8 @@ async function normalizeConfig({
     replace,
     cssModules,
     replaceMode,
-    dts: isPlainObject(dts)
-      ? { files: ['index.d.ts'], ...dts }
+    typeExtractor: isPlainObject(typeExtractor)
+      ? { files: ['index.d.ts'], ...typeExtractor }
       : false,
   }
 

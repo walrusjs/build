@@ -125,11 +125,6 @@ function snapshot(
 //   title: 'css-modules'
 // });
 
-snapshot({
-  title: 'dts',
-  dts: {}
-});
-
 // snapshot({
 //   title: 'optional-chaining-ts'
 // });
@@ -157,3 +152,8 @@ snapshot({
 // snapshot({
 //   title: 'ts-module'
 // });
+
+snapshot({
+  title: 'type-extractor',
+  typeExtractor: {}
+});

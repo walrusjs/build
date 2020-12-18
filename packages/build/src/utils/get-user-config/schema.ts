@@ -35,6 +35,12 @@ export default {
     target: noEmptyStr,
     disableTypeCheck: { type: 'boolean' },
     replaceMode: { type: 'string',  pattern: '^(rollup|babel)$' },
-    replace: { type: 'object' }
+    replace: { type: 'object' },
+    typeExtractor: {
+      oneOf: [
+        { type: 'boolean' },
+        { type: 'object' }
+      ]
+    },
   },
 };

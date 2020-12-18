@@ -96,7 +96,7 @@ export interface Config {
    * @rollup/plugin-replace
    */
   replace?: Record<string, string>;
-  dts?: {
+  typeExtractor?: {
     files?: string[]
     /**
      * 打包类型定义排除文件列表。
@@ -186,7 +186,7 @@ export interface NormalizedConfig {
    * css-modules配置
    */
   cssModules?: Partial<PostcssModulesOptions>;
-  dts: {
+  typeExtractor: {
     files?: string[]
     /**
      * 打包类型定义排除文件列表。

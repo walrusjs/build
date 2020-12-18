@@ -1,5 +1,5 @@
-import path from 'path';
 import AJV from 'ajv';
+import chalk from 'chalk';
 import { DEFAULT_CONFIG_FILE } from '../../config';
 import { configLoader } from '../';
 import schema from './schema';
@@ -19,17 +19,19 @@ export default function(cwd: string) {
   if (configFilePath) {
     const ajv = new AJV({ allErrors: true });
     const isValid = ajv.validate(schema, data);
+    console.log(ajv?.errors);
     if (!isValid) {
       const errors = ajv?.errors?.map(({ dataPath, message }, index) => {
         return `${index + 1}. ${dataPath}${dataPath ? ' ' : ''}${message}`;
-      });
-      throw new Error(
+      }) ?? [];
+      console.log(chalk.red(
         `
-Invalid options in ${slash(path.relative(cwd, data))}
+Invalid options in ${slash(configFilePath)}
 
-${errors?.join('\n')}
+${errors.join('\n')}
 `.trim(),
-      );
+      ));
+      process.exit(1);
     }
   }
 
