@@ -1,4 +1,3 @@
-import path from 'path';
 import { PluginItem } from '@babel/core';
 import { NormalizedConfig, Format, Target } from '../types';
 import { Options, EnvOptions } from '@walrus/babel-preset-walrus';
@@ -16,8 +15,6 @@ const babelCustom = ({
   target,
   useTypescript
 }: BabelCustomOptions) => {
-  const { cwd } = config;
-
   let isBrowser = target === 'browser';
   const targets: EnvOptions['targets']  = isBrowser
     ? { browsers: ['last 2 versions', 'IE 10'] }
@@ -27,9 +24,6 @@ const babelCustom = ({
     env: {
       modules: format === 'esm' ? false : 'auto',
       targets
-    },
-    alias: {
-      '@': path.resolve(cwd, 'src')
     },
     asyncToPromises: true,
     typescript: !!useTypescript,
