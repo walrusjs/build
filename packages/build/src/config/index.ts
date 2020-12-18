@@ -10,7 +10,6 @@ export const DEFAULT_CONFIG_FILE = [
 
 export const DEFAULT_CONFIG: Config = {
   format: ['esm', 'cjs'],
-  output: 'dist',
   strict: true,
   sourcemap: true,
   compress: true

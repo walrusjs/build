@@ -1,5 +1,5 @@
 import path from 'path';
-import { rimraf } from '@walrus/build-utils';
+import { rimraf, deleteEmptyDir } from '@walrus/build-utils';
 import ora from 'ora';
 import { series } from 'asyncro';
 import { rollup } from 'rollup';
@@ -9,7 +9,7 @@ import {
   Config,
   NormalizedConfig
 } from './types';
-import { configLoader, normalizeConfig } from './utils';
+import { configLoader, normalizeConfig, apiExtractor } from './utils';
 import createConfig from './create-config';
 import doWatch from './do-watch';
 
@@ -143,6 +143,12 @@ class Bundler {
         return bundle;
       })
     );
+
+    await apiExtractor(this.normalizedConfig);
+
+    this.spinner.text = 'delete empty dir'
+    await deleteEmptyDir(`${path.join(this.cwd, 'dist')}`)
+
 
     this.spinner.succeed(`build sucess`);
   }

@@ -17,6 +17,7 @@
     "build": "rimraf lib && tsc -p tsconfig.build.json"
   },
   "dependencies": {
+    "@babel/core": "7.12.10",
     "@lerna/project": "^3.21.0",
     "@lerna/run-topologically": "^3.18.5",
     "@walrus/build-utils": "0.3.0",

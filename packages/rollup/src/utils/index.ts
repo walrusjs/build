@@ -54,15 +54,17 @@ export function getMain({
 			: pkg['jsnext:main'] || 'x.esm.js',
 		mainNoExtension,
 	);
-	mainsByFormat.modern = replaceName(
-		(pkg.syntax && pkg.syntax.esmodules) || pkg.esmodule || 'x.modern.js',
-		mainNoExtension,
-	);
+	// mainsByFormat.modern = replaceName(
+	// 	(pkg.syntax && pkg.syntax.esmodules) || pkg.esmodule || 'x.modern.js',
+	// 	mainNoExtension,
+	// );
 	mainsByFormat.cjs = replaceName(pkg['cjs:main'] || 'x.js', mainNoExtension);
 	mainsByFormat.umd = replaceName(
 		pkg['umd:main'] || pkg.unpkg || 'x.umd.js',
 		mainNoExtension,
   );
+
+  console.log(mainsByFormat);
 
 	return mainsByFormat[format] || mainsByFormat.cjs;
 }
@@ -70,3 +72,4 @@ export function getMain({
 export { configLoader, isDir, isFile, getExistFile, normalizeConfig };
 export { default as babelCustom } from './babel-custom';
 export { default as getExternalTest } from './get-external-test';
+export { default as apiExtractor } from './api-extractor';

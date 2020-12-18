@@ -96,6 +96,17 @@ export interface Config {
    * @rollup/plugin-replace
    */
   replace?: Record<string, string>;
+  dts?: {
+    files?: string[]
+    /**
+     * 打包类型定义排除文件列表。
+     */
+    ignore?: string[]
+    /**
+     * 打包类型定义文件包括的包。
+     */
+    includedPackages?: string[]
+  } | false;
 }
 
 export interface NormalizedConfig {
@@ -174,5 +185,16 @@ export interface NormalizedConfig {
   /**
    * css-modules配置
    */
-  cssModules?: Partial<PostcssModulesOptions>
+  cssModules?: Partial<PostcssModulesOptions>;
+  dts: {
+    files?: string[]
+    /**
+     * 打包类型定义排除文件列表。
+     */
+    ignore?: string[]
+    /**
+     * 打包类型定义文件包括的包。
+     */
+    includedPackages?: string[]
+  } | false;
 }

@@ -20,6 +20,7 @@ async function normalizeConfig({
   config,
   hasPackageJson
 }: Opts): Promise<NormalizedConfig> {
+  console.log(config);
   let {
     name,
     tsconfig,
@@ -30,6 +31,7 @@ async function normalizeConfig({
     output,
     alias,
     cssModules,
+    dts,
     format: formatConfig,
     entries: entriesConfig,
     replaceMode = 'babel',
@@ -150,7 +152,10 @@ async function normalizeConfig({
     sourcemap: !!sourcemap,
     replace,
     cssModules,
-    replaceMode
+    replaceMode,
+    dts: isPlainObject(dts)
+      ? { files: ['index.d.ts'], ...dts }
+      : false,
   }
 
   normalizedConfig.pkg.name = pkgName;

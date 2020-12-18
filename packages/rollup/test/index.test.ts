@@ -17,6 +17,7 @@ function snapshot(
   test(title, async () => {
     await generate(
       {
+        format: ['esm', 'cjs'],
         ...rest,
         cwd: fixture(title),
         sourcemap: false,
@@ -28,126 +29,131 @@ function snapshot(
   })
 }
 
-snapshot({
-  title: 'alias',
-  alias: [
-    {
-      find: './constants',
-      replacement: './constants-debug'
-    }
-  ]
-});
-
-snapshot({
-  title: 'alias-default'
-});
-
-snapshot({
-  title: 'alias-external',
-  alias: [
-    {
-      find: 'tiny-glob',
-      replacement: './colossal-glob.js'
-    }
-  ]
-});
-
-snapshot({
-  title: 'async-iife-ts'
-});
-
-snapshot({
-  title: 'async-ts'
-});
-
-snapshot({
-  title: 'basic'
-});
-
-snapshot({
-  title: 'basic-css'
-});
+// snapshot({
+//   title: 'alias',
+//   alias: [
+//     {
+//       find: './constants',
+//       replacement: './constants-debug'
+//     }
+//   ]
+// });
 
 // snapshot({
-//   title: 'basic-dashed-external'
+//   title: 'alias-default'
+// });
+
+// snapshot({
+//   title: 'alias-external',
+//   alias: [
+//     {
+//       find: 'tiny-glob',
+//       replacement: './colossal-glob.js'
+//     }
+//   ]
+// });
+
+// snapshot({
+//   title: 'async-iife-ts'
+// });
+
+// snapshot({
+//   title: 'async-ts'
+// });
+
+// snapshot({
+//   title: 'basic'
+// });
+
+// snapshot({
+//   title: 'basic-css'
+// });
+
+// // snapshot({
+// //   title: 'basic-dashed-external'
+// // });
+
+// snapshot({
+//   title: 'basic-multi-source'
+// });
+
+// snapshot({
+//   title: 'basic-node-internals',
+//   target: 'node',
+//   format: ['cjs']
+// });
+
+// snapshot({
+//   title: 'class-decorators-ts'
+// });
+
+// snapshot({
+//   title: 'class-properties'
+// });
+
+// snapshot({
+//   title: 'basic-ts'
+// });
+
+// snapshot({
+//   title: 'basic-tsx'
+// });
+
+// snapshot({
+//   title: 'basic-json'
+// });
+
+// snapshot({
+//   title: 'replace',
+//   replace: {
+//     DEBUG: 'false'
+//   }
+// });
+
+// snapshot({
+//   title: 'replace-expression',
+//   replace: {
+//     'Object.freeze': 'Object'
+//   }
+// });
+
+// snapshot({
+//   title: 'svgr'
+// });
+
+// snapshot({
+//   title: 'css-modules'
 // });
 
 snapshot({
-  title: 'basic-multi-source'
+  title: 'dts',
+  dts: {}
 });
 
-snapshot({
-  title: 'basic-node-internals',
-  target: 'node',
-  format: ['cjs']
-});
+// snapshot({
+//   title: 'optional-chaining-ts'
+// });
 
-snapshot({
-  title: 'class-decorators-ts'
-});
+// snapshot({
+//   title: 'pretty'
+// });
 
-snapshot({
-  title: 'class-properties'
-});
+// snapshot({
+//   title: 'pure'
+// });
 
-snapshot({
-  title: 'basic-ts'
-});
+// snapshot({
+//   title: 'shebang'
+// });
 
-snapshot({
-  title: 'basic-tsx'
-});
+// snapshot({
+//   title: 'ts-jsx'
+// });
 
-snapshot({
-  title: 'basic-json'
-});
+// snapshot({
+//   title: 'ts-mixed-exports'
+// });
 
-snapshot({
-  title: 'replace',
-  replace: {
-    DEBUG: 'false'
-  }
-});
-
-snapshot({
-  title: 'replace-expression',
-  replace: {
-    'Object.freeze': 'Object'
-  }
-});
-
-snapshot({
-  title: 'svgr'
-});
-
-snapshot({
-  title: 'css-modules'
-});
-
-snapshot({
-  title: 'optional-chaining-ts'
-});
-
-snapshot({
-  title: 'pretty'
-});
-
-snapshot({
-  title: 'pure'
-});
-
-snapshot({
-  title: 'shebang'
-});
-
-snapshot({
-  title: 'ts-jsx'
-});
-
-snapshot({
-  title: 'ts-mixed-exports'
-});
-
-snapshot({
-  title: 'ts-module'
-});
+// snapshot({
+//   title: 'ts-module'
+// });

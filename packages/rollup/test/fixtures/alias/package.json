@@ -1,3 +1,6 @@
 {
-  "name": "alias"
+  "name": "alias",
+  "main": "dist/index1.js",
+  "module": "dist/index1.esm.js",
+  "types": "dist/index.d.ts"
 }
