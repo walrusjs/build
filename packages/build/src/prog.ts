@@ -44,11 +44,6 @@ export default (handler: (opts: any) => void) => {
     .option('--cwd', 'Use an alternative working directory', '.')
     .option('--stream', 'Stream output with lines prefixed by package.', false)
 		.option('--sourcemap', 'Generate source map', true)
-		.option(
-			'--css-modules',
-			'Turns on css-modules for all .css imports. Passing a string will override the scopeName. eg --css-modules="_[hash]"',
-			undefined,
-		)
 		.example("wb --no-sourcemap # don't generate sourcemaps")
 		.option(
 			'--jsx',
