@@ -1,8 +1,8 @@
 {
   "name": "@walrus/build",
   "version": "0.3.0",
-  "main": "./dist/build.js",
-  "types": "./dist/index.d.ts",
+  "main": "./lib/build.js",
+  "types": "./lib/index.d.ts",
   "repository": "git@github.com:walrusjs/build.git",
   "author": "wangxingkang <156148958@qq.com>",
   "license": "MIT",

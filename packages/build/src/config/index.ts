@@ -1,3 +1,5 @@
+import { Config } from '../types';
+
 // 配置文件获取顺序
 export const DEFAULT_CONFIG_FILE = [
   'wb.config.ts',
@@ -5,3 +7,12 @@ export const DEFAULT_CONFIG_FILE = [
   '.wbrc.ts',
   '.wbrc.js'
 ];
+
+export const DEFAULT_CONFIG: Config = {
+  format: ['esm', 'cjs'],
+  output: 'dist',
+  strict: true,
+  sourcemap: true,
+  compress: true
+}
+

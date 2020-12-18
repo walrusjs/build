@@ -3,7 +3,6 @@ import build, { Opts } from './index';
 import prog from './prog';
 
 const run = (opts: Opts) => {
-  console.log(opts);
   build(opts)
     .then(() => {
 
