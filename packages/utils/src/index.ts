@@ -1,5 +1,6 @@
 
 export { default as rimraf } from 'rimraf';
+export { default as deleteEmptyDir } from 'delete-empty'
 export { default as clearConsole } from '@pansy/clear-console';
 export { configLoader } from './config-loader';
 export { isFile } from './is-file';
