@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/walrusjs/build/compare/@walrus/rollup@0.5.0...@walrus/rollup@0.5.1) (2020-12-18)
+
+
+### Bug Fixes
+
+* 修复配置文件校验不通过的问题 ([a6924a3](https://github.com/walrusjs/build/commit/a6924a38fcfd71bbb6773a7cd01dc52551d3661a))
+
+
+
+
+
 # [0.5.0](https://github.com/walrusjs/build/compare/@walrus/rollup@0.4.0...@walrus/rollup@0.5.0) (2020-12-18)
 
 
