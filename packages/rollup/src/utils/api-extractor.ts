@@ -15,8 +15,6 @@ export default async function({
   const outDir = path.dirname(output);
   const { files = [], ignore = [], includedPackages = [] } = typeExtractor;
 
-  console.log(typeExtractor);
-
   const dtsFiles = await globby(files, {
     cwd: outDir,
     absolute: true,

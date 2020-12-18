@@ -7,7 +7,7 @@
   "scripts": {
     "links": "lerna run link --parallel",
     "build": "lerna run build --stream",
-    "test:unit": "walrus test",
+    "test": "walrus test",
     "test:build": "walrus test ./packages/build",
     "test:rollup": "walrus test ./packages/rollup",
     "test:babel-preset-walrus": "walrus test ./packages/babel-preset-walrus",
