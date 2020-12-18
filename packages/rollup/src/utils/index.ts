@@ -64,8 +64,6 @@ export function getMain({
 		mainNoExtension,
   );
 
-  console.log(mainsByFormat);
-
 	return mainsByFormat[format] || mainsByFormat.cjs;
 }
 

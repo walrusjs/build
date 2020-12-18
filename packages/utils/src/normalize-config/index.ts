@@ -20,7 +20,6 @@ async function normalizeConfig({
   config,
   hasPackageJson
 }: Opts): Promise<NormalizedConfig> {
-  console.log(config);
   let {
     name,
     tsconfig,

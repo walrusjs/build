@@ -20,7 +20,6 @@ async function buildForLerna(opts: Opts) {
           rootPath: cwd
         }).then(
           result => {
-            console.log(result);
             setTimeout(() => {
               resolve(result);
             }, 1000)
