@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/walrusjs/build/compare/@walrus/build-utils@0.3.0...@walrus/build-utils@0.4.0) (2020-12-18)
+
+
+### Features
+
+* add @microsoft/api-extractor 支持 ([609be31](https://github.com/walrusjs/build/commit/609be31e2281290b5cf82d90b3bbe0d798788017))
+* **utils:** add deleteEmptyDir util function ([3b28079](https://github.com/walrusjs/build/commit/3b28079421b78744e053e8ad77b68d4524d8628d))
+* **utils:** 提取默认配置到build包 ([183561e](https://github.com/walrusjs/build/commit/183561e31a23e4b00d468baa52dae2032a444eb6))
+
+
+
+
+
 # 0.3.0 (2020-12-18)
 
 

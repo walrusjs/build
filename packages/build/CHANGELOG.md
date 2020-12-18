@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/walrusjs/build/compare/@walrus/build@0.3.0...@walrus/build@0.4.0) (2020-12-18)
+
+
+### Features
+
+* add @microsoft/api-extractor 支持 ([609be31](https://github.com/walrusjs/build/commit/609be31e2281290b5cf82d90b3bbe0d798788017))
+* **build:** 替换合并配置方法，添加清空控制台功能 ([e34c526](https://github.com/walrusjs/build/commit/e34c5265551789f2d869f950855b82746a075762))
+
+
+
+
+
 # [0.3.0](https://github.com/walrusjs/build/compare/@walrus/build@0.2.1...@walrus/build@0.3.0) (2020-12-18)
 
 
