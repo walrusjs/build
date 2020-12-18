@@ -2,7 +2,7 @@ import path from 'path';
 import { isArray, isString, isPlainObject } from 'lodash';
 import { Alias } from '@rollup/plugin-alias';
 import { yellow } from 'kleur';
-import { DEFAULT_INPUT_FILE, ALL_FORMATS, DEFAULT_CONFIG } from './config';
+import { DEFAULT_INPUT_FILE, ALL_FORMATS } from './config';
 import { Config, NormalizedConfig, Format, PackageJson } from '../types';
 import { getExistFile, isFile, configLoader } from '../';
 import { stderr, getOutput, safeVariableName } from './utils';
@@ -17,7 +17,7 @@ interface Opts {
 async function normalizeConfig({
   cwd,
   pkg,
-  config: inputConfig,
+  config,
   hasPackageJson
 }: Opts): Promise<NormalizedConfig> {
   let {
@@ -34,7 +34,7 @@ async function normalizeConfig({
     entries: entriesConfig,
     replaceMode = 'babel',
     target = 'browser'
-  } = Object.assign({}, DEFAULT_CONFIG, inputConfig);
+  } = config ?? {};
 
   // normalize entries
   let entries: NormalizedConfig['entries'] = [];
