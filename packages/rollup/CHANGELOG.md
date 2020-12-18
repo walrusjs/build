@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/walrusjs/build/compare/@walrus/rollup@0.3.0...@walrus/rollup@0.4.0) (2020-12-18)
+
+
+### Features
+
+* **rollup:** 支持css-modules配置 ([6c29c22](https://github.com/walrusjs/build/commit/6c29c22ec077e1531f9f580fe2645d6cc290b5da))
+* 提取解析方法到@walrus/build-utils ([d49c366](https://github.com/walrusjs/build/commit/d49c366c98177a7fbf8eac37f4d99b1399d7a7a7))
+* **rollup:** 删除读取配置文件逻辑 ([7cf2bec](https://github.com/walrusjs/build/commit/7cf2becf7c75c106247475cb7b53d3678ffaaae5))
+* **rollup:** 支持替换prefixText ([332d98f](https://github.com/walrusjs/build/commit/332d98feffdd5d95f0163b8f8cf7337279d87944))
+
+
+
+
+
 # 0.3.0 (2020-12-13)
 
 

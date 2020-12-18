@@ -1,6 +1,6 @@
 {
   "name": "@walrus/build",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "main": "./dist/build.js",
   "types": "./dist/index.d.ts",
   "repository": "git@github.com:walrusjs/build.git",
@@ -19,8 +19,8 @@
   "dependencies": {
     "@lerna/project": "^3.21.0",
     "@lerna/run-topologically": "^3.18.5",
-    "@walrus/build-utils": "^0.2.0",
-    "@walrus/rollup": "^0.3.0",
+    "@walrus/build-utils": "0.3.0",
+    "@walrus/rollup": "0.4.0",
     "ajv": "^6.12.6",
     "sade": "^1.7.4"
   },
