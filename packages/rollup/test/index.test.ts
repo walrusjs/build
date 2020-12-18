@@ -121,6 +121,10 @@ snapshot({
 });
 
 snapshot({
+  title: 'css-modules'
+});
+
+snapshot({
   title: 'optional-chaining-ts'
 });
 

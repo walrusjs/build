@@ -29,6 +29,7 @@ async function normalizeConfig({
     replace,
     output,
     alias,
+    cssModules,
     format: formatConfig,
     entries: entriesConfig,
     replaceMode = 'babel',
@@ -148,6 +149,7 @@ async function normalizeConfig({
     compress: !!compress,
     sourcemap: !!sourcemap,
     replace,
+    cssModules,
     replaceMode
   }
 

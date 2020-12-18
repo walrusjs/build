@@ -5,6 +5,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import alias from '@rollup/plugin-alias';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
+import { PostcssModulesOptions } from '@walrus/build-utils';
 import { terser, Options as TerserOptions  } from "rollup-plugin-terser";
 import inject, { RollupInjectOptions } from '@rollup/plugin-inject';
 import shebang from '@walrus/rollup-plugin-shebang';
@@ -34,6 +35,7 @@ export default function getPlugins(
 ) {
   const {
     target,
+    cssModules: modules,
     alias: aliasOpts,
     replace: replaceOpts,
     disableTypeCheck
@@ -75,6 +77,9 @@ export default function getPlugins(
         // only write out CSS for the first bundle (avoids pointless extra files):
         inject: false,
         extract: !!writeMeta,
+        modules,
+        // modules => all .less will convert into css modules
+        ...(modules ? { autoModules: false } : {}),
         use: {
           less: {
             plugins: [new lessNpmImport({ prefix: '~' })],

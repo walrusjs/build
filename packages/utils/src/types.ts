@@ -18,6 +18,17 @@ export interface PackageJson {
   [key: string]: any;
 }
 
+export interface PostcssModulesOptions {
+  root: string,
+  scopeBehaviour: 'global' | 'local';
+  exportGlobals: boolean;
+  globalModulePaths: RegExp[];
+  Loader: any;
+  localsConvention: (originalClassName: string, generatedClassName: string, inputFile: string) => string | string | null;
+  getJSON: (cssFileName: string, json: JSON, outputFileName: string) => void;
+  generateScopedName: (name: string, filename: string, css: string) => string | string;
+}
+
 export interface Config {
   /**
    * 当前的工作目录
@@ -75,6 +86,11 @@ export interface Config {
    * @default `babel`
    */
   replaceMode?: 'rollup' | 'babel',
+  /**
+   * css-modules配置
+   * 透传给 https://github.com/css-modules/postcss-modules
+   */
+  cssModules?: Partial<PostcssModulesOptions>
   /**
    * 替换代码
    * @rollup/plugin-replace
@@ -155,4 +171,8 @@ export interface NormalizedConfig {
    * @rollup/plugin-replace
    */
   replace?: Record<string, string>;
+  /**
+   * css-modules配置
+   */
+  cssModules?: Partial<PostcssModulesOptions>
 }
