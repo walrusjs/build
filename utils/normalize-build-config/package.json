@@ -1,0 +1,22 @@
+{
+  "name": "@walrus/normalize-build-config",
+  "version": "0.1.0",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "link": "yarn link",
+    "build": "rimraf lib && tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "@walrus/build-types": "^0.1.0",
+    "@walrus/build-utils": "^0.4.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  }
+}

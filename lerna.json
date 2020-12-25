@@ -3,7 +3,8 @@
   "version": "independent",
   "useWorkspaces": true,
   "packages": [
-    "packages/*"
+    "core/*",
+    "utils/*"
   ],
   "command": {
     "publish": {
