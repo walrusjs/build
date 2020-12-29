@@ -5,7 +5,8 @@ import { series } from 'asyncro';
 import { rollup } from 'rollup';
 import { Config, NormalizedConfig } from '@walrus/build-types';
 import normalizeConfig from '@walrus/normalize-build-config';
-import { configLoader, apiExtractor } from './utils';
+import apiExtractor from '@walrus/api-extractor';
+import { configLoader } from './utils';
 import { Task } from './types';
 import createConfig from './create-config';
 import doWatch from './do-watch';
@@ -161,5 +162,4 @@ class Bundler {
   }
 }
 
-export * from './types';
 export default Bundler;

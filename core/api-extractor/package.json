@@ -1,0 +1,19 @@
+{
+  "name": "@walrus/api-extractor",
+  "version": "0.1.0",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "link": "yarn link",
+    "build": "rimraf lib && tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "@microsoft/api-extractor": "7.12.1",
+    "@walrus/build-types": "^0.1.0",
+    "@walrus/build-utils": "^0.4.1"
+  }
+}

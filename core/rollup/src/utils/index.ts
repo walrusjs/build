@@ -70,4 +70,3 @@ export function getMain({
 export { configLoader, isDir, isFile, getExistFile };
 export { default as babelCustom } from './babel-custom';
 export { default as getExternalTest } from './get-external-test';
-export { default as apiExtractor } from './api-extractor';
