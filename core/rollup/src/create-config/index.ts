@@ -1,6 +1,7 @@
 import path from 'path';
 import { InputOptions, OutputOptions } from 'rollup';
 import { NormalizedConfig, Format } from '@walrus/build-types';
+import { getBanner } from '@walrus/build-utils';
 import { getMain, getExternalTest } from '../utils';
 import getPlugins from './get-plugins';
 
@@ -26,7 +27,7 @@ const createConfig = (
  }: CreateRollupConfigOpts,
  writeMeta: boolean
 ): CreateRollupConfigResult => {
-  const { output, multipleEntries, cwd, pkg } = config;
+  const { output, multipleEntries, cwd } = config;
   const useTypescript = path.extname(entry) === '.ts' || path.extname(entry) === '.tsx';
 
   let outputAliases: Record<string, string> = {};
@@ -83,12 +84,15 @@ const createConfig = (
     }
   }
 
+  const banner = getBanner(config.banner, config.pkg);
+
   const outputOptions: OutputOptions = {
     format,
     exports: 'auto',
     strict: config.strict === true,
     sourcemap: config.sourcemap,
     freeze: false,
+    banner,
     esModule: false,
     name: config.name && config.name.replace(/^global\./, ''),
     extend: /^global\./.test(config.name as string),
