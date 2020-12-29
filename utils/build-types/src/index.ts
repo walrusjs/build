@@ -7,6 +7,19 @@ export type Target = 'node' | 'browser';
 // 目前仅支持这三种格式，感觉满足需求了
 export type Format = 'esm' | 'cjs' | 'umd';
 
+export interface BannerInfo {
+  /** Author name */
+  name?: string
+  /** package version */
+  version?: string
+  /** Author name or object */
+  author?: any
+  /** License name, like MIT */
+  license?: string
+}
+
+export type Banner = string | BannerInfo | boolean
+
 export interface PostcssModulesOptions {
   root: string,
   scopeBehaviour: 'global' | 'local';
@@ -57,6 +70,7 @@ export interface Config {
    * @default `dist`
    */
   output?: string;
+  banner?: Banner;
   /**
    * 是否开启压缩
    */
@@ -171,6 +185,7 @@ export interface NormalizedConfig {
    * @rollup/plugin-replace
    */
   replace?: Record<string, string>;
+  banner?: Banner;
   /**
    * css-modules配置
    */
