@@ -1,0 +1,6 @@
+{
+  "name": "rollup-svgr",
+  "dependencies": {
+    "react": "16"
+  }
+}

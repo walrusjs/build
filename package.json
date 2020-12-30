@@ -10,7 +10,6 @@
     "clean": "lerna clean",
     "test": "walrus test",
     "test:build": "walrus test ./core/build",
-    "test:rollup": "walrus test ./core/rollup",
     "test:babel-preset-walrus": "walrus test ./core/babel-preset-walrus",
     "test-types": "tsc --noEmit",
     "release": "walrus release"

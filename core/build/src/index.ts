@@ -16,10 +16,10 @@ export default async function(opts: Opts) {
 
   const useLerna = existsSync(join(cwd, 'lerna.json'));
 
-  if (process.env.NO_CLEAR !== 'true') {
-    // 清空控制台
-    clearConsole();
-  }
+  // if (process.env.NO_CLEAR !== 'true') {
+  //   // 清空控制台
+  //   clearConsole();
+  // }
 
   if (useLerna) {
     await buildForLerna({ ...config, watch });

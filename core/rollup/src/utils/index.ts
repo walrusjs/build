@@ -1,6 +1,6 @@
 import path from 'path';
 import { promises } from 'fs-extra';
-import { configLoader, isDir, isFile, getExistFile } from '@walrus/build-utils';
+import { isDir, isFile, getExistFile } from '@walrus/build-utils';
 import { Format, NormalizedConfig } from '@walrus/build-types';
 
 export const readFile = promises.readFile;
@@ -67,6 +67,6 @@ export function getMain({
 	return mainsByFormat[format] || mainsByFormat.cjs;
 }
 
-export { configLoader, isDir, isFile, getExistFile };
+export { isDir, isFile, getExistFile };
 export { default as babelCustom } from './babel-custom';
 export { default as getExternalTest } from './get-external-test';

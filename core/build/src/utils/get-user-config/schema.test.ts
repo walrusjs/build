@@ -15,7 +15,19 @@ const successValidates = {
   compress: [false, true],
   target: ['node', 'browser'],
   disableTypeCheck: [false, true],
-  replaceMode: ['rollup', 'babel']
+  replaceMode: ['rollup', 'babel'],
+  banner: [
+    {
+      name: 'library',
+      version: '1.0.0',
+      author: {
+        name: 'wangxingkang',
+        email: 'wangxingkang@qq.com',
+        url: 'https://wangxingkang.com'
+      },
+      license: 'MIT'
+    }
+  ]
 };
 
 Object.keys(successValidates).forEach(key => {

@@ -27,7 +27,6 @@
     "@walrus/babel-preset-walrus": "0.2.1",
     "@walrus/build-types": "^0.1.0",
     "@walrus/build-utils": "0.4.1",
-    "@walrus/normalize-build-config": "^0.1.0",
     "@walrus/rollup-plugin-shebang": "1.0.1",
     "asyncro": "3.0.0",
     "autoprefixer": "10.1.0",

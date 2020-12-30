@@ -1,7 +1,7 @@
 import AJV from 'ajv';
 import chalk from 'chalk';
 import { DEFAULT_CONFIG_FILE } from '../../config';
-import { configLoader } from '../';
+import { configLoader } from '@walrus/build-utils';
 import schema from './schema';
 
 const slash = require('slash');

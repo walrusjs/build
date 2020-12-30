@@ -14,6 +14,25 @@ export default {
         { type: 'array', items: noEmptyStr }
       ]
     },
+    banner:  {
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        name: {
+          type: 'string'
+        },
+        version: {
+          type: 'string'
+        },
+        author: {
+          oneOf: [
+            { type: 'string' },
+            { type: 'object' }
+          ]
+        },
+        license: { type: 'string' }
+      },
+    },
     format: {
       oneOf: [
         { type: 'string' },

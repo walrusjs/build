@@ -3,10 +3,8 @@ import { rimraf, deleteEmptyDir } from '@walrus/build-utils';
 import ora from 'ora';
 import { series } from 'asyncro';
 import { rollup } from 'rollup';
-import { Config, NormalizedConfig } from '@walrus/build-types';
-import normalizeConfig from '@walrus/normalize-build-config';
+import { NormalizedConfig } from '@walrus/build-types';
 import apiExtractor from '@walrus/api-extractor';
-import { configLoader } from './utils';
 import { Task } from './types';
 import createConfig from './create-config';
 import doWatch from './do-watch';
@@ -25,27 +23,13 @@ interface RunOptions {
 
 class Bundler {
   private cwd: string;
-  private pkg: NormalizedConfig['pkg'];
-  private config: Config;
-  private hasPackageJson: boolean;
-  private normalizedConfig: NormalizedConfig;
+  private config: NormalizedConfig;
   public bundles: Set<Assets>;
   private spinner: ora.Ora;
 
-  constructor(config: Config) {
-    this.cwd = path.resolve(config.cwd || '.');
-
-    const pkgInfo = configLoader
-      .loadSync({
-        files: ['package.json'],
-        cwd: this.cwd
-      });
-
-    this.pkg = pkgInfo.data ?? {};
-    this.hasPackageJson = !!pkgInfo.path;
-
+  constructor(config: NormalizedConfig) {
+    this.cwd = config.cwd;
     this.config = config;
-    this.normalizedConfig = {} as NormalizedConfig;
     this.bundles = new Set();
 
     this.spinner = ora({
@@ -63,14 +47,7 @@ class Bundler {
       prefixText: prefixText ? `${prefixText}: ` : undefined,
     });
 
-    this.normalizedConfig = await normalizeConfig({
-      cwd: this.cwd,
-      config: this.config,
-      pkg: this.pkg,
-      hasPackageJson: this.hasPackageJson
-    });
-
-    const { formats, entries } = this.normalizedConfig;
+    const { formats, entries } = this.config;
 
     const tasks: Task[] = [];
 
@@ -80,7 +57,7 @@ class Bundler {
           {
             entry: entries[i],
             format: formats[j],
-            config: this.normalizedConfig,
+            config: this.config,
           },
           i === 0 && j === 0,
         );
@@ -96,7 +73,7 @@ class Bundler {
 
       return doWatch(
         {
-          output: this.normalizedConfig.output,
+          output: this.config.output,
           onStart: () => {
             this.spinner.text = 'build start';
           },
@@ -107,14 +84,14 @@ class Bundler {
             this.spinner.fail(`error: ${message}`);
           }
         },
-        this.normalizedConfig.cwd,
+        this.config.cwd,
         tasks
       );
     }
 
     this.spinner.start('build start');
 
-    const outputDir = path.dirname(this.normalizedConfig.output);
+    const outputDir = path.dirname(this.config.output);
 
     const cleanPromise = new Promise(resolve =>
       rimraf(
@@ -144,7 +121,7 @@ class Bundler {
       })
     );
 
-    await apiExtractor(this.normalizedConfig);
+    await apiExtractor(this.config);
 
     this.spinner.text = 'delete empty dir'
     await deleteEmptyDir(`${path.join(this.cwd, 'dist')}`)
