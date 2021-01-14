@@ -3,10 +3,11 @@ import json from '@rollup/plugin-json';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import alias from '@rollup/plugin-alias';
+import image from '@rollup/plugin-image';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import { PostcssModulesOptions } from '@walrus/build-types';
-import { terser, Options as TerserOptions  } from "rollup-plugin-terser";
+import { terser, Options as TerserOptions  } from 'rollup-plugin-terser';
 import inject, { RollupInjectOptions } from '@rollup/plugin-inject';
 import shebang from '@walrus/rollup-plugin-shebang';
 import autoprefixer from 'autoprefixer';
@@ -60,6 +61,7 @@ export default function getPlugins(
     .concat(
       // @ts-ignore
       shebang(),
+      image(),
       config.replaceMode === 'rollup' &&
         replace(replaceOpts ?? {}),
       peerDepsExternal({
@@ -88,6 +90,8 @@ export default function getPlugins(
         } as { [key in 'sass' | 'stylus' | 'less']: any },
       }),
       nodeResolve({
+        // default + jsnext
+        // https://www.webpackjs.com/configuration/resolve/#resolve-mainfields
         mainFields: ['module', 'jsnext', 'main'],
         browser: target !== 'node',
         // defaults + .jsx
@@ -113,7 +117,8 @@ export default function getPlugins(
           },
           tsconfigOverride: {
             compilerOptions : {
-              module: 'esnext'
+              module: 'ESNext',
+              target: 'ESNext',
             }
           }
         }),

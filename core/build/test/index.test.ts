@@ -102,6 +102,10 @@ snapshot({
 });
 
 snapshot({
+  title: 'rollup-image'
+});
+
+snapshot({
   title: 'rollup-lerna'
 });
 
