@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/walrusjs/build/compare/@walrus/build@0.4.1...@walrus/build@0.5.0) (2021-01-14)
+
+
+### Features
+
+* **rollup:** add @rollup/plugin-image ([dc6474f](https://github.com/walrusjs/build/commit/dc6474fa5f0540070d90b0e92abff961f5efefd1))
+* 提取解析配置到@walrus/build ([91a77e5](https://github.com/walrusjs/build/commit/91a77e5d4837dec34e652810669757c37fb3ed17))
+
+
+
+
+
 ## [0.4.1](https://github.com/walrusjs/build/compare/@walrus/build@0.4.0...@walrus/build@0.4.1) (2020-12-18)
 
 

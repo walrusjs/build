@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/walrusjs/build/compare/@walrus/babel-preset-walrus@0.2.1...@walrus/babel-preset-walrus@0.3.0) (2021-01-14)
+
+
+### Features
+
+* **babel-preset-walrus:** babel-plugin-transform-async-to-promises 支持配置 ([0e4f424](https://github.com/walrusjs/build/commit/0e4f42441195b50a4e0f56da8edee916f7bf18fb))
+
+
+
+
+
 ## [0.2.1](https://github.com/walrusjs/build/compare/@walrus/babel-preset-walrus@0.2.0...@walrus/babel-preset-walrus@0.2.1) (2020-12-18)
 
 **Note:** Version bump only for package @walrus/babel-preset-walrus

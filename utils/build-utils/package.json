@@ -1,6 +1,6 @@
 {
   "name": "@walrus/build-utils",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "license": "MIT",
@@ -16,8 +16,8 @@
     "@rollup/plugin-alias": "3.1.1",
     "@types/delete-empty": "3.0.0",
     "@types/rimraf": "^3.0.0",
-    "@walrus/build-types": "^0.1.0",
-    "@walrus/stringify-author": "^0.1.0",
+    "@walrus/build-types": "0.2.0",
+    "@walrus/stringify-author": "0.2.0",
     "@walrus/utils": "1.3.4",
     "camelcase": "^6.2.0",
     "delete-empty": "3.0.0",

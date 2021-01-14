@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/walrusjs/build/compare/@walrus/build-utils@0.4.1...@walrus/build-utils@0.5.0) (2021-01-14)
+
+
+### Features
+
+* **build-utils:** add getBanner utils ([9463a31](https://github.com/walrusjs/build/commit/9463a31f978a54628acba0ee29e618493362818b))
+
+
+
+
+
 ## [0.4.1](https://github.com/walrusjs/build/compare/@walrus/build-utils@0.4.0...@walrus/build-utils@0.4.1) (2020-12-18)
 
 
