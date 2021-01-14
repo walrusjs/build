@@ -85,7 +85,7 @@ export interface Options {
    * 是否将`async`转换为`promise`
    * 开启则使用 babel-plugin-transform-async-to-promises
    */
-  asyncToPromises?: boolean;
+  asyncToPromises?: boolean | Partial<AsyncToPromisesOptions>;
   /**
    * babel-plugin-import配置
    */

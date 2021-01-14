@@ -60,6 +60,12 @@ export default declare((api: { assertVersion: (version: number) => void }, opts:
           }),
         }
       ],
+      opts.asyncToPromises && [
+        require.resolve('babel-plugin-transform-async-to-promises'),
+        {
+          ...mergeConfig(defaulrAsyncToPromisesOptions, toObject(opts.asyncToPromises)),
+        }
+      ],
       [
         require.resolve('babel-plugin-module-resolver'),
         {
@@ -117,10 +123,6 @@ export default declare((api: { assertVersion: (version: number) => void }, opts:
             ];
           })
         : []),
-      opts.asyncToPromises && [
-        require.resolve('babel-plugin-transform-async-to-promises'),
-        {...defaulrAsyncToPromisesOptions}
-      ],
     ].filter(Boolean),
   }
 });
