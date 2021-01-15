@@ -15,5 +15,9 @@
     "@microsoft/api-extractor": "7.12.1",
     "@walrus/build-types": "0.2.0",
     "@walrus/build-utils": "0.5.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   }
 }
