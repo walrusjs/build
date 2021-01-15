@@ -1,6 +1,6 @@
 {
   "name": "@walrus/build",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "main": "./lib/build.js",
   "types": "./lib/index.d.ts",
   "repository": "git@github.com:walrusjs/build.git",
@@ -34,4 +34,3 @@
     "access": "public"
   }
 }
-
