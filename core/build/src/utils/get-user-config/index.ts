@@ -19,7 +19,6 @@ export default function(cwd: string) {
   if (configFilePath) {
     const ajv = new AJV({ allErrors: true });
     const isValid = ajv.validate(schema, data);
-    console.log(ajv?.errors);
     if (!isValid) {
       const errors = ajv?.errors?.map(({ dataPath, message }, index) => {
         return `${index + 1}. ${dataPath}${dataPath ? ' ' : ''}${message}`;
