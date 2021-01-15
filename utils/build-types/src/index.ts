@@ -70,6 +70,9 @@ export interface Config {
    * @default `dist`
    */
   output?: string;
+  /**
+   * banner配置
+   */
   banner?: Banner;
   /**
    * 是否开启压缩

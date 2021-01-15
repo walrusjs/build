@@ -15,23 +15,29 @@ export default {
       ]
     },
     banner:  {
-      type: 'object',
-      additionalProperties: false,
-      properties: {
-        name: {
-          type: 'string'
+      oneOf: [
+        {
+          type: 'object',
+          additionalProperties: false,
+          properties: {
+            name: {
+              type: 'string'
+            },
+            version: {
+              type: 'string'
+            },
+            author: {
+              oneOf: [
+                { type: 'string' },
+                { type: 'object' }
+              ]
+            },
+            license: { type: 'string' }
+          },
         },
-        version: {
-          type: 'string'
-        },
-        author: {
-          oneOf: [
-            { type: 'string' },
-            { type: 'object' }
-          ]
-        },
-        license: { type: 'string' }
-      },
+        { type: 'string' },
+        { type: 'boolean' }
+      ]
     },
     format: {
       oneOf: [
