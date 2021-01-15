@@ -1,6 +1,6 @@
 {
   "name": "@walrus/rollup",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "license": "MIT",
@@ -24,7 +24,7 @@
     "@rollup/plugin-strip": "2.0.0",
     "@rollup/plugin-url": "6.0.0",
     "@svgr/rollup": "5.5.0",
-    "@walrus/api-extractor": "0.2.0",
+    "@walrus/api-extractor": "0.2.1",
     "@walrus/babel-preset-walrus": "0.3.0",
     "@walrus/build-types": "0.2.0",
     "@walrus/build-utils": "0.5.0",
