@@ -1,7 +1,7 @@
 import { BabelOptions } from './types';
 
 export const defaultOpts: BabelOptions = {
-  cwd: '/Users/aqian/Documents/projects/wangxingkang/walrus-build/core/build-babel',
+  cwd: '.',
   target: 'node',
   outDir: 'dist',
   buildDir: 'src',

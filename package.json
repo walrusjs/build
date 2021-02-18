@@ -12,8 +12,7 @@
     "test:build": "walrus test ./core/build",
     "test:babel-preset-walrus": "walrus test ./core/babel-preset-walrus",
     "test-types": "tsc --noEmit",
-    "release": "walrus release",
-    "test:b": "walrus run ./core/build-babel/src/index.ts"
+    "release": "walrus release"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.166",
