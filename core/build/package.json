@@ -22,7 +22,7 @@
     "@lerna/run-topologically": "^3.18.5",
     "@walrus/build-utils": "0.5.0",
     "@walrus/normalize-build-config": "0.2.0",
-    "@walrus/rollup": "0.6.1",
+    "@walrus/build-rollup": "0.6.1",
     "ajv": "^6.12.6",
     "sade": "^1.7.4"
   },

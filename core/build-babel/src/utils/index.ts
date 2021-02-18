@@ -2,7 +2,7 @@ import babel from '@babel/core';
 import path from 'path';
 import fs from 'fs';
 import readdirRecursive from 'fs-readdir-recursive';
-import { transform, compile } from './transform';
+import { transform } from './transform';
 
 /**
  *
@@ -76,7 +76,6 @@ export function readdir(
 }
 
 export {
-  compile,
   transform
 }
 

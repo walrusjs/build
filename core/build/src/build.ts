@@ -1,5 +1,5 @@
 import { parse } from 'path';
-import RollupBundler from '@walrus/rollup';
+import RollupBundler from '@walrus/build-rollup';
 import { randomColor, configLoader } from '@walrus/build-utils';
 import normalizeConfig from '@walrus/normalize-build-config';
 import { Opts } from './types';

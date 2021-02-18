@@ -1,5 +1,5 @@
 {
-  "name": "@walrus/rollup",
+  "name": "@walrus/build-rollup",
   "version": "0.6.1",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",

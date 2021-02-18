@@ -6,7 +6,7 @@ import { $Keys } from '@pansy/types';
 import { TransformOptions } from '@babel/core';
 import { LiteralUnion } from '@pansy/types/dist/literal-union';
 import {
-  compile,
+  transform,
   readdir,
   chmod,
   withExtension,
@@ -115,7 +115,7 @@ export default async function (
     const dest = getDest(relative, base);
 
     try {
-      const res = await compile(src, {
+      const res = await transform(src, {
         ...transformOpts,
         sourceFileName: slash(path.relative(dest + '/..', src)),
       });

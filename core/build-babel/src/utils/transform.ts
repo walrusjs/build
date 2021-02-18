@@ -10,7 +10,7 @@ const CALLER = {
  * @param filename
  * @param opts
  */
-export function compile(
+export function transform(
   filename: string,
   opts: TransformOptions,
 ): Promise<BabelFileResult | null> {

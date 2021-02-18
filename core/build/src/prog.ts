@@ -1,5 +1,5 @@
 import sade from 'sade';
-import { DEFAULT_FORMATS } from '@walrus/rollup/lib/config';
+import { DEFAULT_FORMATS } from '@walrus/build-rollup/lib/config';
 
 const pkg = require('../package.json');
 const toArray = (val: any) => (Array.isArray(val) ? val : val == null ? [] : [val]);

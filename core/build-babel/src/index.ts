@@ -11,7 +11,6 @@ import { defaultOpts } from './config';
 import getGulpConfig from './gulp';
 
 async function build(opts: BabelOptions = {}) {
-
   const babelOpts = {
     ...defaultOpts,
     ...opts
