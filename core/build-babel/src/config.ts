@@ -3,6 +3,7 @@ import { BabelOptions } from './types';
 export const defaultOpts: BabelOptions = {
   cwd: '.',
   target: 'node',
+  format: 'esm',
   outDir: 'dist',
   buildDir: 'src',
   watch: false,

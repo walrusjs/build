@@ -32,9 +32,6 @@ export default async function (
   let compiledFiles = 0;
   let startTime: [number, number] | null = null;
 
-  /** 创建输出目录 */
-  fs.mkdirSync( opts.outDir, { recursive: true });
-
   startTime = process.hrtime();
 
    /** 编译及拷贝 */

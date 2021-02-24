@@ -1,6 +1,6 @@
 {
   "name": "@walrus/build-babel",
-  "description": "Babel编译模式(目录 --> 目录)",
+  "description": "基于Babel的库编译工具",
   "version": "1.0.0",
   "main": "./lib/build.js",
   "types": "./lib/index.d.ts",
@@ -23,6 +23,7 @@
     "autoprefixer": "10.1.0",
     "cac": "^6.7.2",
     "chokidar": "^3.5.1",
+    "debug": "^4.3.1",
     "fs-readdir-recursive": "^1.1.0",
     "gulp": "^4.0.2",
     "gulp-less": "^4.0.1",

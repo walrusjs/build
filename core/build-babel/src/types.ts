@@ -1,4 +1,4 @@
-import { Target, Format } from '@walrus/build-types';
+import { Target } from '@walrus/build-types';
 
 export interface BabelOptions {
   /**
@@ -6,7 +6,14 @@ export interface BabelOptions {
    * @default `.`
    */
   cwd?: string;
+  /**
+   * 设置编译格式
+   */
   target?: Target;
+  /**
+   * 设置编译格式
+   */
+  format?: 'esm' | 'cjs';
   /**
    * 输出目录
    */

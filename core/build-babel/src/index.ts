@@ -37,7 +37,7 @@ async function build(opts: BabelOptions = {}) {
 
   const babelPresetWalrusOpts: Options = {
     env: {
-      modules: false,
+      modules: babelOpts.format === 'cjs' ? 'cjs' : 'auto',
       targets
     },
     asyncToPromises: true,
@@ -64,8 +64,5 @@ async function build(opts: BabelOptions = {}) {
     getGulpConfig({ ...babelOpts, buildDir  })(gulp);
   }
 }
-
-build();
-
 
 export default build;
