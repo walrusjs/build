@@ -1,0 +1,37 @@
+{
+  "name": "@walrus/build",
+  "version": "0.5.3",
+  "main": "./lib/build.js",
+  "types": "./lib/index.d.ts",
+  "repository": "git@github.com:walrusjs/build.git",
+  "author": "wangxingkang <156148958@qq.com>",
+  "license": "MIT",
+  "bin": {
+    "wb": "./lib/cli.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "link": "yarn link",
+    "build": "rimraf lib && tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "@babel/core": "7.14.6",
+    "@lerna/project": "^4.0.0",
+    "@lerna/run-topologically": "^4.0.0",
+    "@walrus/build-utils": "0.5.0",
+    "@walrus/normalize-build-config": "0.2.0",
+    "@walrus/rollup": "0.6.1",
+    "ajv": "^8.6.1",
+    "cac": "^6.7.3",
+    "sade": "^1.7.4"
+  },
+  "devDependencies": {
+    "@types/sade": "^1.7.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  }
+}

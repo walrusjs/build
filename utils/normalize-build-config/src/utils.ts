@@ -52,7 +52,7 @@ const INVALID_ES3_IDENT = /((^[^a-zA-Z]+)|[^\w.-])|([^a-zA-Z0-9]+$)/g;
  * Turn a package name into a valid reasonably-unique variable name
  * @param {string} name
  */
-export function safeVariableName(name: string) {
+export function safeVariableName(name: string = '') {
 	const normalized = removeScope(name).toLowerCase();
 	const identifier = normalized.replace(INVALID_ES3_IDENT, '');
 	return camelCase(identifier);

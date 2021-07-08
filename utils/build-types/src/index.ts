@@ -4,9 +4,12 @@ import { PackageJson } from '@pansy/types';
 /** JS target */
 export type Target = 'node' | 'browser';
 
-// 目前仅支持这三种格式，感觉满足需求了
-export type Format = 'esm' | 'cjs' | 'umd';
+/** 目前仅支持这三种格式 */
+export type Format = 'esm' | 'cjs' | 'umd' | 'esnext';
 
+/**
+ * Banner信息
+ */
 export interface BannerInfo {
   /** Author name */
   name?: string
@@ -18,7 +21,7 @@ export interface BannerInfo {
   license?: string
 }
 
-export type Banner = string | BannerInfo | boolean
+export type Banner = string | BannerInfo | boolean;
 
 export interface PostcssModulesOptions {
   root: string,
@@ -31,6 +34,9 @@ export interface PostcssModulesOptions {
   generateScopedName: (name: string, filename: string, css: string) => string | string;
 }
 
+/**
+ * 配置
+ */
 export interface Config {
   /**
    * 当前的工作目录
@@ -115,6 +121,9 @@ export interface Config {
   } | false;
 }
 
+/**
+ * 解析后的配置
+ */
 export interface NormalizedConfig {
   /**
    * 当前的工作目录
@@ -124,11 +133,11 @@ export interface NormalizedConfig {
    * 是否开启严格模式
    */
   strict: boolean;
-    /**
+  /**
    * 是否生成sourcemap
    */
   sourcemap: boolean;
-   /**
+  /**
    * 是否开启压缩
    */
   compress: boolean;

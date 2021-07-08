@@ -1,0 +1,9 @@
+{
+  "name": "@walrus/rollup-cli",
+  "devDependencies": {
+    "@walrus/build-utils": "workspace:utils/build-utils",
+    "@walrus/cli-utils": "1.1.2",
+    "@walrus/normalize-build-config": "workspace:utils/normalize-build-config",
+    "@walrus/rollup": "workspace:core/rollup"
+  }
+}

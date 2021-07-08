@@ -7,17 +7,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "importHelpers": true,
-    "plugins": [
-      {
-        "name": "typescript-snapshots-plugin",
-        "snapshotCallIdentifiers": [
-          "toMatchSnapshot",
-          "toThrowErrorMatchingSnapshot",
-          "toMatchDiffSnapshot"
-        ]
-      }
-    ]
+    "importHelpers": true
   },
   "exclude": [
     "node_modules",
